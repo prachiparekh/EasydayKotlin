@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="colorPrimary">#243A5A</color>
+  <color name="colorPrimaryDark">#243A5A</color>
+  <color name="colorAccent">#243A5A</color>
+  <array name="default_colors">
+    <item>#ff0000</item>
+    <item>#FF6F00</item>
+    <item>#B4C700</item>
+    <item>#0D47A1</item>
+    <item>#4527A0</item>
+    <item>#AD1457</item>
+    <item>#006064</item>
+    <item>#1B5E20</item>
+    <item>#558B2F</item>
+    <item>#00ffff</item>
+    <item>#FAFAFA</item>
+    <item>#3E2723</item>
+    <item>#000000</item>
+  </array>
+  <color name="gray">#737171</color>
+  <color name="white">#ffffff</color>
+  <color name="transparent_black">#a34b4949</color>
+  <color name="blackish">#2d2c2c</color>
+  <color name="checkbox_color">#ff0000</color>
+  <color name="black">#FF000000</color>
+</resources>

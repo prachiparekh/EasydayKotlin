@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
+   <item
+        android:id="@+id/inbox"
+        android:icon="@drawable/ic_inbox"
+        android:menuCategory="secondary"
+        android:title="@string/inbox" />
+     <item
+        android:id="@+id/services"
+        android:menuCategory="secondary"
+         android:enabled="false"
+        android:title="" />
+    <item
+        android:id="@+id/reports"
+        android:icon="@drawable/ic_reports"
+        android:menuCategory="secondary"
+        android:title="@string/reports" />
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/ic_more"
+        android:menuCategory="secondary"
+        android:title="@string/more" />
+</menu>

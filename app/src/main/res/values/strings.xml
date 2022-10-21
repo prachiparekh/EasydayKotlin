@@ -1,0 +1,238 @@
+<resources>
+    <string name="app_name">Easyday</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get started</string>
+    <string name="boarding_title1">Quick task \nmanagement</string>
+    <string name="boarding_title2">Save your \nmoney and time</string>
+    <string name="boarding_title3">Team work \nmore effectively</string>
+    <string name="boarding_text">Create documents and manage all your \n data intelligently and quickly</string>
+    <string name="hello_there">Hello there,</string>
+
+    <string name="lets_make">Let’s make \nyour day easy</string>
+    <string name="get_otp">Enter your mobile number to get OTP</string>
+    <string name="country_code">Country code</string>
+    <string name="romania_flag">us</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="verify_number">Verify Your \nPhone Number</string>
+    <string name="enter_otp">Enter the OTP sent to</string>
+    <string name="change">Change</string>
+    <string name="dash">-</string>
+
+    <string name="resend_code_in">Resend code in %s</string>
+    <string name="resend_code">Resend code</string>
+    <string name="number_requires">Phone number requires to LogIn.</string>
+    <string name="wrong_otp">Wrong OTP, Please check again</string>
+    <string name="create_profile">Create Profile</string>
+    <string name="enter_details">Enter your details to complete your profile</string>
+    <string name="full_name_c">Full Name <font color='#FB4079'>*</font></string>
+    <string name="ur_profession_c">Your profession <font color='#FB4079'>*</font></string>
+    <string name="crop_fail">Cropping failed:</string>
+
+    <string name="name_constarin">Full name is required !</string>
+    <string name="profession_constarin">Profession is required !</string>
+    <string name="home">Home</string>
+    <string name="inbox">Inbox</string>
+    <string name="reports">Reports</string>
+    <string name="more">More</string>
+    <string name="u_have_catch">You have catch up with all tasks</string>
+    <string name="create_task">Create task</string>
+    <string name="create_new">+ Create new</string>
+
+    <string name="done">Done</string>
+    <string name="u_can_add">You can add more project using</string>
+    <string name="see_all">See all your project here</string>
+    <string name="guys_task">Guy\'s task</string>
+    <string name="skip">Skip</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="filter_task">Filter tasks</string>
+    <string name="ur_projects">Your Projects</string>
+
+    <string name="create_new_project">Create New Project</string>
+    <string name="project_name">Project name <font color='#FB4079'>*</font></string>
+    <string name="description">Description <font color='#FB4079'>*</font></string>
+    <string name="assign_color">Assign Color</string>
+    <string name="dex_length">0/110</string>
+    <string name="name_required">Project name requires !</string>
+    <string name="desc_required">Project description requires !</string>
+    <string name="participants">Participants</string>
+    <string name="admin">Admin</string>
+    <string name="search">Search</string>
+
+    <string name="what_is_admin">What is admin?</string>
+    <string name="admin_t1">Admin has a unique permissions to manage and create specific features mentioned below</string>
+    <string name="admin_t2">• Permission one that goes something</string>
+    <string name="create">Create</string>
+    <string name="participant_role">participant</string>
+    <string name="admin_role">admin</string>
+    <string name="clear_filters">Clear filters</string>
+    <string name="apply">Apply</string>
+    <string name="close">Close</string>
+
+    <string name="f_date_range">Date range</string>
+    <string name="f_task_status">Task Status</string>
+    <string name="f_tag">Tag</string>
+    <string name="f_priority">Priority</string>
+    <string name="f_assigned_To">Assigned To</string>
+    <string name="f_zone">Zone</string>
+    <string name="f_space">Space</string>
+    <string name="f_red_flag">Red Flag</string>
+    <string name="f_due_date">Due Date</string>
+
+    <string name="from">From <font color='#FB4079'>*</font></string>
+    <string name="to">To <font color='#FB4079'>*</font></string>
+    <string name="date_format_template" translatable="false">dd/MM/yyyy</string>
+    <string name="date_format_template1" translatable="false">yyyy-MM-dd</string>
+    <string name="to_date_error">Due date : To date should greater than from date !</string>
+
+    <string name="progress">In Progress</string>
+    <string name="review">Review</string>
+    <string name="completed">Completed</string>
+    <string name="reopened">Reopened</string>
+
+    <string name="none">None</string>
+    <string name="low">Low</string>
+    <string name="normal">Normal</string>
+    <string name="high">High</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="passed">Passed</string>
+    <string name="not_passed">Not Passed</string>
+
+    <string name="task_title">Task Title</string>
+    <string name="under_process">Development \nUnder Progress</string>
+    <string name="add_tags">Add Tags</string>
+    <string name="add_due_date">Add Due Date</string>
+    <string name="type_to_create">Type to create</string>
+    <string name="skip_photo">Skip Photo</string>
+    <string name="press_hold">Press and Hold for Video</string>
+    <string name="by_continuing">By continuing you agree to Easyday \n Terms &amp; Conditions and Privacy Policy</string>
+    <string name="link">Link EasyDay Desktop or EasyDay Web by \n Scanning QR code</string>
+    <string name="easy_day_desktop">EasyDay Desktop</string>
+    <string name="easy_day_web">EasyDay Web</string>
+
+    <string name="terms">Terms &amp; Conditions</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="policy">Privacy Policy</string>
+    <string name="analytics">Analytics</string>
+    <string name="inprogress">In Progress</string>
+    <string name="total_task">Total Task</string>
+    <string name="task_status">Task Status</string>
+    <string name="priority_status">Priority Status</string>
+    <string name="in_review">In Review</string>
+    <string name="completed_task">Completed</string>
+
+    <string name="urgent_p">Urgent</string>
+    <string name="normal_p">Normal</string>
+    <string name="low_p">Low</string>
+    <string name="flag_status">Flag Status</string>
+    <string name="not_flagged">Not Flagged</string>
+    <string name="red_flagged">Red Flagged</string>
+    <string name="team_status">Team Status</string>
+    <string name="tags">Tags</string>
+    <string name="no_msg">No Messages Found</string>
+
+    <string name="general_setting">General Settings</string>
+    <string name="my_profile">My Profile</string>
+    <string name="device">Devices</string>
+    <string name="you_commented">You commented on Door Fix on second floor</string>
+    <string name="oct">Oct 16,2022 %s 2.45 pm</string>
+    <string name="my_activity_log">My Activity Log</string>
+    <string name="one_plus">OnePlus OnePlus Nord CE2</string>
+    <string name="hyderabad">Hyderabad, India %s Online</string>
+    <string name="online">Online</string>
+    <string name="android">Android 9.0.2</string>
+    <string name="my_profile_text">View and edit your profile info</string>
+    <string name="notepad">Notepad</string>
+    <string name="notepad_text">Create and manage notepad</string>
+    <string name="notifications">Notifications</string>
+    <string name="notifications_text">Set notifications priority</string>
+    <string name="privacy_security">Privacy &amp; Security</string>
+    <string name="privacy_security_text">Set notifications priority</string>
+
+    <string name="activity_log">Activity log</string>
+    <string name="activity_log_text">Manage your all activities</string>
+    <string name="other">OTHER</string>
+    <string name="upgrade_premium">Upgrade to Premium</string>
+    <string name="upgrade_premium_text">View and update your interests</string>
+    <string name="feedback_app">Feedback App</string>
+    <string name="feedback_app_text">View and update your interests</string>
+    <string name="logout">Logout</string>
+    <string name="logout_text">Exit you EasyDay account</string>
+
+    <string name="version">Version %s</string>
+    <string name="full_name">Full Name</string>
+    <string name="ur_profession">Your profession</string>
+    <string name="save_changes">Save changes</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="policy_text">In case you missed them on Sign Up</string>
+    <string name="block_list">Block List</string>
+    <string name="block_list_text">Users blocked by you</string>
+    <string name="delete_account">Delete Account</string>
+
+    <string name="delete_my_account"><u>Delete My Account</u></string>
+    <string name="delete_account_text">Delete account from Easyday?</string>
+    <string name="delete_account_text1">Are you sure you would like to Delete your Easyday account?</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes_delete">Yes, Delete</string>
+    <string name="yes_logout">Yes, Logout</string>
+    <string name="logout_account_text">Logout from Easyday?</string>
+    <string name="logout_account_text1">Are you sure you would like to logout of your Easyday account?</string>
+
+    <string name="total">Total</string>
+    <string name="flagged">Flagged</string>
+    <string name="tag_status">Tag Status</string>
+    <string name="project_create_success">Project created successfully</string>
+    <string name="contacts_permission_denied_feedback">Contacts permission is needed.</string>
+    <string name="permission_rationale_settings_button_text">SETTINGS</string>
+    <string name="date_">Date :</string>
+    <string name="complete">Complete</string>
+    <string name="share">Share</string>
+    <string name="discussion">Discussion</string>
+
+    <string name="message">Message</string>
+    <string name="task_details">Task Details</string>
+    <string name="project_related">Project Related</string>
+    <string name="description_length">%s/500</string>
+    <string name="status">Status</string>
+    <string name="tap_to_note">Tab to create button to create note</string>
+    <string name="untitled_date">Untitled %s</string>
+    <string name="type_here">Type here</string>
+    <string name="save">Save</string>
+
+    <string name="select_assignee">Select Assignee</string>
+    <string name="user_role">user</string>
+    <string name="task_title_required">Task title is required !</string>
+    <string name="assign">Assign</string>
+    <string name="dot">•</string>
+    <string name="recent_searches">Recent Searches</string>
+
+    <string name="rate">Rate your experience</string>
+    <string name="are_you_satisfied">Are you satisfied with the service ?</string>
+    <string name="suggestion">Tell us what can be improved ?</string>
+    <string name="customer_support">Customer Support</string>
+    <string name="transparency">Transparency</string>
+    <string name="slow">Too Slow</string>
+    <string name="speed">Speed &amp; Efficiency</string>
+    <string name="bug_improve">Improve Bugs</string>
+    <string name="back_setting">Back to Setting</string>
+    <string name="thanks">Thanks for your feedback</string>
+    <string name="we_really_appreciate">We really appreciate your valuable \n feedbacks and we will try to fix this ASAP </string>
+    <string name="full_peter_assigned">Peter, Assigned you a task on Door fix on second floor</string>
+    <string name="peter_assigned_you">Peter, Assigned you a task on </string>
+    <string name="door_fix_on"><u><b> Door fix on second floor</b></u></string>
+    <string name="julia_okina_respond">Julia Rokina, Responded to your comment</string>
+    <string name="julia_okina">Julia Rokina</string>
+    <string name="great_i_ll">Great, i shall continue working on the project tomorrow</string>
+    <string name="mark_all_read">Mark all read</string>
+    <string name="feedback">Feedback</string>
+    <string name="laborum_distinctio">Laborum distinctio autem voluptate dignissimos ut quo</string>
+    <string name="replying_to_jane_cooper">Replying to Jane Cooper</string>
+    <string name="replying_to">Replying to</string>
+    <string name="jane_cooper">Jane Cooper </string>
+    <string name="register"><u><b><i>Copyright</i></b></u></string>
+
+    <string name="test"><![CDATA[<b>bold!</b> normal]]></string>
+</resources>

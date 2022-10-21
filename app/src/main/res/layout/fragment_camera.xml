@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@android:color/black"
+        tools:context=".screens.activities.main.home.create_task.CameraFragment">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/viewFinder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/skipPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="@id/btnTakePicture"
+            app:layout_constraintEnd_toEndOf="@id/btnTakePicture"
+            app:layout_constraintBottom_toTopOf="@id/btnTakePicture"
+            android:background="@drawable/ic_curve_white_bg"/>
+
+        <com.app.easyday.utils.camera_utils.CameraVideoButton
+            android:id="@+id/btnTakePicture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintBottom_toTopOf="@id/text1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cvb_recording_color="@color/green20"/>
+
+        <ImageView
+            android:id="@+id/btnSwitchCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rotate"
+            app:layout_constraintBottom_toBottomOf="@id/btnTakePicture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnTakePicture"
+            app:layout_constraintTop_toTopOf="@id/btnTakePicture" />
+
+        <ImageView
+            android:id="@+id/btnGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_no_picture"
+            app:layout_constraintBottom_toBottomOf="@id/btnSwitchCamera"
+            app:layout_constraintEnd_toStartOf="@id/btnTakePicture"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnSwitchCamera"
+            tools:ignore="ContentDescription" />
+
+
+        <ImageView
+            android:id="@+id/btnImage"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_image_curve"
+            android:scaleType="centerCrop"
+            android:src="@drawable/boarding_img2"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/btnSwitchCamera"
+            app:layout_constraintEnd_toStartOf="@id/btnTakePicture"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnSwitchCamera"
+            tools:ignore="ContentDescription" />
+
+
+        <ImageView
+            android:id="@+id/btnFlash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_flash_off"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+
+        <LinearLayout
+            android:id="@+id/llFlashOptions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:elevation="3dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/btnFlashOff"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:paddingVertical="@dimen/_5sdp"
+                android:src="@drawable/ic_flash_off"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/btnFlashAuto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:paddingVertical="@dimen/_5sdp"
+                android:src="@drawable/ic_flash_auto"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/btnFlashOn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:paddingVertical="@dimen/_5sdp"
+                android:src="@drawable/ic_flash_on"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintBottom_toBottomOf="@id/btnFlash"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnFlash"
+            app:tint="@color/white" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/press_hold"
+            android:textColor="@color/white"
+            android:fontFamily="@font/dm_sans_700"
+            android:gravity="center"
+            android:id="@+id/text1"
+            android:background="@color/black"
+            android:padding="@dimen/_5sdp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.app.easyday.screens.activities.main.dashboard.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/dashboard_to_add_project"
+            app:destination="@id/addProjectFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+
+        <action
+            android:id="@+id/dashboard_to_camera"
+            app:destination="@id/cameraFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+
+        <action
+            android:id="@+id/dashboard_to_more_view_profile"
+            app:destination="@id/viewProfileFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+
+        <action
+            android:id="@+id/dashboard_to_more_privacy"
+            app:destination="@id/privacySecurityFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+
+        <action
+            android:id="@+id/dashboard_to_notepad"
+            app:destination="@id/notepadFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+
+        <action
+            android:id="@+id/dashboard_to_search"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+
+        <action
+            android:id="@+id/dashboard_to_more_devices"
+            app:destination="@id/deviceFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+        <action
+            android:id="@+id/dashboard_to_more_activity_log"
+            app:destination="@id/activityLogFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+
+        <action
+            android:id="@+id/dashboard_to_task_details"
+            app:destination="@id/taskDetailsFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+
+        <action
+            android:id="@+id/dashboard_to_more_feedback"
+            app:destination="@id/feedbackFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+        <action
+            android:id="@+id/dashboard_to_more_notifications"
+            app:destination="@id/notificationsFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+
+        <action
+            android:id="@+id/dashboard_to_discussion"
+            app:destination="@id/discussionFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProjectFragment"
+        android:name="com.app.easyday.screens.activities.main.home.project.AddProjectFragment"
+        android:label="fragment_add_project"
+        tools:layout="@layout/fragment_add_project">
+
+        <action
+            android:id="@+id/add_project_to_add_participant"
+            app:destination="@id/addParticipantsFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right">
+
+            <argument
+                android:name="createProjectModel"
+                android:defaultValue="@null"
+                app:argType="com.app.easyday.app.sources.remote.model.AddProjectRequestModel"
+                app:nullable="true" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/addParticipantsFragment"
+        android:name="com.app.easyday.screens.activities.main.home.project.AddParticipantsFragment"
+        android:label="fragment_add_participants"
+        tools:layout="@layout/fragment_add_participants">
+        <action
+            android:id="@+id/add_participant_to_add_admin"
+            app:destination="@id/addAdminFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right">
+            <argument
+                android:name="createProjectModel"
+                android:defaultValue="@null"
+                app:argType="com.app.easyday.app.sources.remote.model.AddProjectRequestModel"
+                app:nullable="true" />
+        </action>
+
+    </fragment>
+    <fragment
+        android:id="@+id/addAdminFragment"
+        android:name="com.app.easyday.screens.activities.main.home.project.AddAdminFragment"
+        android:label="fragment_add_admin"
+        tools:layout="@layout/fragment_add_admin">
+        <action
+            android:id="@+id/add_admin_to_dashboard"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/createTaskFragment"
+        android:name="com.app.easyday.screens.activities.main.home.create_task.CreateTaskFragment"
+        android:label="fragment_create_task"
+        tools:layout="@layout/fragment_create_task" >
+        <action
+            android:id="@+id/create_task_to_dashboard"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.app.easyday.screens.activities.main.home.create_task.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" >
+
+        <action
+            android:id="@+id/camera_to_create_task"
+            app:destination="@id/createTaskFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right"/>
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/viewProfileFragment"
+        android:name="com.app.easyday.screens.activities.main.more.profile.ViewProfileFragment"
+        android:label="fragment_view_profile"
+        tools:layout="@layout/fragment_view_profile" />
+    <fragment
+        android:id="@+id/privacySecurityFragment"
+        android:name="com.app.easyday.screens.activities.main.more.privacy.PrivacySecurityFragment"
+        android:label="fragment_privacy_security"
+        tools:layout="@layout/fragment_privacy_security" >
+
+        <action android:id="@+id/more_privacy_to_terms"
+            app:destination="@id/termsPolicyFragment2"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right">
+            <argument
+                android:name="title"
+                android:defaultValue="@null"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="url"
+                android:defaultValue="@null"
+                app:argType="string"
+                app:nullable="true" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/termsPolicyFragment2"
+        android:name="com.app.easyday.screens.activities.auth.TermsPolicyFragment"
+        android:label="TermsPolicyFragment" />
+    <fragment
+        android:id="@+id/notepadFragment"
+        android:name="com.app.easyday.screens.activities.main.more.notepad.NotepadListFragment"
+        android:label="fragment_notepad"
+        tools:layout="@layout/fragment_notepad_list" >
+
+        <action android:id="@+id/notepad_list_to_create_note"
+            app:destination="@id/createNoteFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="com.app.easyday.screens.activities.main.more.notepad.CreateNoteFragment"
+        android:label="fragment_create_note"
+        tools:layout="@layout/fragment_create_note" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.app.easyday.screens.activities.main.home.search_task.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/search_to_task_details"
+            app:destination="@id/taskDetailsFragment"
+            app:enterAnim="@anim/slide_in_from_the_right"
+            app:exitAnim="@anim/slide_out_to_the_left"
+            app:popEnterAnim="@anim/slide_in_from_the_left"
+            app:popExitAnim="@anim/slide_out_to_the_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/activityLogFragment"
+        android:name="com.app.easyday.screens.activities.main.more.activityLog.ActivityLogFragment"
+        android:label="fragment_activity_log"
+        tools:layout="@layout/fragment_activity_log" />
+    <fragment
+        android:id="@+id/deviceFragment"
+        android:name="com.app.easyday.screens.activities.main.more.devices.DevicesFragment"
+        android:label="fragment_devices"
+        tools:layout="@layout/fragment_devices" />
+    <fragment
+        android:id="@+id/taskDetailsFragment"
+        android:name="com.app.easyday.screens.activities.main.home.task_detail.TaskDetailsFragment"
+        android:label="fragment_task_details"
+        tools:layout="@layout/fragment_task_details" />
+
+    <fragment
+        android:id="@+id/feedbackFragment"
+        android:name="com.app.easyday.screens.activities.main.more.feedback.FeedbackFragment"
+        android:label="fragment_feedback"
+        tools:layout="@layout/fragment_feedback" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.app.easyday.screens.activities.main.more.notifications.NotificationsFragment"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/discussionFragment"
+        android:name="com.app.easyday.screens.activities.main.home.task_detail.Discussion.DiscussionFragment"
+        android:label="fragment_discussion"
+        tools:layout="@layout/fragment_discussion" />
+</navigation>
