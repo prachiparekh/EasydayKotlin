@@ -16,7 +16,6 @@ class EasyDayApplication : MultiDexApplication(){
             .setPrefsName(packageName)
             .setUseDefaultSharedPreference(true)
             .build()
-
         FontManager.preLoadFonts(this)
     }
 }
