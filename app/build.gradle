@@ -17,6 +17,7 @@ android {
         targetSdk 32
         versionCode 5
         versionName "1.0.4"
+        resConfigs "en", "US"
         setProperty("archivesBaseName", "EasyDay" + "-v" + versionCode + "(" + versionName + ")")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
