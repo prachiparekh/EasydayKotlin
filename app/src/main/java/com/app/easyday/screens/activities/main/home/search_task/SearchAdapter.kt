@@ -12,16 +12,18 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
+import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
+import java.util.*
 
 class SearchAdapter(
     private val context: Context,
     private var taskList: java.util.ArrayList<TaskResponse>,
-    val anInterface: SearchFragment.TaskInterfaceClick
+    val anInterface: TaskInterfaceClick
 ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterable {
 
     var filterData: ArrayList<TaskResponse> = taskList
@@ -82,17 +84,17 @@ class SearchAdapter(
                 1 -> {
                     priority.text = context.resources.getString(R.string.low_p)
                     priority.setTextColor(context.resources.getColor(R.color.green))
-                    priority.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_low, 0, 0, 0);
+                    priority.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_low, 0, 0, 0)
                 }
                 2 -> {
                     priority.text = context.resources.getString(R.string.normal_p)
                     priority.setTextColor(context.resources.getColor(R.color.yellow))
-                    priority.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_normal, 0, 0, 0);
+                    priority.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_normal, 0, 0, 0)
                 }
                 3 -> {
                     priority.text = context.resources.getString(R.string.urgent_p)
                     priority.setTextColor(context.resources.getColor(R.color.red))
-                    priority.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_urgent, 0, 0, 0);
+                    priority.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_urgent, 0, 0, 0)
                 }
             }
 
@@ -110,8 +112,10 @@ class SearchAdapter(
                     filteredList1.addAll(taskList)
                 } else {
                     for (location in taskList) {
-                        if (location.title?.toLowerCase()
-                                ?.contains(charSequence.toString().toLowerCase()) == true
+                        if (location.title?.lowercase(Locale.getDefault())
+                                ?.contains(
+                                    charSequence.toString().lowercase(Locale.getDefault())
+                                ) == true
                         ) {
                             filteredList1.add(location)
                         }
@@ -124,6 +128,7 @@ class SearchAdapter(
 
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
                 filterData = filterResults.values as ArrayList<TaskResponse>
+                anInterface.onSearchResult(filterData.size)
                 notifyDataSetChanged()
             }
         }

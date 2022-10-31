@@ -218,6 +218,7 @@
     <string name="speed">Speed &amp; Efficiency</string>
     <string name="bug_improve">Improve Bugs</string>
     <string name="back_setting">Back to Setting</string>
+
     <string name="thanks">Thanks for your feedback</string>
     <string name="we_really_appreciate">We really appreciate your valuable \n feedbacks and we will try to fix this ASAP </string>
     <string name="full_peter_assigned">Peter, Assigned you a task on Door fix on second floor</string>
@@ -227,6 +228,7 @@
     <string name="julia_okina">Julia Rokina</string>
     <string name="great_i_ll">Great, i shall continue working on the project tomorrow</string>
     <string name="mark_all_read">Mark all read</string>
+
     <string name="feedback">Feedback</string>
     <string name="laborum_distinctio">Laborum distinctio autem voluptate dignissimos ut quo</string>
     <string name="replying_to_jane_cooper">Replying to Jane Cooper</string>
@@ -235,4 +237,5 @@
     <string name="register"><u><b><i>Copyright</i></b></u></string>
 
     <string name="test"><![CDATA[<b>bold!</b> normal]]></string>
+    <string name="result_found">%d Results found</string>
 </resources>

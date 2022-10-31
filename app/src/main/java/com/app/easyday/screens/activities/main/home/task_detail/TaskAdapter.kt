@@ -16,10 +16,10 @@ import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.app.easyday.R
+import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.remote.model.TaskAttributeResponse
 import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.activities.main.home.HomeFragment.Companion.selectedColor
-import com.app.easyday.screens.activities.main.home.search_task.SearchFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.time.OffsetDateTime
@@ -29,7 +29,7 @@ import java.util.*
 class TaskAdapter(
     private val context: Context,
     private var taskList: ArrayList<TaskResponse>,
-    val anInterfaceClick: SearchFragment.TaskInterfaceClick
+    val anInterfaceClick: TaskInterfaceClick
 ) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
 

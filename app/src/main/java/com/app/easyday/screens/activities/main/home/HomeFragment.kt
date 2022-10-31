@@ -4,7 +4,6 @@ package com.app.easyday.screens.activities.main.home
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -17,10 +16,10 @@ import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.ProjectInterface
 import com.app.easyday.app.sources.local.interfaces.TaskFilterApplyInterface
+import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
-import com.app.easyday.screens.activities.main.home.search_task.SearchFragment
 import com.app.easyday.screens.activities.main.home.task_detail.TaskAdapter
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.screens.dialogs.FilterBottomSheetDialog
@@ -39,7 +38,7 @@ import me.toptas.fancyshowcase.listener.OnViewInflateListener
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeViewModel>(),
-    ProjectInterface, TaskFilterApplyInterface, SearchFragment.TaskInterfaceClick {
+    ProjectInterface, TaskFilterApplyInterface, TaskInterfaceClick {
 
     companion object {
         const val TAG = "HomeFragment"
@@ -274,6 +273,10 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     override fun onDiscussionClick() {
         val direction = DashboardFragmentDirections.dashboardToDiscussion()
         Navigation.findNavController(requireView()).navigate(direction)
+    }
+
+    override fun onSearchResult(count: Int) {
+
     }
 
 }
