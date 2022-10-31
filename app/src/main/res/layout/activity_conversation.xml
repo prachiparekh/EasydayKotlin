@@ -297,7 +297,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/_5sdp"
                     android:src="@drawable/microphone"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/cam"
@@ -307,17 +307,19 @@
                     android:layout_weight="1"
                     android:padding="@dimen/_7sdp"
                     android:src="@drawable/camera"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
             </LinearLayout>
 
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/send"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_alignTop="@id/conv_rel"
             android:layout_toRightOf="@+id/conv_rel"
-            android:src="@drawable/send_msg" />
+            android:src="@drawable/send_msg"
+            android:visibility="gone"/>
     </LinearLayout>
 
 
