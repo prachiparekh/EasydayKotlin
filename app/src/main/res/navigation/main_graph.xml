@@ -268,7 +268,13 @@
         android:id="@+id/taskDetailsFragment"
         android:name="com.app.easyday.screens.activities.main.home.task_detail.TaskDetailsFragment"
         android:label="fragment_task_details"
-        tools:layout="@layout/fragment_task_details" />
+        tools:layout="@layout/fragment_task_details" >
+        <argument
+            android:name="projectName"
+            app:argType="com.app.easyday.app.sources.remote.model.ProjectRespModel"
+            android:defaultValue="@null"
+            app:nullable="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/feedbackFragment"

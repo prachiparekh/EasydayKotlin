@@ -5,6 +5,7 @@ import android.text.TextWatcher
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.app.easyday.R
+import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -14,7 +15,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(){
 
 
     interface TaskInterfaceClick{
-        fun onTaskClick()
+        fun onTaskClick(position: Int)
         fun onDiscussionClick()
     }
 
@@ -31,7 +32,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(){
     override fun setObservers() {
         viewModel.taskList.observe(viewLifecycleOwner) {
             val adapter = it?.let { it1 -> SearchAdapter(requireContext(), it1,object :TaskInterfaceClick {
-                override fun onTaskClick() {
+                override fun onTaskClick(position: Int) {
                     val action = SearchFragmentDirections.searchToTaskDetails()
                     val nav: NavController = Navigation.findNavController(requireView())
                     if (nav.currentDestination != null && nav.currentDestination?.id == R.id.searchFragment) {
@@ -42,6 +43,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(){
                 override fun onDiscussionClick() {
                     TODO("Not yet implemented")
                 }
+
 
             }) }
             taskRV.adapter = adapter

@@ -193,6 +193,7 @@
     <string name="discussion">Discussion</string>
 
     <string name="message">Message</string>
+    <string name="create_pdf">Create PDF</string>
     <string name="task_details">Task Details</string>
     <string name="project_related">Project Related</string>
     <string name="description_length">%s/500</string>

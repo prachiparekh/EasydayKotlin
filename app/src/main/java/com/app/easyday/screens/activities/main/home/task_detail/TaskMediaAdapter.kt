@@ -14,6 +14,11 @@ import coil.load
 import com.app.easyday.R
 import com.app.easyday.app.sources.remote.model.TaskMediaItem
 import com.app.easyday.utils.camera_utils.TaskMediaDiffCallback
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class TaskMediaAdapter(
     val mContext: Context,
@@ -48,8 +53,30 @@ class TaskMediaAdapter(
                 ) {
                     imagePlay.isVisible=true
                     fetcher(VideoFrameUriFetcher(itemView.context))
+
+                    val options = RequestOptions()
+                    Glide.with(mContext)
+                        .load(item.mediaUrl)
+                        .apply(
+                            options.centerCrop()
+                                .skipMemoryCache(true)
+                                .priority(Priority.HIGH)
+                                .format(DecodeFormat.PREFER_ARGB_8888)
+                        )
+                        .into(imagePreview)
                 }else{
                     imagePlay.isVisible=false
+
+                    val options = RequestOptions()
+                    Glide.with(mContext)
+                        .load(item.mediaUrl)
+                        .apply(
+                            options.centerCrop()
+                                .skipMemoryCache(true)
+                                .priority(Priority.HIGH)
+                                .format(DecodeFormat.PREFER_ARGB_8888)
+                        )
+                        .into(imagePreview)
                 }
             }
             imagePreview.setOnClickListener {

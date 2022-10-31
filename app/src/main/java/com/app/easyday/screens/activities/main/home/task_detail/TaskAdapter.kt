@@ -58,6 +58,7 @@ class TaskAdapter(
         val priority = itemView.findViewById<ImageView>(R.id.priority)
         val projectIcon = itemView.findViewById<ImageView>(R.id.projectIcon)
         val discussion = itemView.findViewById<TextView>(R.id.discussion)
+        val taskStatus = itemView.findViewById<TextView>(R.id.taskStatus)
 
         @SuppressLint("NewApi")
         fun bind(position: Int) {
@@ -124,11 +125,14 @@ class TaskAdapter(
             )
 
             itemView.setOnClickListener {
-                anInterfaceClick.onTaskClick()
+                anInterfaceClick.onTaskClick(position)
             }
 
             discussion.setOnClickListener {
                 anInterfaceClick.onDiscussionClick()
+            }
+            taskStatus.setOnClickListener {
+//                anInterfaceClick.onDiscussionClick()
             }
         }
     }

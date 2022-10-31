@@ -1,10 +1,11 @@
 package com.app.easyday.screens.activities.main.home
 
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -18,10 +19,14 @@ import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.ProjectInterface
 import com.app.easyday.app.sources.local.interfaces.TaskFilterApplyInterface
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
+import com.app.easyday.app.sources.remote.model.AddProjectRequestModel
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
+import com.app.easyday.screens.activities.main.home.project.AddParticipantsFragment
+import com.app.easyday.screens.activities.main.home.project.AddParticipantsFragmentDirections
 import com.app.easyday.screens.activities.main.home.search_task.SearchFragment
 import com.app.easyday.screens.activities.main.home.task_detail.TaskAdapter
+import com.app.easyday.screens.activities.main.home.task_detail.TaskDetailsFragment
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.screens.dialogs.FilterBottomSheetDialog
 import com.app.easyday.screens.dialogs.ProjectListDialog
@@ -35,6 +40,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import me.toptas.fancyshowcase.FancyShowCaseQueue
 import me.toptas.fancyshowcase.FancyShowCaseView
 import me.toptas.fancyshowcase.listener.OnViewInflateListener
+import java.io.Serializable
 
 
 @AndroidEntryPoint
@@ -45,6 +51,9 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         const val TAG = "HomeFragment"
         var selectedProjectID: Int? = null
         var selectedColor: String? = null
+        var createProjectTitle: ProjectRespModel? = null
+        var adapter: TaskAdapter? = null
+
     }
 
     private lateinit var queue: FancyShowCaseQueue
@@ -122,6 +131,8 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                 nav.navigate(action)
             }
         }
+
+        createProjectTitle = arguments?.getParcelable("projectName") as ProjectRespModel?
     }
 
 
@@ -263,17 +274,26 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         filterDialog?.dismiss()
     }
 
-    override fun onTaskClick() {
+    override fun onTaskClick(position: Int) {
+//        val courseName = projectList[position].projectName
+//        val exam = ProjectRespModel(courseName)
+
         val action = DashboardFragmentDirections.dashboardToTaskDetails()
+        action.projectName = createProjectTitle
+
+//        val action = DashboardFragmentDirections.dashboardToTaskDetails()
         val nav: NavController = Navigation.findNavController(requireView())
         if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
             nav.navigate(action)
+
         }
+
     }
 
     override fun onDiscussionClick() {
         val direction = DashboardFragmentDirections.dashboardToDiscussion()
         Navigation.findNavController(requireView()).navigate(direction)
     }
+
 
 }
