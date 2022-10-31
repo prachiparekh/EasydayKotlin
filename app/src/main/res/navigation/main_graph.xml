@@ -283,7 +283,7 @@
 
     <fragment
         android:id="@+id/discussionFragment"
-        android:name="com.app.easyday.screens.activities.main.home.task_detail.Discussion.DiscussionFragment"
+        android:name="com.app.easyday.screens.activities.main.home.task_detail.discussion.DiscussionFragment"
         android:label="fragment_discussion"
         tools:layout="@layout/fragment_discussion" />
 </navigation>

@@ -46,9 +46,9 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
         mSearch.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    val localList = AppPreferencesDelegates.get().searchList.toMutableList()
-                    localList.add(mSearch.text.toString())
-                    AppPreferencesDelegates.get().searchList = localList.toSet()
+                    val setList = AppPreferencesDelegates.get().searchList.toMutableList()
+                    setList.add(mSearch.text.toString())
+                    AppPreferencesDelegates.get().searchList = setList.toSet()
                     searchHintAdapter.addItem(mSearch.text.toString())
                     return true
                 }

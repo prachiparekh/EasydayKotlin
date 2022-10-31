@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_white"
-    tools:context=".screens.activities.main.home.task_detail.Discussion.DiscussionFragment">
+    tools:context=".screens.activities.main.home.task_detail.discussion.DiscussionFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topDiscussionCL"
@@ -564,7 +564,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -574,7 +574,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/l_blue"
-            android:paddingVertical="@dimen/_3sdp">
+            android:paddingVertical="@dimen/_3sdp"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -603,30 +604,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/selected_id_RL"
-            android:layout_marginHorizontal="@dimen/_10sdp"
             android:visibility="visible">
 
             <EditText
+                android:id="@+id/commentET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/recordIV"
                 android:background="@null"
-                android:fontFamily="@font/inter_medium_500"
+                android:layout_toLeftOf="@id/actionRL"
+                android:fontFamily="@font/dm_sans_700"
                 android:hint="What would you like to say? type or Record.."
-                android:paddingVertical="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp"
                 android:textColor="@color/light_text"
-                android:textSize="15sp" />
+                android:textSize="@dimen/_11sdp" />
 
-            <ImageView
-                android:id="@+id/recordIV"
-                android:layout_width="@dimen/_35sdp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/actionRL"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:paddingVertical="@dimen/_10sdp"
-                android:src="@drawable/ic_record" />
+                android:layout_alignParentEnd="true">
 
+                <TextView
+                    android:id="@+id/cta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:fontFamily="@font/inter_medium_500"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/post"
+                    android:textColor="@color/green"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/recordBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/ic_record"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
 
         <RelativeLayout

@@ -238,4 +238,5 @@
 
     <string name="test"><![CDATA[<b>bold!</b> normal]]></string>
     <string name="result_found">%d Results found</string>
+    <string name="post">Post</string>
 </resources>
