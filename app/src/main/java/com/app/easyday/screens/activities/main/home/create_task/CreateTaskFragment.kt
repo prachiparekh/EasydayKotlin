@@ -50,6 +50,10 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     var selectedUriList = ArrayList<Media>()
     var mediaAdapter: MediaAdapter? = null
 
+    companion object{
+//        val contactList = ArrayList<ContactModel>()
+    }
+
 //    *****************
 
     var tagBSFDialog: AddTagBottomSheetDialog? = null

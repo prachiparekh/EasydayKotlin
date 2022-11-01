@@ -32,6 +32,11 @@ class TaskAdapter(
     val anInterfaceClick: SearchFragment.TaskInterfaceClick
 ) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
+    companion object {
+        var usertaskList: ArrayList<TaskResponse>? = null
+        var useritem : TaskResponse? = null
+    }
+
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -124,8 +129,13 @@ class TaskAdapter(
                 item.taskTags as ArrayList<TaskAttributeResponse>
             )
 
+//            itemView.setOnClickListener {
+//                anInterfaceClick.onTaskClick(position)
+//            }
             itemView.setOnClickListener {
-                anInterfaceClick.onTaskClick(position)
+                position.let { it1 ->
+                    anInterfaceClick.onTaskClick(it1)
+                }
             }
 
             discussion.setOnClickListener {
@@ -134,6 +144,9 @@ class TaskAdapter(
             taskStatus.setOnClickListener {
 //                anInterfaceClick.onDiscussionClick()
             }
+
+            usertaskList?.addAll(taskList)
+            useritem = usertaskList?.get(position)
         }
     }
 

@@ -280,6 +280,9 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
         val action = DashboardFragmentDirections.dashboardToTaskDetails()
         action.projectName = createProjectTitle
+//        projectList[position]
+//        var bundle = Bundle()
+//        bundle.getParcelableArray(projectList[position].toString())
 
 //        val action = DashboardFragmentDirections.dashboardToTaskDetails()
         val nav: NavController = Navigation.findNavController(requireView())
