@@ -21,10 +21,15 @@ class DiscussionViewModel @Inject constructor(
 
     val commentList = MutableLiveData<ArrayList<CommentResponseItem>?>()
 
-    fun addComment(task_id: Int, comment: String, parent_id: Int, audioList: ArrayList<File>) {
+    fun addComment(
+        task_id: Int,
+        comment: RequestBody,
+        parent_id: Int?,
+        audioList: ArrayList<File>?
+    ) {
 
         val attachmentBodyList: ArrayList<MultipartBody.Part> = ArrayList()
-        for (i in 0 until audioList.size) {
+        audioList?.indices?.forEach { i ->
             val requestList: RequestBody =
                 audioList[i].asRequestBody("*/*".toMediaTypeOrNull())
 

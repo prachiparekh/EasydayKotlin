@@ -102,7 +102,14 @@
             app:enterAnim="@anim/slide_in_from_the_right"
             app:exitAnim="@anim/slide_out_to_the_left"
             app:popEnterAnim="@anim/slide_in_from_the_left"
-            app:popExitAnim="@anim/slide_out_to_the_right" />
+            app:popExitAnim="@anim/slide_out_to_the_right">
+
+            <argument
+                android:name="taskModel"
+                android:defaultValue="@null"
+                app:argType="com.app.easyday.app.sources.remote.model.TaskResponse"
+                app:nullable="true" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/addProjectFragment"

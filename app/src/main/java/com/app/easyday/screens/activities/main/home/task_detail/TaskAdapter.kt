@@ -116,8 +116,6 @@ class TaskAdapter(
 
             }.attach()
 
-//            dots_indicator.setupWithViewPager(mediaPager)
-
             tagRV.adapter = TaskTagAdapter(
                 context,
                 item.taskTags as ArrayList<TaskAttributeResponse>
@@ -128,7 +126,7 @@ class TaskAdapter(
             }
 
             discussion.setOnClickListener {
-                anInterfaceClick.onDiscussionClick()
+                item.let { it1 -> anInterfaceClick.onDiscussionClick(it1) }
             }
         }
     }

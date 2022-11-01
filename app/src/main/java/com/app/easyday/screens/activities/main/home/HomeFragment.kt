@@ -19,6 +19,7 @@ import com.app.easyday.app.sources.local.interfaces.TaskFilterApplyInterface
 import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
+import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
 import com.app.easyday.screens.activities.main.home.task_detail.TaskAdapter
 import com.app.easyday.screens.base.BaseFragment
@@ -270,9 +271,10 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         }
     }
 
-    override fun onDiscussionClick() {
-        val direction = DashboardFragmentDirections.dashboardToDiscussion()
-        Navigation.findNavController(requireView()).navigate(direction)
+    override fun onDiscussionClick(taskModel: TaskResponse) {
+        val action = DashboardFragmentDirections.dashboardToDiscussion()
+        action.taskModel = taskModel
+        Navigation.findNavController(requireView()).navigate(action)
     }
 
     override fun onSearchResult(count: Int) {

@@ -12,6 +12,7 @@ import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.SearchHintInterface
 import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
+import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -70,8 +71,10 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
                         }
                     }
 
-                    override fun onDiscussionClick() {
+                    override fun onDiscussionClick(taskModel: TaskResponse) {
+
                     }
+
 
                     override fun onSearchResult(count: Int) {
                         resultCount.text =

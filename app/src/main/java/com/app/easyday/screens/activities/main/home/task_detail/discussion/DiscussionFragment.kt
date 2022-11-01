@@ -5,17 +5,29 @@ import android.text.TextWatcher
 import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.app.easyday.R
+import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
+import com.app.easyday.app.sources.remote.model.CommentResponseItem
+import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_discussion.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
-class DiscussionFragment : BaseFragment<DiscussionViewModel>() {
+
+@AndroidEntryPoint
+class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterface {
 
     override fun getContentView() = R.layout.fragment_discussion
+    var commentAdapter: CommentsAdapter? = null
+    var commentList: ArrayList<CommentResponseItem>? = null
 
     override fun initUi() {
 
+        val taskModel = arguments?.getParcelable("taskModel") as TaskResponse?
+
         add_commentTV.setOnClickListener {
-            add_commentTV.isVisible = false
             bottom_RL.isVisible = true
         }
 
@@ -53,13 +65,49 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>() {
         })
 
         cta.setOnClickListener {
-//            viewModel.addComment()
+            if (taskModel?.id != null) {
+                val comment = commentET.text
+                val commentBody: RequestBody = comment.toString()
+                    .toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                viewModel.addComment(taskModel.id, commentBody, null, null)
+            }
         }
+
+
+        commentList = taskModel?.taskComments as ArrayList<CommentResponseItem>?
+        discussionCount.text = requireContext().resources.getString(
+            R.string.discussion_str,
+            commentList?.size.toString()
+        )
+        commentAdapter = commentList?.let {
+            CommentsAdapter(
+                requireContext(),
+                it, this
+            )
+        }
+        commentRV.adapter = commentAdapter
 
     }
 
     override fun setObservers() {
+        viewModel.commentList.observe(viewLifecycleOwner) {
+            commentList?.clear()
+            if (it != null) {
+                commentList?.addAll(it)
+                discussionCount.text = requireContext().resources.getString(
+                    R.string.discussion_str,
+                    commentList?.size.toString()
+                )
+                commentAdapter?.notifyDataSetChanged()
+            }
+        }
+    }
 
+    override fun onLikeClick() {
+
+    }
+
+    override fun onReplyClick() {
     }
 
 }
