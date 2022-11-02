@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_task_details.*
 
 class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>(), FilterTypeInterface {
 
-    var projectTitle: ProjectRespModel? = null
+    var projectTitle: TaskResponse? = null
 
     //    private val args: TaskDetailsFragmentArgs by navArgs()
     private var selectedPriority: Int? = null

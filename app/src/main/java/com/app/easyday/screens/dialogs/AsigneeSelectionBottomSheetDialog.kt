@@ -9,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.FilterCloseInterface
 import com.app.easyday.app.sources.local.interfaces.AssigneeInterface
 import com.app.easyday.app.sources.local.model.ContactModel
+import com.app.easyday.app.sources.remote.model.AddProjectRequestModel
 import com.app.easyday.databinding.AddAssigneeLayoutBinding
 import com.app.easyday.screens.activities.main.home.project.AddParticipantsFragment
+import com.app.easyday.screens.activities.main.home.project.AddParticipantsFragmentDirections
 import com.app.easyday.screens.activities.main.home.project.adapter.ParticipentAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -33,6 +37,7 @@ class AsigneeSelectionBottomSheetDialog(
 
     companion object{
         var assignedUserList = ArrayList<ContactModel>()
+        var assignProjectModel: AddProjectRequestModel? = null
     }
 
     override fun onCreateView(
@@ -78,14 +83,30 @@ class AsigneeSelectionBottomSheetDialog(
                 }
 
             }
-            mainList?.forEach { it ->
-                assignedUserList.add(it)
-            }
+//            mainList?.forEach { it ->
+//                assignedUserList.add(it)
+//            }
 
 
             assigneeInterface.onSelestAssignee(assigneeList)
 //            assignedUserList.addAll(assigneeList)
 
+            if (adapter?.getList() != null) {
+
+//                val action = AddParticipantsFragmentDirections.addParticipantToAddAdmin()
+
+                assignProjectModel?.participants = adapter?.getList()
+
+//                action.createProjectModel = assignProjectModel
+//                val nav: NavController? = binding?.root?.let { it1 ->
+//                    Navigation.findNavController(
+//                        it1
+//                    )
+//                }
+//                if (nav?.currentDestination != null && nav.currentDestination?.id == R.id.addParticipantsFragment) {
+//                    nav.navigate(action)
+//                }
+            }
             dismiss()
         }
 
