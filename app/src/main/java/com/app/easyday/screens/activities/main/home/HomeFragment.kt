@@ -45,6 +45,9 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         const val TAG = "HomeFragment"
         var selectedProjectID: Int? = null
         var selectedColor: String? = null
+        var createProjectTitle: ProjectRespModel? = null
+        var adapter: TaskAdapter? = null
+
     }
 
     private lateinit var queue: FancyShowCaseQueue
@@ -122,6 +125,8 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                 nav.navigate(action)
             }
         }
+
+        createProjectTitle = arguments?.getParcelable("projectName") as ProjectRespModel?
     }
 
 
@@ -263,8 +268,9 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         filterDialog?.dismiss()
     }
 
-    override fun onTaskClick() {
+    override fun onTaskClick(taskModel: TaskResponse) {
         val action = DashboardFragmentDirections.dashboardToTaskDetails()
+        action.taskModel = taskModel
         val nav: NavController = Navigation.findNavController(requireView())
         if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
             nav.navigate(action)

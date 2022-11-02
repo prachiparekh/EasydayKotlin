@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<SearchViewModel>() {
 
+
     override fun getContentView() = R.layout.fragment_search
 
     override fun initUi() {
@@ -61,8 +62,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
     override fun setObservers() {
         viewModel.taskList.observe(viewLifecycleOwner) {
             val adapter = it?.let { it1 ->
-                SearchAdapter(requireContext(), it1, object :
-                    TaskInterfaceClick {
+                SearchAdapter(requireContext(), it1, object : TaskInterfaceClick {
                     override fun onTaskClick() {
                         val action = SearchFragmentDirections.searchToTaskDetails()
                         val nav: NavController = Navigation.findNavController(requireView())

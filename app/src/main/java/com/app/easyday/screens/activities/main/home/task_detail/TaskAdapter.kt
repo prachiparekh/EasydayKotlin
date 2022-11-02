@@ -33,6 +33,7 @@ class TaskAdapter(
 ) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
 
+
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getItemCount(): Int = taskList.size
@@ -58,6 +59,7 @@ class TaskAdapter(
         val priority = itemView.findViewById<ImageView>(R.id.priority)
         val projectIcon = itemView.findViewById<ImageView>(R.id.projectIcon)
         val discussion = itemView.findViewById<TextView>(R.id.discussion)
+        val taskStatus = itemView.findViewById<TextView>(R.id.taskStatus)
 
         @SuppressLint("NewApi")
         fun bind(position: Int) {
@@ -121,13 +123,22 @@ class TaskAdapter(
                 item.taskTags as ArrayList<TaskAttributeResponse>
             )
 
+//            itemView.setOnClickListener {
+//                anInterfaceClick.onTaskClick(position)
+//            }
             itemView.setOnClickListener {
-                anInterfaceClick.onTaskClick()
+                position.let { it1 ->
+                    anInterfaceClick.onTaskClick(item)
+                }
             }
 
             discussion.setOnClickListener {
                 item.let { it1 -> anInterfaceClick.onDiscussionClick(it1) }
             }
+            taskStatus.setOnClickListener {
+//                anInterfaceClick.onDiscussionClick()
+            }
+
         }
     }
 

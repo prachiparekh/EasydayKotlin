@@ -3,18 +3,16 @@ package com.app.easyday.screens.dialogs
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import com.app.easyday.R
-import com.app.easyday.app.sources.local.interfaces.FilterCloseInterface
 import com.app.easyday.app.sources.local.interfaces.AssigneeInterface
+import com.app.easyday.app.sources.local.interfaces.FilterCloseInterface
 import com.app.easyday.app.sources.local.model.ContactModel
 import com.app.easyday.databinding.AddAssigneeLayoutBinding
-import com.app.easyday.screens.activities.main.home.project.AddParticipantsFragment
 import com.app.easyday.screens.activities.main.home.project.adapter.ParticipentAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -30,6 +28,10 @@ class AsigneeSelectionBottomSheetDialog(
     BottomSheetDialogFragment() {
     var binding: AddAssigneeLayoutBinding? = null
     var adapter: ParticipentAdapter? = null
+
+    companion object {
+        var assignedUserList = ArrayList<ContactModel>()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,17 +66,25 @@ class AsigneeSelectionBottomSheetDialog(
         })
 
         binding?.cta?.setOnClickListener {
-            val assigneeList=ArrayList<Int>()
-            val mainList=adapter?.getList()
+            val assigneeList = ArrayList<Int>()
+            val mainList = adapter?.getList()
 
             mainList?.indices?.forEach { i ->
-                mainList[i].id?.toInt()?.let { it1 -> assigneeList.add(it1)
+                mainList[i].id?.toInt()?.let { it1 ->
+                    assigneeList.add(it1)
+//                    assignedUserList.add(it1)
 
                 }
+
+            }
+            mainList?.forEach { it ->
+                assignedUserList.add(it)
             }
 
 
             assigneeInterface.onSelestAssignee(assigneeList)
+//            assignedUserList.addAll(assigneeList)
+
             dismiss()
         }
 
@@ -104,3 +114,4 @@ class AsigneeSelectionBottomSheetDialog(
     }
 
 }
+

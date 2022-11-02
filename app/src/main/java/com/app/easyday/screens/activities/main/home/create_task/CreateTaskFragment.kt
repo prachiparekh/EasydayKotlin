@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -49,6 +48,10 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     private var imgAdapter: BottomImageAdapter? = null
     var selectedUriList = ArrayList<Media>()
     var mediaAdapter: MediaAdapter? = null
+
+    companion object {
+//        val contactList = ArrayList<ContactModel>()
+    }
 
 //    *****************
 
