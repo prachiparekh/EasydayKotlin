@@ -68,18 +68,19 @@ data class TaskResponse(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readString(),
-        TODO("taskSpaces"),
-        TODO("taskZones"),
-        TODO("taskComments"),
+        parcel.createTypedArrayList(TaskAttributeResponse),
+        parcel.createTypedArrayList(TaskAttributeResponse),
+        parcel.createTypedArrayList(CommentResponseItem),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
-        TODO("taskTags"),
-        TODO("taskParticipants"),
+        parcel.createTypedArrayList(TaskAttributeResponse),
+        parcel.createTypedArrayList(TaskParticipantsItem),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString()
-    )
+    ) {
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(dueDate)
@@ -89,10 +90,15 @@ data class TaskResponse(
         parcel.writeValue(priority)
         parcel.writeValue(redFlag)
         parcel.writeString(createdAt)
+        parcel.writeTypedList(taskSpaces)
+        parcel.writeTypedList(taskZones)
+        parcel.writeTypedList(taskComments)
         parcel.writeValue(projectId)
         parcel.writeValue(userId)
         parcel.writeValue(projectParticipantId)
         parcel.writeValue(id)
+        parcel.writeTypedList(taskTags)
+        parcel.writeTypedList(taskParticipants)
         parcel.writeValue(status)
         parcel.writeString(updatedAt)
     }
@@ -111,7 +117,3 @@ data class TaskResponse(
         }
     }
 }
-
-
-
-

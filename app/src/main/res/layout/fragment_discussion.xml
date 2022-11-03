@@ -160,6 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/actionRL"
                 android:background="@null"
+                android:textCursorDrawable="@color/green"
                 android:fontFamily="@font/dm_sans_700"
                 android:hint="@string/type_to_record"
                 android:padding="@dimen/_10sdp"

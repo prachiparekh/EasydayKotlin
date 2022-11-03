@@ -63,7 +63,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
         viewModel.taskList.observe(viewLifecycleOwner) {
             val adapter = it?.let { it1 ->
                 SearchAdapter(requireContext(), it1, object : TaskInterfaceClick {
-                    override fun onTaskClick() {
+                    override fun onTaskClick(taskModel: TaskResponse) {
                         val action = SearchFragmentDirections.searchToTaskDetails()
                         val nav: NavController = Navigation.findNavController(requireView())
                         if (nav.currentDestination != null && nav.currentDestination?.id == R.id.searchFragment) {

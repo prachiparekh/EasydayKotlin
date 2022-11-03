@@ -99,7 +99,7 @@ class SearchAdapter(
             }
 
             itemView.setOnClickListener {
-                anInterface.onTaskClick(position)
+                anInterface.onTaskClick(filterData[position])
             }
         }
     }
