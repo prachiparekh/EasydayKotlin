@@ -71,8 +71,14 @@
             app:enterAnim="@anim/slide_in_from_the_right"
             app:exitAnim="@anim/slide_out_to_the_left"
             app:popEnterAnim="@anim/slide_in_from_the_left"
-            app:popExitAnim="@anim/slide_out_to_the_right" />
+            app:popExitAnim="@anim/slide_out_to_the_right">
 
+<!--            <argument-->
+<!--                android:name="userActivityModel"-->
+<!--                android:defaultValue="@null"-->
+<!--                app:argType="com.app.easyday.app.sources.remote.model.UserActivityResponse"-->
+<!--                app:nullable="true" />-->
+        </action>
         <action
             android:id="@+id/dashboard_to_task_details"
             app:destination="@id/taskDetailsFragment"
@@ -163,27 +169,27 @@
             app:enterAnim="@anim/slide_in_from_the_right"
             app:exitAnim="@anim/slide_out_to_the_left"
             app:popEnterAnim="@anim/slide_in_from_the_left"
-            app:popExitAnim="@anim/slide_out_to_the_right"/>
+            app:popExitAnim="@anim/slide_out_to_the_right" />
 
     </fragment>
     <fragment
         android:id="@+id/createTaskFragment"
         android:name="com.app.easyday.screens.activities.main.home.create_task.CreateTaskFragment"
         android:label="fragment_create_task"
-        tools:layout="@layout/fragment_create_task" >
+        tools:layout="@layout/fragment_create_task">
         <action
             android:id="@+id/create_task_to_dashboard"
             app:destination="@id/dashboardFragment"
             app:enterAnim="@anim/slide_in_from_the_right"
             app:exitAnim="@anim/slide_out_to_the_left"
             app:popEnterAnim="@anim/slide_in_from_the_left"
-            app:popExitAnim="@anim/slide_out_to_the_right"/>
+            app:popExitAnim="@anim/slide_out_to_the_right" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.app.easyday.screens.activities.main.home.create_task.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" >
+        tools:layout="@layout/fragment_camera">
 
         <action
             android:id="@+id/camera_to_create_task"
@@ -191,7 +197,7 @@
             app:enterAnim="@anim/slide_in_from_the_right"
             app:exitAnim="@anim/slide_out_to_the_left"
             app:popEnterAnim="@anim/slide_in_from_the_left"
-            app:popExitAnim="@anim/slide_out_to_the_right"/>
+            app:popExitAnim="@anim/slide_out_to_the_right" />
 
 
     </fragment>
@@ -204,9 +210,10 @@
         android:id="@+id/privacySecurityFragment"
         android:name="com.app.easyday.screens.activities.main.more.privacy.PrivacySecurityFragment"
         android:label="fragment_privacy_security"
-        tools:layout="@layout/fragment_privacy_security" >
+        tools:layout="@layout/fragment_privacy_security">
 
-        <action android:id="@+id/more_privacy_to_terms"
+        <action
+            android:id="@+id/more_privacy_to_terms"
             app:destination="@id/termsPolicyFragment2"
             app:enterAnim="@anim/slide_in_from_the_right"
             app:exitAnim="@anim/slide_out_to_the_left"
@@ -232,14 +239,15 @@
         android:id="@+id/notepadFragment"
         android:name="com.app.easyday.screens.activities.main.more.notepad.NotepadListFragment"
         android:label="fragment_notepad"
-        tools:layout="@layout/fragment_notepad_list" >
+        tools:layout="@layout/fragment_notepad_list">
 
-        <action android:id="@+id/notepad_list_to_create_note"
+        <action
+            android:id="@+id/notepad_list_to_create_note"
             app:destination="@id/createNoteFragment"
             app:enterAnim="@anim/slide_in_from_the_right"
             app:exitAnim="@anim/slide_out_to_the_left"
             app:popEnterAnim="@anim/slide_in_from_the_left"
-            app:popExitAnim="@anim/slide_out_to_the_right"/>
+            app:popExitAnim="@anim/slide_out_to_the_right" />
 
     </fragment>
     <fragment
@@ -251,7 +259,7 @@
         android:id="@+id/searchFragment"
         android:name="com.app.easyday.screens.activities.main.home.search_task.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/search_to_task_details"
             app:destination="@id/taskDetailsFragment"
@@ -265,7 +273,15 @@
         android:id="@+id/activityLogFragment"
         android:name="com.app.easyday.screens.activities.main.more.activityLog.ActivityLogFragment"
         android:label="fragment_activity_log"
-        tools:layout="@layout/fragment_activity_log" />
+        tools:layout="@layout/fragment_activity_log">
+<!--        <argument-->
+<!--            android:name="userActivityModel"-->
+<!--            android:defaultValue="@null"-->
+<!--            app:argType="com.app.easyday.app.sources.remote.model.UserActivityResponse"-->
+<!--            app:nullable="true" />-->
+    </fragment>
+
+
     <fragment
         android:id="@+id/deviceFragment"
         android:name="com.app.easyday.screens.activities.main.more.devices.DevicesFragment"

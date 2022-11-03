@@ -120,5 +120,10 @@ interface EasyDayApi {
         @Part task_comment_media: ArrayList<MultipartBody.Part>?,
     ): Observable<ApiResponse<ArrayList<CommentResponseItem>>>
 
+    @GET("user/get-user-activity")
+    fun getUserActivityDetails(
+        @Query("project_id") project_id: Int
+    ): Observable<ApiResponse<ArrayList<UserActivityResponse>>>
+
 }
 

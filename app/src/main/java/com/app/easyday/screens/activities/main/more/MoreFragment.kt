@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.DeleteLogoutProfileInterface
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
+import com.app.easyday.app.sources.remote.model.UserActivityResponse
 import com.app.easyday.databinding.FragmentMoreBinding
 import com.app.easyday.screens.activities.auth.AuthActivity
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragment.Companion.selectedTabID
@@ -33,6 +34,7 @@ class MoreFragment : Fragment(), OnClickListener,DeleteLogoutProfileInterface {
         const val TAG = "MoreFragment"
     }
 
+    val userActivityModel :UserActivityResponse? = null
     var binding: FragmentMoreBinding? = null
 
     override fun onCreateView(
@@ -102,7 +104,9 @@ class MoreFragment : Fragment(), OnClickListener,DeleteLogoutProfileInterface {
 
             }
             R.id.activity_logLL -> {
+
                 val direction = DashboardFragmentDirections.dashboardToMoreActivityLog()
+//                direction.userActivityModel = userActivityModel
                 Navigation.findNavController(requireView()).navigate(direction)
             }
 

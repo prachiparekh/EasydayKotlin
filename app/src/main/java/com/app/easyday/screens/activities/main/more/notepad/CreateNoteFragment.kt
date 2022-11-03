@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.databinding.FragmentCreateNoteBinding
 import com.onegravity.rteditor.RTManager
@@ -16,6 +17,7 @@ import com.onegravity.rteditor.api.RTMediaFactoryImpl
 import com.onegravity.rteditor.api.RTProxyImpl
 import com.onegravity.rteditor.effects.Effects
 import com.onegravity.rteditor.utils.Helper
+import kotlinx.android.synthetic.main.fragment_activity_log.*
 import java.util.*
 
 
@@ -81,6 +83,9 @@ class CreateNoteFragment : Fragment() {
             binding?.rtEditText?.applyEffect(Effects.FONTSIZE, size)
         }
 
+        binding?.back?.setOnClickListener {
+            Navigation.findNavController(requireView()).popBackStack()
+        }
         return binding?.root
     }
 

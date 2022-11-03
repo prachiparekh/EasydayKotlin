@@ -28,21 +28,9 @@ class NotificationsFragment : BaseFragment<NotificationsViewModel>() {
         time_3?.text = requireContext().resources.getString(R.string.oct, dot)
         time_4?.text = requireContext().resources.getString(R.string.oct, dot)
 
-//        fst_comment?.text = HtmlCompat.fromHtml(getString(R.string.test), HtmlCompat.FROM_HTML_MODE_LEGACY)
-//
         val fullText: String = requireContext().resources.getString(R.string.full_peter_assigned)
         val normalText: String = requireContext().resources.getString(R.string.peter_assigned_you)
         val boldText: String = requireContext().resources.getString(R.string.door_fix_on)
-//        val str = SpannableString(boldText)
-//        str.setSpan(StyleSpan(Typeface.BOLD), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-//        fst_comment?.text = normalText +" "+ str
-
-//        val boldSpan = StyleSpan(Typeface.BOLD)
-//        str.setSpan(boldSpan, 18, 29, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//        fst_comment?.text = str
-
-//        val sourceString = "<b>$normalText</b> $boldText"
-//        fst_comment.setText(Html.fromHtml(sourceString))
 
         MarkAll.paintFlags = MarkAll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
@@ -50,8 +38,6 @@ class NotificationsFragment : BaseFragment<NotificationsViewModel>() {
         val spanString = SpannableString(fullText)
         spanStringbold.setSpan(UnderlineSpan(), 0, spanStringbold.length, 0)
         spanStringbold.setSpan(StyleSpan(Typeface.BOLD), 0, spanStringbold.length, 0)
-//        fst_comment.text = spanString
-//        fst_comment.text = spanStringbold
 
         setHighLightedText(fst_comment, requireContext().resources.getString(R.string.door_fix_on))
         setHighLightedText(sec_comment, requireContext().resources.getString(R.string.julia_okina))
