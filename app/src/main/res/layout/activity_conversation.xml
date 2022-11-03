@@ -4,109 +4,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_white"
     tools:context=".screens.activities.main.inbox.ConversationActivity">
 
+    <LinearLayout
+        android:id="@+id/Person_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_7sdp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_back_arrow"
+            app:tint="@color/black" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_img"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_back"
+            android:src="@drawable/ic_profile_circle"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@+id/profile_img"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/opt_rl"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/_2sdp">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Android"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name"
+                    android:text="Online"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/opt_rl"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentEnd="true">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/_10sdp"
+                    android:rotation="90"
+                    android:src="@drawable/ic_option_btn"
+                    app:tint="@color/black" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
     <ScrollView
+        android:id="@+id/scroll_items"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/type_msg_cont"
-        app:layout_constraintTop_toTopOf="parent">
+
+        app:layout_constraintBottom_toTopOf="@+id/type_msg_cont"
+        app:layout_constraintTop_toBottomOf="@+id/Person_status">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp">
 
-            <LinearLayout
-                android:id="@+id/Person_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_5sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="@dimen/_35sdp"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_centerVertical="true"
-                    android:padding="@dimen/_7sdp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_cam_back"
-                    app:tint="@color/black" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_img"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/iv_back"
-                    android:src="@drawable/profile"
-                    app:civ_border_color="@color/white"
-                    app:civ_border_width="2dp" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_toRightOf="@+id/profile_img"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/opt_rl"
-                        android:orientation="vertical"
-                        android:paddingVertical="@dimen/_2sdp">
-
-                        <TextView
-                            android:id="@+id/name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Android"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/name"
-                            android:text="Online"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_13sdp" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/opt_rl"
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_alignParentEnd="true">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_alignParentEnd="true"
-                            android:padding="@dimen/_10sdp"
-                            android:rotation="90"
-                            android:src="@drawable/ic_option_btn"
-                            app:tint="@color/black" />
-                    </RelativeLayout>
-
-                </RelativeLayout>
-
-
-            </LinearLayout>
-
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_below="@+id/Person_status"
-                android:background="@color/bg_white"
+                android:layout_height="match_parent"
                 android:paddingBottom="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Person_status">
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <RelativeLayout
                     android:id="@+id/rel_date"
@@ -190,7 +191,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/_3sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
-                            android:src="@drawable/grn_tick" />
+                            android:src="@drawable/ic_tick_grn" />
 
                     </RelativeLayout>
                 </RelativeLayout>
@@ -200,7 +201,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/my_side_conv"
-                    android:layout_marginTop="@dimen/_50sdp">
+                    android:layout_marginTop="@dimen/_30sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -242,6 +243,204 @@
 
                     </RelativeLayout>
                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/m"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/yr_side_conv"
+                    android:layout_marginTop="@dimen/_30sdp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/rel_greet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/conversation_dialog_1"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:paddingVertical="@dimen/_10sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_10sdp"
+                                android:text="shall we meet ? i need to talk to you something"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/rel_greet"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_toLeftOf="@+id/tick_d"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:text="10.13 am"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/tick_d"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_below="@+id/rel_greet"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/ic_tick_grn" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/yr_side_conv_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/m"
+                    android:layout_marginTop="@dimen/_30sdp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/yr_rel_text_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:background="@drawable/conversation_dialog_2"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:paddingVertical="@dimen/_10sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_10sdp"
+                                android:text="ok, let's meet but where !"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/yr_rel_text_2"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:text="10.14 am"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/yr_side_conv_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/yr_side_conv_2"
+                    android:layout_marginTop="@dimen/_30sdp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/yr_rel_text_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:background="@drawable/conversation_dialog_2"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:paddingVertical="@dimen/_10sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_10sdp"
+                                android:text="ok, let's meet but where !"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/yr_rel_text_3"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:text="10.14 am"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/yr_side_conv_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/yr_side_conv_3"
+                    android:layout_marginTop="@dimen/_30sdp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/yr_rel_text_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:background="@drawable/conversation_dialog_2"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:paddingVertical="@dimen/_10sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_10sdp"
+                                android:text="ok, let's meet but where !"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/yr_rel_text_4"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:text="10.14 am"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
 
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -250,76 +449,92 @@
     <LinearLayout
         android:id="@+id/type_msg_cont"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/_10sdp"
+        android:layout_height="@dimen/_42sdp"
+        android:paddingVertical="@dimen/_3sdp"
+        android:background="@color/bg_white"
+        android:layout_marginBottom="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <RelativeLayout
-            android:id="@+id/conv_rel"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="@dimen/_8sdp"
-            android:background="@drawable/bg_stroke_round">
-
-            <EditText
-                android:id="@+id/edt_msg"
-                android:layout_width="@dimen/_190sdp"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:background="@null"
-                android:hint="Type a message"
-                android:paddingStart="@dimen/_10sdp"
-                android:textColorHint="@color/little_l_gray" />
-
-            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp">
+            <RelativeLayout
+                android:id="@+id/conv_rel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/edt_msg"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_5sdp">
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/send"
+                android:background="@drawable/bg_stroke_round">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/attach"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_weight="1"
-                    android:padding="@dimen/_10sdp"
-                    android:src="@drawable/attach" />
+                <EditText
+                    android:id="@+id/edt_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:background="@null"
+                    android:hint="Type a message"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:textColorHint="@color/little_l_gray" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/mic"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_weight="1"
-                    android:padding="@dimen/_5sdp"
-                    android:src="@drawable/microphone"
-                    android:visibility="visible" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="@dimen/_7sdp">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/cam"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:padding="@dimen/_7sdp"
-                    android:src="@drawable/camera"
-                    android:visibility="visible" />
-            </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/attach"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/mic"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_8sdp"
+                        android:src="@drawable/ic_attach" />
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/mic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_microphone"
+                        android:layout_toLeftOf="@+id/cam"
+                        android:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/cam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_7sdp"
+                        android:src="@drawable/ic_camera"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/send"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignTop="@id/conv_rel"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_send"
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/_5sdp"/>
         </RelativeLayout>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/send"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_alignTop="@id/conv_rel"
-            android:layout_toRightOf="@+id/conv_rel"
-            android:src="@drawable/send_msg"
-            android:visibility="gone"/>
     </LinearLayout>
 
 

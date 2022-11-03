@@ -78,19 +78,19 @@ interface EasyDayApi {
     fun getTask(
         @Query("project_id") project_id: Int,
         @Query("zones") zones: ArrayList<Int>? = null,
-        @Query("tags") tags: ArrayList<Int>?= null,
-        @Query("spaces") spaces: ArrayList<Int>?= null,
-        @Query("assigned_to") assigned_to: ArrayList<Int>?= null,
-        @Query("red_flag") red_flag: Int?= null,
-        @Query("due_date") due_date: Int?= null,
-        @Query("priority") priority: Int?= null,
-        @Query("date_range") date_range: ArrayList<String>?= null,
+        @Query("tags") tags: ArrayList<Int>? = null,
+        @Query("spaces") spaces: ArrayList<Int>? = null,
+        @Query("assigned_to") assigned_to: ArrayList<Int>? = null,
+        @Query("red_flag") red_flag: Int? = null,
+        @Query("due_date") due_date: Int? = null,
+        @Query("priority") priority: Int? = null,
+        @Query("date_range") date_range: ArrayList<String>? = null,
     ): Observable<ApiResponse<ArrayList<TaskResponse>>>
 
-   /* @GET("task/get-task")
-    fun getTask(
-        @Query("project_id") project_id: Int
-    ): Observable<ApiResponse<ArrayList<TaskResponse>>>*/
+    /* @GET("task/get-task")
+     fun getTask(
+         @Query("project_id") project_id: Int
+     ): Observable<ApiResponse<ArrayList<TaskResponse>>>*/
 
     @GET("project/get-attributes")
     fun getAttributes(
@@ -110,6 +110,15 @@ interface EasyDayApi {
     fun getProjectParticipants(
         @Query("project_id") project_id: Int
     ): Observable<ApiResponse<ArrayList<ProjectParticipantsModel>>>
+
+    @Multipart
+    @POST("task/add-comment")
+    fun addComment(
+        @Part("task_id") task_id: Int,
+        @Part("comment") comment: RequestBody,
+        @Part("parent_id") parent_id: Int?,
+        @Part task_comment_media: ArrayList<MultipartBody.Part>?,
+    ): Observable<ApiResponse<ArrayList<CommentResponseItem>>>
 
 }
 

@@ -102,7 +102,14 @@
             app:enterAnim="@anim/slide_in_from_the_right"
             app:exitAnim="@anim/slide_out_to_the_left"
             app:popEnterAnim="@anim/slide_in_from_the_left"
-            app:popExitAnim="@anim/slide_out_to_the_right" />
+            app:popExitAnim="@anim/slide_out_to_the_right">
+
+            <argument
+                android:name="taskModel"
+                android:defaultValue="@null"
+                app:argType="com.app.easyday.app.sources.remote.model.TaskResponse"
+                app:nullable="true" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/addProjectFragment"
@@ -268,12 +275,12 @@
         android:id="@+id/taskDetailsFragment"
         android:name="com.app.easyday.screens.activities.main.home.task_detail.TaskDetailsFragment"
         android:label="fragment_task_details"
-        tools:layout="@layout/fragment_task_details" >
+        tools:layout="@layout/fragment_task_details">
         <argument
-            android:name="projectName"
-            app:argType="com.app.easyday.app.sources.remote.model.ProjectRespModel"
+            android:name="taskModel"
             android:defaultValue="@null"
-            app:nullable="true"/>
+            app:argType="com.app.easyday.app.sources.remote.model.TaskResponse"
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -289,7 +296,7 @@
 
     <fragment
         android:id="@+id/discussionFragment"
-        android:name="com.app.easyday.screens.activities.main.home.task_detail.Discussion.DiscussionFragment"
+        android:name="com.app.easyday.screens.activities.main.home.task_detail.discussion.DiscussionFragment"
         android:label="fragment_discussion"
         tools:layout="@layout/fragment_discussion" />
 </navigation>

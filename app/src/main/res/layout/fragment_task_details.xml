@@ -96,7 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mediaPager"
-            app:tabBackground="@drawable/tab_selector"
+            app:tabBackground="@drawable/tab_selector_blue"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"
             app:tabPaddingEnd="@dimen/_5sdp"
@@ -265,7 +265,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:drawableStart="@drawable/ic_send"
+                        android:drawableStart="@drawable/ic_send_small"
                         android:drawablePadding="@dimen/_2sdp"
                         android:fontFamily="@font/inter_medium_500"
                         android:gravity="center_horizontal"
@@ -390,18 +390,16 @@
                         android:drawablePadding="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingTop="@dimen/_10sdp"
-                        android:src="@drawable/ic_urgent_p2"
-                        app:tint="@color/red" />
+                        android:src="@drawable/ic_urgent_p2" />
 
                     <TextView
-
+                        android:id="@+id/priority_Tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/dm_sans_400"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingTop="@dimen/_10sdp"
                         android:text="@string/urgent_p"
-                        android:textColor="@color/red"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -446,6 +444,7 @@
                 android:text="@string/tags"
                 android:textColor="@color/hint_color"
                 android:textSize="@dimen/_12sdp" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tagRV"
@@ -494,6 +493,7 @@
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
+                    android:id="@+id/space_Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/dm_sans_400"
@@ -503,7 +503,7 @@
                     android:textColor="@color/accent_blue"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold"
-                    android:visibility="gone"/>
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View
@@ -528,6 +528,7 @@
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
+                    android:id="@+id/zones_Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/dm_sans_400"
@@ -537,7 +538,7 @@
                     android:textColor="@color/accent_blue"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold"
-                    android:visibility="gone"/>
+                    android:visibility="visible" />
             </LinearLayout>
 
 
@@ -568,43 +569,16 @@
                 android:text="@string/f_assigned_To"
                 android:textColor="@color/hint_color"
                 android:textSize="@dimen/_12sdp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/taskAssignRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_30sdp"
+                android:paddingBottom="@dimen/_20sdp"
                 app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
                 tools:listitem="@layout/item_participant" />
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/_5sdp"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <androidx.appcompat.widget.AppCompatImageView-->
-<!--                    android:id="@+id/assigneeImg"-->
-<!--                    android:layout_width="@dimen/_20sdp"-->
-<!--                    android:layout_height="@dimen/_20sdp"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:layout_marginStart="@dimen/_10sdp"-->
-<!--                    android:src="@drawable/ic_profile_circle" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/userName_2"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginStart="@dimen/_10sdp"-->
-<!--                    android:fontFamily="@font/dm_sans_400"-->
-<!--                    android:text="John Doe"-->
-<!--                    android:textColor="@color/accent_blue"-->
-<!--                    android:textSize="@dimen/_12sdp"-->
-<!--                    android:textStyle="bold" />-->
-
-
-<!--            </LinearLayout>-->
         </LinearLayout>
 
         <View

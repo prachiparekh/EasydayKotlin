@@ -3,22 +3,16 @@ package com.app.easyday.screens.dialogs
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.app.easyday.R
-import com.app.easyday.app.sources.local.interfaces.FilterCloseInterface
 import com.app.easyday.app.sources.local.interfaces.AssigneeInterface
+import com.app.easyday.app.sources.local.interfaces.FilterCloseInterface
 import com.app.easyday.app.sources.local.model.ContactModel
-import com.app.easyday.app.sources.remote.model.AddProjectRequestModel
 import com.app.easyday.databinding.AddAssigneeLayoutBinding
-import com.app.easyday.screens.activities.main.home.project.AddParticipantsFragment
-import com.app.easyday.screens.activities.main.home.project.AddParticipantsFragmentDirections
 import com.app.easyday.screens.activities.main.home.project.adapter.ParticipentAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -35,10 +29,6 @@ class AsigneeSelectionBottomSheetDialog(
     var binding: AddAssigneeLayoutBinding? = null
     var adapter: ParticipentAdapter? = null
 
-    companion object{
-        var assignedUserList = ArrayList<ContactModel>()
-        var assignProjectModel: AddProjectRequestModel? = null
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,40 +63,20 @@ class AsigneeSelectionBottomSheetDialog(
         })
 
         binding?.cta?.setOnClickListener {
-            val assigneeList=ArrayList<Int>()
-            val mainList=adapter?.getList()
+            val assigneeList = ArrayList<Int>()
+            val mainList = adapter?.getList()
 
             mainList?.indices?.forEach { i ->
-                mainList[i].id?.toInt()?.let { it1 -> assigneeList.add(it1)
+                mainList[i].id?.toInt()?.let { it1 ->
+                    assigneeList.add(it1)
 //                    assignedUserList.add(it1)
 
                 }
 
             }
-//            mainList?.forEach { it ->
-//                assignedUserList.add(it)
-//            }
-
 
             assigneeInterface.onSelestAssignee(assigneeList)
-//            assignedUserList.addAll(assigneeList)
 
-            if (adapter?.getList() != null) {
-
-//                val action = AddParticipantsFragmentDirections.addParticipantToAddAdmin()
-
-                assignProjectModel?.participants = adapter?.getList()
-
-//                action.createProjectModel = assignProjectModel
-//                val nav: NavController? = binding?.root?.let { it1 ->
-//                    Navigation.findNavController(
-//                        it1
-//                    )
-//                }
-//                if (nav?.currentDestination != null && nav.currentDestination?.id == R.id.addParticipantsFragment) {
-//                    nav.navigate(action)
-//                }
-            }
             dismiss()
         }
 

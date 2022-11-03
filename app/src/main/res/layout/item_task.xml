@@ -267,26 +267,26 @@
                     android:gravity="center_horizontal"
                     android:maxLines="1"
                     android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:text="@string/complete"
                     android:textColor="@color/tab_gray"
-                    android:textSize="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_10sdp"/>
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/share"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
-                    android:drawableStart="@drawable/ic_send"
+                    android:drawableStart="@drawable/ic_send_small"
                     android:drawablePadding="@dimen/_2sdp"
                     android:fontFamily="@font/inter_medium_500"
                     android:gravity="center_horizontal"
                     android:maxLines="1"
                     android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:text="@string/share"
                     android:textColor="@color/tab_gray"
-                    android:textSize="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_10sdp"/>
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/discussion"
@@ -299,10 +299,10 @@
                     android:gravity="center_horizontal"
                     android:maxLines="1"
                     android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:text="@string/discussion"
                     android:textColor="@color/tab_gray"
-                    android:textSize="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_10sdp"/>
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/message"
@@ -315,10 +315,10 @@
                     android:gravity="center_horizontal"
                     android:maxLines="1"
                     android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:text="@string/message"
                     android:textColor="@color/tab_gray"
-                    android:textSize="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_10sdp"/>
+                    android:textSize="@dimen/_10sdp" />
             </LinearLayout>
         </RelativeLayout>
 
