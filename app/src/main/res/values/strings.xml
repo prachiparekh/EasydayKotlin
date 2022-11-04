@@ -176,6 +176,7 @@
     <string name="delete_account_text">Delete account from Easyday?</string>
     <string name="delete_account_text1">Are you sure you would like to Delete your Easyday account?</string>
     <string name="cancel">Cancel</string>
+    <string name="delete_for_me">Delete for me</string>
     <string name="yes_delete">Yes, Delete</string>
     <string name="yes_logout">Yes, Logout</string>
     <string name="logout_account_text">Logout from Easyday?</string>
@@ -242,4 +243,5 @@
     <string name="post">Post</string>
     <string name="discussion_str">Discussion (%s)</string>
     <string name="type_to_record">What would you like to say? type or Record..</string>
+    <string name="delete_image">Delete Image?</string>
 </resources>

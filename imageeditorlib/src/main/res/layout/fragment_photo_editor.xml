@@ -69,42 +69,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:layout_toLeftOf="@+id/add_text_btn"
-        android:layout_toStartOf="@+id/add_text_btn"
-        android:padding="8dp"
-        android:src="@drawable/ic_cam_sticker"
-        />
-
-
-    <ImageView
-        android:id="@+id/add_text_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_toStartOf="@+id/paint_btn"
         android:layout_toLeftOf="@+id/paint_btn"
+        android:layout_toStartOf="@+id/paint_btn"
         android:padding="8dp"
-        android:src="@drawable/ic_text_t" />
+        android:src="@drawable/ic_cam_sticker" />
+
 
     <ImageView
         android:id="@+id/paint_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toStartOf="@+id/add_text_btn"
+        android:layout_toLeftOf="@+id/add_text_btn"
+        android:padding="8dp"
+        android:src="@drawable/ic_edit_pen" />
+
+    <ImageView
+        android:id="@+id/add_text_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/paint_btn"
+        android:layout_alignBottom="@id/paint_btn"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@id/add_text_btn"
         android:layout_marginLeft="10dp"
-        android:layout_alignTop="@id/add_text_btn"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="15dp"
+        android:padding="8dp"
         android:paddingTop="4dp"
-        android:src="@drawable/ic_edit_pen" />
+        android:src="@drawable/ic_text_t" />
 
     <com.passiondroid.imageeditorlib.views.VerticalSlideColorPicker
         android:id="@+id/color_picker_view"
         android:layout_width="18dp"
         android:paddingHorizontal="5dp"
         android:layout_height="300dp"
-        android:layout_below="@+id/paint_btn"
+        android:layout_below="@+id/add_text_btn"
         android:layout_alignParentRight="true"
         android:layout_marginTop="15dp"
         android:layout_marginRight="25dp"

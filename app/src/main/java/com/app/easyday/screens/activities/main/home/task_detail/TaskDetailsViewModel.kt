@@ -8,7 +8,7 @@ import javax.inject.Inject
 class TaskDetailsViewModel @Inject constructor() : BaseViewModel() {
 
     /* val actionStream: SingleLiveEvent<TaskDetailsViewModel.ACTIONN> = SingleLiveEvent()
-     val projectParticipantsData = MutableLiveData<ArrayList<ProjectParticipantsModel>?>()
+     val userActivityData = MutableLiveData<ArrayList<ProjectParticipantsModel>?>()
 
      sealed class ACTIONN {
          class getAttributes(val attributeList: List<AttributeResponse>?, val type: Int) : ACTIONN()
@@ -49,7 +49,7 @@ class TaskDetailsViewModel @Inject constructor() : BaseViewModel() {
          api.getProjectParticipants(projectId)
              .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
              .subscribe({ resp ->
-                 projectParticipantsData.value = resp?.data
+                 userActivityData.value = resp?.data
 
                  DeviceUtils.dismissProgress()
              }, {

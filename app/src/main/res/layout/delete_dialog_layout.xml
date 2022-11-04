@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/green_curve_bg"
+        android:backgroundTint="@color/navy_blue"
+        android:layout_marginHorizontal="@dimen/_15sdp">
+
+        <TextView
+            android:id="@+id/sure_Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/dm_sans_400"
+            android:text="@string/delete_image"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sure_Tv"
+            android:layout_marginHorizontal="@dimen/_25sdp"
+            android:layout_marginBottom="@dimen/_20sdp">
+
+            <TextView
+                android:id="@+id/cancel_dismis_Tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/inter_medium_500"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/cancel"
+                android:textColor="@color/gray_x"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/sure_delete_Tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/inter_medium_500"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/delete_for_me"
+                android:textColor="@color/red"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

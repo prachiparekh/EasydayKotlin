@@ -1,9 +1,15 @@
 package com.app.easyday.screens.activities.main.home.create_task
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -26,6 +32,7 @@ import com.app.easyday.utils.FileUtil
 import com.passiondroid.imageeditorlib.ImageEditActivity
 import com.passiondroid.imageeditorlib.ImageEditor
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.delete_dialog_layout.*
 import kotlinx.android.synthetic.main.fragment_create_task.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -160,33 +167,100 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
             })
         imgRV.adapter = imgAdapter
 
-        edit.setOnClickListener {
 
-            val imagePath = selectedUriList[pagerPhotos.currentItem].uri?.let { it1 ->
-                FileUtil.getPath(
-                    it1,
-                    requireContext()
-                )
+        edit.setOnClickListener {
+            if (selectedUriList[pagerPhotos.currentItem].uri != null) {
+                val imagePath = selectedUriList[pagerPhotos.currentItem].uri?.let { it1 ->
+                    FileUtil.getPath(
+                        it1,
+                        requireContext()
+                    )
+                }
+                if (imagePath?.let { it1 -> File(it1).exists() } == true) {
+                    val intent = Intent(context, ImageEditActivity::class.java)
+                    intent.putExtra(ImageEditor.EXTRA_IS_PAINT_MODE, true)
+                    intent.putExtra(ImageEditor.EXTRA_IS_STICKER_MODE, false)
+                    intent.putExtra(ImageEditor.EXTRA_IS_TEXT_MODE, true)
+                    intent.putExtra(ImageEditor.EXTRA_IS_CROP_MODE, false)
+                    intent.putExtra(ImageEditor.EXTRA_HAS_FILTERS, false)
+                    intent.putExtra(ImageEditor.EXTRA_IMAGE_PATH, imagePath)
+                    startActivityForResult(intent, ImageEditor.RC_IMAGE_EDITOR)
+                } else {
+                    Toast.makeText(context, "Invalid image path", Toast.LENGTH_SHORT).show()
+                }
             }
-            if (imagePath?.let { it1 -> File(it1).exists() } == true) {
-                val intent = Intent(context, ImageEditActivity::class.java)
-                intent.putExtra(ImageEditor.EXTRA_IS_PAINT_MODE, true)
-                intent.putExtra(ImageEditor.EXTRA_IS_STICKER_MODE, false)
-                intent.putExtra(ImageEditor.EXTRA_IS_TEXT_MODE, true)
-                intent.putExtra(ImageEditor.EXTRA_IS_CROP_MODE, false)
-                intent.putExtra(ImageEditor.EXTRA_HAS_FILTERS, false)
-                intent.putExtra(ImageEditor.EXTRA_IMAGE_PATH, imagePath)
-                startActivityForResult(intent, ImageEditor.RC_IMAGE_EDITOR)
-            } else {
-                Toast.makeText(context, "Invalid image path", Toast.LENGTH_SHORT).show()
+
+        }
+        textT.setOnClickListener {
+            if (selectedUriList[pagerPhotos.currentItem].uri != null) {
+                val imagePath = selectedUriList[pagerPhotos.currentItem].uri?.let { it1 ->
+                    FileUtil.getPath(
+                        it1,
+                        requireContext()
+                    )
+                }
+                if (imagePath?.let { it1 -> File(it1).exists() } == true) {
+                    val intent = Intent(context, ImageEditActivity::class.java)
+                    intent.putExtra(ImageEditor.EXTRA_IS_PAINT_MODE, true)
+                    intent.putExtra(ImageEditor.EXTRA_IS_STICKER_MODE, false)
+                    intent.putExtra(ImageEditor.EXTRA_IS_TEXT_MODE, true)
+                    intent.putExtra(ImageEditor.EXTRA_IS_CROP_MODE, false)
+                    intent.putExtra(ImageEditor.EXTRA_HAS_FILTERS, false)
+                    intent.putExtra(ImageEditor.EXTRA_IMAGE_PATH, imagePath)
+                    startActivityForResult(intent, ImageEditor.RC_IMAGE_EDITOR)
+                } else {
+                    Toast.makeText(context, "Invalid image path", Toast.LENGTH_SHORT).show()
+                }
             }
 
         }
 
         delete.setOnClickListener {
-            selectedUriList.removeAt(pagerPhotos.currentItem)
-            mediaAdapter?.notifyDataSetChanged()
-            imgAdapter?.notifyDataSetChanged()
+
+            if (selectedUriList.isNotEmpty()) {
+                filterRV.visibility = View.GONE
+                delete_activated.visibility = View.VISIBLE
+                context?.resources?.getColor(R.color.black)
+                    ?.let { it1 -> delete.setColorFilter(it1) }
+                val dialog = Dialog(requireContext())
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog.setCancelable(false)
+                dialog.setContentView(R.layout.delete_dialog_layout)
+                dialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+                dialog.window?.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT
+                )
+                dialog.show()
+
+                dialog.sure_delete_Tv.setOnClickListener {
+
+                    selectedUriList.removeAt(pagerPhotos.currentItem)
+                    mediaAdapter?.notifyDataSetChanged()
+                    imgAdapter?.notifyDataSetChanged()
+                    dialog.dismiss()
+
+                    delete_activated.visibility = View.GONE
+                    context?.resources?.getColor(R.color.white)
+                        ?.let { it1 -> delete.setColorFilter(it1) }
+
+                    filterRV.visibility = View.VISIBLE
+                }
+                dialog.cancel_dismis_Tv.setOnClickListener {
+                    dialog.dismiss()
+
+                    delete_activated.visibility = View.GONE
+                    context?.resources?.getColor(R.color.white)
+                        ?.let { it1 -> delete.setColorFilter(it1) }
+
+                    filterRV.visibility = View.VISIBLE
+                }
+
+            } else {
+                Toast.makeText(context, "Please add item for Delete", Toast.LENGTH_SHORT).show()
+            }
+
+
         }
 
         imgAdd.setOnClickListener {

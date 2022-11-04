@@ -112,31 +112,35 @@
                 <RelativeLayout
                     android:id="@+id/rel_date"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_18sdp">
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/date_tv"
-                        android:background="@color/l_gray" />
+                        android:background="@color/l_gray"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/date_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
+                        android:layout_centerInParent="true"
                         android:layout_marginHorizontal="@dimen/_20sdp"
+                        android:fontFamily="@font/dm_sans_400"
                         android:text="Today"
-                        android:textColor="@color/little_l_gray" />
+                        android:textColor="@color/little_l_gray"
+                        android:textSize="@dimen/_11sdp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/date_tv"
-                        android:background="@color/l_gray" />
+                        android:background="@color/l_gray"
+                        android:visibility="gone"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -144,7 +148,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rel_date"
-                    android:layout_marginTop="@dimen/_50sdp">
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_50sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -155,7 +160,7 @@
                         <RelativeLayout
                             android:id="@+id/rel_text"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/_38sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:background="@drawable/conversation_dialog_1"
@@ -165,10 +170,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/_10sdp"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/dm_sans_400"
+                                android:paddingHorizontal="@dimen/_2sdp"
                                 android:text="Hey, How are you ?"
                                 android:textColor="@color/black"
-                                android:textSize="15sp" />
+                                android:textSize="@dimen/_12sdp" />
 
                         </RelativeLayout>
 
@@ -178,15 +185,16 @@
                             android:layout_below="@+id/rel_text"
                             android:layout_marginTop="@dimen/_3sdp"
                             android:layout_toLeftOf="@+id/tick"
-                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:fontFamily="@font/dm_sans_400"
+                            android:paddingHorizontal="@dimen/_5sdp"
                             android:text="10.12 am"
-                            android:textColor="@color/black"
+                            android:textColor="@color/chat_time_color"
                             android:textSize="12sp" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/tick"
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_10sdp"
                             android:layout_below="@+id/rel_text"
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/_3sdp"
@@ -201,20 +209,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/my_side_conv"
-                    android:layout_marginTop="@dimen/_30sdp">
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_50sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:orientation="vertical">
 
                         <RelativeLayout
                             android:id="@+id/yr_rel_text"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/_38sdp"
                             android:layout_alignParentStart="true"
-                            android:layout_marginStart="@dimen/_10sdp"
                             android:background="@drawable/conversation_dialog_2"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:paddingVertical="@dimen/_10sdp">
@@ -222,10 +231,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/_10sdp"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/dm_sans_400"
+                                android:paddingHorizontal="@dimen/_2sdp"
                                 android:text="i'm good !! What about you ?"
                                 android:textColor="@color/black"
-                                android:textSize="15sp" />
+                                android:textSize="@dimen/_12sdp" />
 
                         </RelativeLayout>
 
@@ -235,9 +246,10 @@
                             android:layout_below="@+id/yr_rel_text"
                             android:layout_alignParentStart="true"
                             android:layout_marginTop="@dimen/_3sdp"
-                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:fontFamily="@font/dm_sans_400"
+                            android:paddingHorizontal="@dimen/_5sdp"
                             android:text="10.12 am"
-                            android:textColor="@color/black"
+                            android:textColor="@color/chat_time_color"
                             android:textSize="12sp" />
 
 
@@ -248,18 +260,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/yr_side_conv"
-                    android:layout_marginTop="@dimen/_30sdp">
+                    android:layout_marginTop="@dimen/_10sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/_50sdp">
 
                         <RelativeLayout
                             android:id="@+id/rel_greet"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/_38sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:background="@drawable/conversation_dialog_1"
@@ -269,10 +282,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/_10sdp"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/dm_sans_400"
+                                android:paddingHorizontal="@dimen/_2sdp"
                                 android:text="shall we meet ? i need to talk to you something"
                                 android:textColor="@color/black"
-                                android:textSize="15sp" />
+                                android:textSize="@dimen/_12sdp" />
 
                         </RelativeLayout>
 
@@ -282,10 +297,11 @@
                             android:layout_below="@+id/rel_greet"
                             android:layout_marginTop="@dimen/_3sdp"
                             android:layout_toLeftOf="@+id/tick_d"
-                            android:paddingHorizontal="@dimen/_10sdp"
-                            android:text="10.13 am"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:fontFamily="@font/dm_sans_400"
+                            android:paddingHorizontal="@dimen/_5sdp"
+                            android:text="10.12 am"
+                            android:textColor="@color/chat_time_color"
+                            android:textSize="12sp"/>
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/tick_d"
@@ -305,20 +321,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/m"
-                    android:layout_marginTop="@dimen/_30sdp">
+                    android:layout_marginTop="@dimen/_10sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="@dimen/_50sdp"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/_10sdp">
 
                         <RelativeLayout
                             android:id="@+id/yr_rel_text_2"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/_38sdp"
                             android:layout_alignParentStart="true"
-                            android:layout_marginStart="@dimen/_10sdp"
                             android:background="@drawable/conversation_dialog_2"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:paddingVertical="@dimen/_10sdp">
@@ -326,10 +343,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/_10sdp"
                                 android:text="ok, let's meet but where !"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/dm_sans_400"
+                                android:paddingHorizontal="@dimen/_2sdp"
                                 android:textColor="@color/black"
-                                android:textSize="15sp" />
+                                android:textSize="@dimen/_12sdp" />
 
                         </RelativeLayout>
 
@@ -339,9 +358,10 @@
                             android:layout_below="@+id/yr_rel_text_2"
                             android:layout_alignParentStart="true"
                             android:layout_marginTop="@dimen/_3sdp"
-                            android:paddingHorizontal="@dimen/_10sdp"
-                            android:text="10.14 am"
-                            android:textColor="@color/black"
+                            android:fontFamily="@font/dm_sans_400"
+                            android:paddingHorizontal="@dimen/_5sdp"
+                            android:text="10.12 am"
+                            android:textColor="@color/chat_time_color"
                             android:textSize="12sp" />
 
 
@@ -352,20 +372,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/yr_side_conv_2"
-                    android:layout_marginTop="@dimen/_30sdp">
+                    android:layout_marginTop="@dimen/_10sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="@dimen/_50sdp"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/_10sdp">
 
                         <RelativeLayout
                             android:id="@+id/yr_rel_text_3"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/_38sdp"
                             android:layout_alignParentStart="true"
-                            android:layout_marginStart="@dimen/_10sdp"
                             android:background="@drawable/conversation_dialog_2"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:paddingVertical="@dimen/_10sdp">
@@ -373,10 +394,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/_10sdp"
                                 android:text="ok, let's meet but where !"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/dm_sans_400"
+                                android:paddingHorizontal="@dimen/_2sdp"
                                 android:textColor="@color/black"
-                                android:textSize="15sp" />
+                                android:textSize="@dimen/_12sdp" />
 
                         </RelativeLayout>
 
@@ -386,9 +409,10 @@
                             android:layout_below="@+id/yr_rel_text_3"
                             android:layout_alignParentStart="true"
                             android:layout_marginTop="@dimen/_3sdp"
-                            android:paddingHorizontal="@dimen/_10sdp"
-                            android:text="10.14 am"
-                            android:textColor="@color/black"
+                            android:fontFamily="@font/dm_sans_400"
+                            android:paddingHorizontal="@dimen/_5sdp"
+                            android:text="10.12 am"
+                            android:textColor="@color/chat_time_color"
                             android:textSize="12sp" />
 
 
@@ -399,20 +423,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/yr_side_conv_3"
-                    android:layout_marginTop="@dimen/_30sdp">
+                    android:layout_marginTop="@dimen/_10sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="@dimen/_50sdp"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/_10sdp">
 
                         <RelativeLayout
                             android:id="@+id/yr_rel_text_4"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/_38sdp"
                             android:layout_alignParentStart="true"
-                            android:layout_marginStart="@dimen/_10sdp"
                             android:background="@drawable/conversation_dialog_2"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:paddingVertical="@dimen/_10sdp">
@@ -420,10 +445,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/_10sdp"
                                 android:text="ok, let's meet but where !"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/dm_sans_400"
+                                android:paddingHorizontal="@dimen/_2sdp"
                                 android:textColor="@color/black"
-                                android:textSize="15sp" />
+                                android:textSize="@dimen/_12sdp" />
 
                         </RelativeLayout>
 
@@ -433,9 +460,10 @@
                             android:layout_below="@+id/yr_rel_text_4"
                             android:layout_alignParentStart="true"
                             android:layout_marginTop="@dimen/_3sdp"
-                            android:paddingHorizontal="@dimen/_10sdp"
-                            android:text="10.14 am"
-                            android:textColor="@color/black"
+                            android:fontFamily="@font/dm_sans_400"
+                            android:paddingHorizontal="@dimen/_5sdp"
+                            android:text="10.12 am"
+                            android:textColor="@color/chat_time_color"
                             android:textSize="12sp" />
 
 

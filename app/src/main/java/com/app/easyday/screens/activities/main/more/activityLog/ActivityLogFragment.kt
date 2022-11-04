@@ -1,17 +1,10 @@
 package com.app.easyday.screens.activities.main.more.activityLog
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import com.app.easyday.screens.base.BaseFragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.app.easyday.R
-import com.app.easyday.app.sources.remote.model.ProjectParticipantsModel
 import com.app.easyday.app.sources.remote.model.UserActivityResponse
-import com.app.easyday.app.sources.remote.model.UserModel
-import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.activities.main.home.HomeFragment.Companion.selectedProjectID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_activity_log.*
@@ -19,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_activity_log.*
 @AndroidEntryPoint
 class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
 
-    var projectparticipantList: ArrayList<UserActivityResponse>? = null
+    var userActivityList: ArrayList<UserActivityResponse>? = null
     var userActivityModel: UserActivityResponse? = null
 
     override fun getContentView() = R.layout.fragment_activity_log
@@ -48,8 +41,9 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
 
     override fun setObservers() {
 
-        viewModel.projectParticipantsData.observe(viewLifecycleOwner) {
-            this.projectparticipantList = it
+        viewModel.userActivityData.observe(viewLifecycleOwner) {
+            this.userActivityList = it
+            Log.e("userActivityList", userActivityList.toString())
         }
     }
 

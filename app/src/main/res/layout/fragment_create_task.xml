@@ -32,15 +32,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/delete_RL"
+        android:layout_width="@dimen/_34sdp"
+        android:layout_height="@dimen/_34sdp"
         android:layout_marginEnd="@dimen/_15sdp"
-        android:src="@drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="@id/close"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/close" />
+        app:layout_constraintTop_toTopOf="@id/close">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/delete_activated"
+            android:layout_width="@dimen/_34sdp"
+            android:layout_height="@dimen/_34sdp"
+            android:src="@drawable/circle"
+            app:tint="@color/white"
+            android:visibility="gone"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/textT"
@@ -49,7 +64,7 @@
         android:layout_marginEnd="@dimen/_15sdp"
         android:src="@drawable/ic_text_t"
         app:layout_constraintBottom_toBottomOf="@id/close"
-        app:layout_constraintEnd_toStartOf="@id/delete"
+        app:layout_constraintEnd_toStartOf="@id/delete_RL"
         app:layout_constraintTop_toTopOf="@id/close" />
 
     <androidx.appcompat.widget.AppCompatImageView

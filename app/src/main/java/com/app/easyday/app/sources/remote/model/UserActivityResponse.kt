@@ -51,7 +51,11 @@ data class UserActivityResponse(
 
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
-)
+) {
+	override fun toString(): String {
+		return "UserActivityResponse(activityText=$activityText)"
+	}
+}
 
 
 data class UserActivityType(
