@@ -41,9 +41,6 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
 
         selectedProjectID?.let { viewModel.getUserActivityDetails(it) }
 
-//        comment_tv.text = userActivityModel?.activityText?.length.toString()
-//        comment_tv.text = userActivityModel?.activityText?.toString()
-//        comm.setImageURI()
         layoutManager = LinearLayoutManager(context)
         Act_log_Recy.layoutManager = layoutManager
 

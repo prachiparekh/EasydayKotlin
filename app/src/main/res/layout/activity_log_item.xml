@@ -28,21 +28,23 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/today">
+            android:layout_below="@+id/today"
+            android:layout_marginHorizontal="@dimen/_10sdp">
 
             <View
                 android:id="@+id/v_line"
-                android:layout_width="@dimen/_2sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="match_parent"
                 android:layout_alignBottom="@+id/commentRL"
-                android:background="@color/line_color" />
+                android:layout_alignTop="@+id/commentRL"
+                android:background="@color/line_color"
+                android:visibility="visible"/>
 
             <RelativeLayout
                 android:id="@+id/commentRL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/v_line"
+                android:layout_toEndOf="@+id/v_line"
                 android:paddingVertical="@dimen/_5sdp">
 
                 <View
@@ -53,7 +55,7 @@
                     android:background="@color/line_color" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/comm"
+                    android:id="@+id/user_image"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginTop="@dimen/_3sdp"
@@ -61,11 +63,12 @@
                     android:src="@drawable/ic_comment" />
 
                 <LinearLayout
+                    android:id="@+id/inf_LL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_toRightOf="@+id/comm"
+                    android:layout_toRightOf="@+id/user_image"
                     android:orientation="vertical">
 
                     <TextView
