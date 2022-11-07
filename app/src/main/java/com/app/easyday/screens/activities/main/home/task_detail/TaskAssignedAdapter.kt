@@ -39,6 +39,7 @@ class TaskAssignedAdapter(
         val avatar = itemView.findViewById<ImageView>(R.id.avatar)
         val selection = itemView.findViewById<ImageView>(R.id.selection)
         val participantName = itemView.findViewById<TextView>(R.id.participantName)
+        val viewLine = itemView.findViewById<View>(R.id.v2)
 
         @SuppressLint("NewApi")
         fun bind(position: Int) {
@@ -69,6 +70,12 @@ class TaskAssignedAdapter(
                             .format(DecodeFormat.PREFER_ARGB_8888)
                     )
                     .into(avatar)
+            }
+
+            if(contactList[position] == contactList.last()){
+                viewLine.visibility = View.GONE
+            }else{
+                viewLine.visibility = View.VISIBLE
             }
 
 

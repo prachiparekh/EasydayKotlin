@@ -78,7 +78,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:background="@color/alpha_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/projectRelated" />
@@ -477,11 +476,13 @@
             app:layout_constraintTop_toBottomOf="@id/view6">
 
             <LinearLayout
+                android:id="@+id/spc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingVertical="@dimen/_5sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -507,16 +508,19 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/view_s_z"
                 android:layout_width="@dimen/_1sdp"
                 android:layout_height="match_parent"
-                android:background="@color/stroke" />
+                android:background="@color/stroke"
+                android:visibility="gone"/>
 
             <LinearLayout
+                android:id="@+id/zn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingVertical="@dimen/_5sdp">
+                android:paddingVertical="@dimen/_7sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -548,7 +552,6 @@
             android:id="@+id/view7"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_marginVertical="@dimen/_5sdp"
             android:background="@color/stroke"
             app:layout_constraintTop_toBottomOf="@id/spaceLL" />
 

@@ -20,13 +20,6 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
 
     var taskModel: TaskResponse? = null
 
-
-    private var selectedPriority: Int? = null
-    var projectparticipantList: ArrayList<ProjectParticipantsModel>? = null
-
-    //    var adapter: TaskAssignedAdapter? = null
-    var userAssignList: ArrayList<ContactModel>? = null
-
     override fun getContentView() = R.layout.fragment_task_details
 
 
@@ -51,8 +44,13 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
             mFlag.setColorFilter(R.color.l_gray)
         }
 
-        tagRV.adapter = context?.let { TaskTagAdapter(it, tags as java.util.ArrayList<TaskAttributeResponse>) }
-//        tag_tv.text = tags.toString()
+        if (tags != null && tags.size > 0){
+            tagRV.adapter = context?.let { TaskTagAdapter(it, tags as java.util.ArrayList<TaskAttributeResponse>) }
+        }else {
+            tagLL.visibility = View.GONE
+            view6.visibility = View.GONE
+        }
+
         taskAssignRV.adapter = context?.let {
             TaskAssignedAdapter(
                 it,
@@ -75,6 +73,23 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
                 zoneStr += taskModel?.taskZones?.get(i)?.projectAttribute?.attributeName
             else
                 zoneStr += "," + taskModel?.taskZones?.get(i)?.projectAttribute?.attributeName
+        }
+
+        if (spaceStr.isEmpty() && zoneStr.isEmpty()){
+            spaceLL.visibility = View.GONE
+            view7.visibility = View.GONE
+
+        }else if (spaceStr.isEmpty() && !zoneStr.isEmpty()){
+            spc.visibility = View.GONE
+            view_s_z.visibility = View.GONE
+        }else if (zoneStr.isEmpty() && !spaceStr.isEmpty()){
+            zn.visibility = View.GONE
+            view_s_z.visibility = View.GONE
+        }
+        else{
+            spaceLL.visibility = View.VISIBLE
+            view7.visibility = View.VISIBLE
+            view_s_z.visibility = View.VISIBLE
         }
 
         Log.e("spaceStr", zoneStr.toString())
@@ -114,7 +129,7 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
             0 -> {
                 show_priority.isVisible = false
                 priority_Tv.text = "None"
-                priority_Tv.setTextColor(resources.getColor(R.color.l_gray))
+                priority_Tv.setTextColor(resources.getColor(R.color.black))
             }
             1 -> {
                 show_priority.setImageDrawable(requireContext().resources.getDrawable(R.drawable.ic_low))

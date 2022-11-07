@@ -4,6 +4,6 @@
     <corners android:topLeftRadius="@dimen/_10sdp"
         android:bottomLeftRadius="@dimen/_10sdp"
         android:bottomRightRadius="@dimen/_10sdp"/>
-    <solid android:color="@color/l_gray"/>
+    <solid android:color="@color/chat_bg_color"/>
 
 </shape>

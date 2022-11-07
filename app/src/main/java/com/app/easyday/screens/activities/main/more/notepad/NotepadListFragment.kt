@@ -37,7 +37,9 @@ var binding: FragmentNotepadListBinding?=null
             Navigation.findNavController(requireView()).navigate(direction)
         }
 
-
+        binding?.back?.setOnClickListener {
+            Navigation.findNavController(requireView()).popBackStack()
+        }
         return binding?.root
     }
 

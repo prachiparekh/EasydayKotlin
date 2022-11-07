@@ -54,75 +54,86 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
 
-            <RelativeLayout
-                android:id="@+id/profileRL"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/link_device_CL"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_130sdp"
-                android:paddingVertical="@dimen/_30sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/bg_rounded_rect"
-                android:layout_margin="@dimen/_20sdp">
+                android:visibility="gone">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/avatar"
-                    android:layout_width="@dimen/_210sdp"
-                    android:layout_height="@dimen/_100sdp"
-                    android:layout_centerHorizontal="true"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/link_device" />
+                <RelativeLayout
+                    android:id="@+id/profileRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_130sdp"
+                    android:paddingVertical="@dimen/_30sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/bg_rounded_rect"
+                    android:layout_margin="@dimen/_20sdp">
 
-            </RelativeLayout>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/avatar"
+                        android:layout_width="@dimen/_210sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/link_device" />
 
-            <TextView
-                android:id="@+id/terms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/dm_sans_400"
-                android:gravity="center"
-                android:text="@string/link"
-                android:textColor="@color/light_text"
-                android:textColorLink="@color/color4"
-                android:textSize="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileRL" />
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/link_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_25sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/green_curve_bg"
-                app:layout_constraintTop_toBottomOf="@+id/terms"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/terms"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_centerHorizontal="true"
-                    android:paddingVertical="@dimen/_7sdp"
-                    >
+                    android:fontFamily="@font/dm_sans_400"
+                    android:gravity="center"
+                    android:text="@string/link"
+                    android:textColor="@color/light_text"
+                    android:textColorLink="@color/color4"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/profileRL" />
 
-                    <ImageView
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/scan_code"/>
-                    <TextView
+                <RelativeLayout
+                    android:id="@+id/link_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_25sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/green_curve_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/terms"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Link Desktop Device"
-                        android:textColor="@color/white"
-                        android:layout_marginStart="@dimen/_5sdp"/>
-                </LinearLayout>
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:paddingVertical="@dimen/_7sdp"
+                        >
+
+                        <ImageView
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:src="@drawable/scan_code"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Link Desktop Device"
+                            android:textColor="@color/white"
+                            android:layout_marginStart="@dimen/_5sdp"/>
+                    </LinearLayout>
 
 
-            </RelativeLayout>
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
             <RelativeLayout
@@ -131,7 +142,7 @@
                 android:paddingVertical="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/link_btn"
+                app:layout_constraintTop_toBottomOf="@+id/link_device_CL"
                 android:background="@drawable/bg_rounded_rect"
                 android:layout_marginTop="@dimen/_30sdp">
 
@@ -148,7 +159,8 @@
                         android:layout_marginStart="@dimen/_19sdp"
                         android:text="This device"
                         android:textColor="@color/color4"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/_11sdp"
+                        android:fontFamily="@font/inter_medium_500"/>
 
                     <RelativeLayout
                         android:id="@+id/first"
@@ -164,10 +176,10 @@
                             android:layout_marginTop="@dimen/_15sdp">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_marginTop="@dimen/_3sdp"
-                                android:src="@drawable/ic_devices" />
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:src="@drawable/ic_devices"
+                                android:layout_gravity="center_vertical"/>
 
                             <LinearLayout
 
@@ -189,19 +201,19 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/android"
-                                    android:textColor="@color/gray"
+                                    android:textColor="@color/navy_blue"
                                     android:textSize="@dimen/_11sdp" />
 
                                 <TextView
                                     android:id="@+id/location"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/hyderabad"
-                                    android:textColor="@color/tab_gray"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textColor="@color/hint_color"
+                                    android:textSize="@dimen/_9sdp" />
 
 
                             </LinearLayout>
@@ -230,10 +242,10 @@
                             android:layout_marginTop="@dimen/_15sdp">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_marginTop="@dimen/_3sdp"
-                                android:src="@drawable/ic_devices" />
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:src="@drawable/ic_devices"
+                                android:layout_gravity="center_vertical"/>
 
                             <LinearLayout
 
@@ -255,18 +267,18 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/android"
-                                    android:textColor="@color/gray"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textColor="@color/navy_blue"
+                                    android:textSize="@dimen/_10sdp" />
                                 <TextView
                                     android:id="@+id/location2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/hyderabad"
-                                    android:textColor="@color/tab_gray"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textColor="@color/hint_color"
+                                    android:textSize="@dimen/_9sdp" />
 
 
                             </LinearLayout>
@@ -294,10 +306,10 @@
                             android:layout_marginTop="@dimen/_15sdp">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_marginTop="@dimen/_3sdp"
-                                android:src="@drawable/ic_devices" />
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:src="@drawable/ic_devices"
+                                android:layout_gravity="center_vertical"/>
 
                             <LinearLayout
 
@@ -319,18 +331,18 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/android"
-                                    android:textColor="@color/gray"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textColor="@color/navy_blue"
+                                    android:textSize="@dimen/_10sdp" />
                                 <TextView
                                     android:id="@+id/location3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/hyderabad"
-                                    android:textColor="@color/tab_gray"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textColor="@color/hint_color"
+                                    android:textSize="@dimen/_9sdp" />
 
 
                             </LinearLayout>

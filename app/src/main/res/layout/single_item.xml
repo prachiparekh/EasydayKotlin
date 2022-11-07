@@ -5,90 +5,101 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/Person_1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginHorizontal="@dimen/_5sdp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_profile_circle"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="2dp" />
-        <LinearLayout
-            android:id="@+id/cont"
+        app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:id="@+id/Person_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/profile_image"
-            android:layout_marginStart="@dimen/_10sdp">
+            android:layout_marginHorizontal="@dimen/_8sdp">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="@dimen/_2sdp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Android"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="1.10 pm"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
-            </RelativeLayout>
-            <RelativeLayout
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_profile_circle"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"
+                android:layout_centerVertical="true"/>
+            <LinearLayout
+                android:id="@+id/cont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="@dimen/_2sdp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hey, whatsUp"
-                    android:textSize="@dimen/_12sdp"
-                    android:textColor="@color/black" />
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/profile_image"
+                android:layout_marginStart="@dimen/_10sdp">
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/green_curve_bg"
-                    android:layout_alignParentEnd="true"
-                    android:paddingHorizontal="@dimen/_7sdp">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/_2sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="32"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_11sdp"
+                        android:fontFamily="@font/mulish_700"
+                        android:text="Android"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/dm_sans_400"
+                        android:text="1.10 pm"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_11sdp" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/_2sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/dm_sans_400"
+                        android:text="Hey, whatsUp"
+                        android:textColor="@color/hint_color"
+                        android:textSize="@dimen/_11sdp"
+                        android:textStyle="normal" />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_16sdp"
+                        android:background="@drawable/green_curve_bg"
+                        android:layout_alignParentEnd="true"
+                        android:paddingHorizontal="@dimen/_7sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="32"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dm_sans_400"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+
                 </RelativeLayout>
 
-            </RelativeLayout>
 
-
-        </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:background="@color/l_gray"
-            android:layout_below="@+id/profile_image"
+            android:layout_below="@+id/Person_1"
             android:layout_marginTop="@dimen/_7sdp"/>
-
-
     </RelativeLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

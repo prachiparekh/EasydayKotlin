@@ -75,6 +75,7 @@ class TaskMediaAdapter(
                     val options = RequestOptions()
                     Glide.with(mContext)
                         .load(item.mediaUrl)
+                        .placeholder(R.drawable.ic_gradient_top_bg)
                         .apply(
                             options.centerCrop()
                                 .skipMemoryCache(true)

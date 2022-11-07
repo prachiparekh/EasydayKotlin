@@ -28,6 +28,8 @@
     <color name="color2">#B4C700</color>
     <color name="color3">#009688</color>
     <color name="color4">#2196F3</color>
+    <color name="chat_bg_color">#EDF5F9</color>
+    <color name="chat_time_color">#6D658A</color>
 
     <color name="color5">#795548</color>
     <color name="color6">#3F51B5</color>
@@ -48,4 +50,6 @@
     <color name="l_gray">#66A5A5A6</color>
     <color name="little_l_gray">#A84B5563</color>
     <color name="l_blue">#61BDD9F3</color>
+    <color name="gray_x">#7DFFFFFF</color>
+    <color name="line_color">#264791FF</color>
 </resources>
