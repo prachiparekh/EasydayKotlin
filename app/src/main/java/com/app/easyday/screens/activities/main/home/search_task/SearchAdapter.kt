@@ -50,6 +50,7 @@ class SearchAdapter(
         @SuppressLint("NewApi")
         fun bind(position: Int) {
 
+            val item = filterData[position]
             projectName.text = filterData[position].title
             description.text = filterData[position].description
 
@@ -99,7 +100,7 @@ class SearchAdapter(
             }
 
             itemView.setOnClickListener {
-                anInterface.onTaskClick(filterData[position])
+                anInterface.onTaskClick(item)
             }
         }
     }

@@ -29,9 +29,6 @@ class AsigneeSelectionBottomSheetDialog(
     var binding: AddAssigneeLayoutBinding? = null
     var adapter: ParticipentAdapter? = null
 
-    companion object {
-        var assignedUserList = ArrayList<ContactModel>()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,13 +74,8 @@ class AsigneeSelectionBottomSheetDialog(
                 }
 
             }
-            mainList?.forEach { it ->
-                assignedUserList.add(it)
-            }
-
 
             assigneeInterface.onSelestAssignee(assigneeList)
-//            assignedUserList.addAll(assigneeList)
 
             dismiss()
         }
