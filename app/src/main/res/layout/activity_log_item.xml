@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
@@ -22,19 +22,20 @@
             android:text="@string/today"
             android:textColor="@color/black"
             android:textSize="@dimen/_15sdp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/today"
-            android:layout_marginTop="@dimen/_10sdp">
+            android:layout_below="@+id/today">
 
             <View
                 android:id="@+id/v_line"
-                android:layout_width="@dimen/_1sdp"
+                android:layout_width="@dimen/_2sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_alignBottom="@+id/commentRL"
                 android:background="@color/line_color" />
 
             <RelativeLayout
@@ -72,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:fontFamily="@font/mulish_700"
+                        android:fontFamily="@font/inter_medium_500"
                         android:text="@string/you_commented"
                         android:textColor="@color/accent_blue"
                         android:textSize="@dimen/_12sdp" />
@@ -82,9 +83,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:fontFamily="@font/dm_sans_400"
-                        android:text="@string/oct"
-                        android:textColor="@color/tab_gray"
+                        android:fontFamily="@font/inter_medium_500"
+                        android:text="@string/activity_time"
+                        android:textColor="@color/hint_color"
                         android:textSize="@dimen/_11sdp" />
 
 

@@ -81,6 +81,7 @@
     <string name="from">From <font color='#FB4079'>*</font></string>
     <string name="to">To <font color='#FB4079'>*</font></string>
     <string name="date_format_template" translatable="false">dd/MM/yyyy</string>
+    <string name="server_date_format_template" translatable="false">yyyy-MM-dd</string>
     <string name="date_format_template1" translatable="false">yyyy-MM-dd</string>
     <string name="to_date_error">Due date : To date should greater than from date !</string>
 
@@ -114,6 +115,8 @@
 
     <string name="terms">Terms &amp; Conditions</string>
     <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="this_month">This month</string>
     <string name="yesterday">Yesterday</string>
     <string name="policy">Privacy Policy</string>
     <string name="analytics">Analytics</string>
@@ -138,7 +141,7 @@
     <string name="my_profile">My Profile</string>
     <string name="device">Devices</string>
     <string name="you_commented">You commented on Door Fix on second floor</string>
-    <string name="oct">Oct 16,2022 %s 2.45 pm</string>
+    <string name="activity_time">%s • %s</string>
     <string name="my_activity_log">My Activity Log</string>
     <string name="one_plus">OnePlus OnePlus Nord CE2</string>
     <string name="hyderabad">Hyderabad, India %s Online</string>

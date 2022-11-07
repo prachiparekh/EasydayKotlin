@@ -1,5 +1,6 @@
 package com.app.easyday.screens.activities.main.more.notifications
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.text.Spannable
@@ -21,12 +22,13 @@ class NotificationsFragment : BaseFragment<NotificationsViewModel>() {
 
     override fun getContentView() = R.layout.fragment_notifications
 
+    @SuppressLint("StringFormatMatches")
     override fun initUi() {
         val dot = requireContext().resources.getString(R.string.dot)
-        time_1?.text = requireContext().resources.getString(R.string.oct, dot)
-        time_2?.text = requireContext().resources.getString(R.string.oct, dot)
-        time_3?.text = requireContext().resources.getString(R.string.oct, dot)
-        time_4?.text = requireContext().resources.getString(R.string.oct, dot)
+        time_1?.text = requireContext().resources.getString(R.string.activity_time, dot)
+        time_2?.text = requireContext().resources.getString(R.string.activity_time, dot)
+        time_3?.text = requireContext().resources.getString(R.string.activity_time, dot)
+        time_4?.text = requireContext().resources.getString(R.string.activity_time, dot)
 
         val fullText: String = requireContext().resources.getString(R.string.full_peter_assigned)
         val normalText: String = requireContext().resources.getString(R.string.peter_assigned_you)

@@ -1,6 +1,8 @@
 package com.app.easyday.app.sources.remote.model
 
+import com.app.easyday.screens.activities.main.more.activityLog.ListItem
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class UserActivityResponse(
 
@@ -51,9 +53,11 @@ data class UserActivityResponse(
 
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
-) {
+): ListItem(null, null), Serializable {
 	override fun toString(): String {
-		return "UserActivityResponse(activityText=$activityText)"
+		return "UserActivityResponse(activityText=$activityText, receiver=$receiver, receiverId=$receiverId, project=$project, taskId=$taskId, type=$type, createdAt=$createdAt" +
+				", taskComment=$taskComment, taskCommentId=$taskCommentId, task=$task, userId=$userId, projectId=$projectId, id=$id" +
+				", user=$user" + ", userActivityType=$userActivityType, updatedAt=$updatedAt)"
 	}
 }
 
