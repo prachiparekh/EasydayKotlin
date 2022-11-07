@@ -242,4 +242,5 @@
     <string name="post">Post</string>
     <string name="discussion_str">Discussion (%s)</string>
     <string name="type_to_record">What would you like to say? type or Record..</string>
+    <string name="audio_permission_denied_feedback">Audio permission is required.</string>
 </resources>

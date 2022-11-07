@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -160,11 +160,11 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/actionRL"
                 android:background="@null"
-                android:textCursorDrawable="@color/green"
                 android:fontFamily="@font/dm_sans_700"
                 android:hint="@string/type_to_record"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/light_text"
+                android:textCursorDrawable="@color/green"
                 android:textSize="@dimen/_12sdp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -211,6 +211,7 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/audioTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -218,7 +219,6 @@
                 android:drawableLeft="@drawable/ic_red_record"
                 android:drawablePadding="@dimen/_5sdp"
                 android:fontFamily="@font/inter_medium_500"
-                android:text="00:11"
                 android:textColor="@color/light_text"
                 android:textSize="15sp" />
 

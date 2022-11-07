@@ -115,7 +115,7 @@ interface EasyDayApi {
     @POST("task/add-comment")
     fun addComment(
         @Part("task_id") task_id: Int,
-        @Part("comment") comment: RequestBody,
+        @Part("comment") comment: RequestBody?,
         @Part("parent_id") parent_id: Int?,
         @Part task_comment_media: ArrayList<MultipartBody.Part>?,
     ): Observable<ApiResponse<ArrayList<CommentResponseItem>>>

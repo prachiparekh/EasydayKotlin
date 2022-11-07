@@ -23,7 +23,7 @@ class DiscussionViewModel @Inject constructor(
 
     fun addComment(
         task_id: Int,
-        comment: RequestBody,
+        comment: RequestBody?,
         parent_id: Int?,
         audioList: ArrayList<File>?
     ) {
