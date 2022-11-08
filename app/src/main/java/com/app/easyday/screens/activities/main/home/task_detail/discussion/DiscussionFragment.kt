@@ -8,11 +8,16 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.app.easyday.R
+import com.app.easyday.app.sources.aws.AWSKeys
+import com.app.easyday.app.sources.aws.S3Uploader
+import com.app.easyday.app.sources.aws.S3Utils.generates3ShareUrl
 import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
 import com.app.easyday.app.sources.remote.model.CommentResponseItem
 import com.app.easyday.app.sources.remote.model.TaskResponse
@@ -43,8 +48,12 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     var outputMediaFile: File? = null
     var parentCommentId: Int? = null
 
-    override fun initUi() {
+    private var s3uploaderObj: S3Uploader? = null
+    private var urlFromS3: String? = null
 
+
+    override fun initUi() {
+        s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_TASK_COMMENT_MEDIA)
         taskModel = arguments?.getParcelable("taskModel") as TaskResponse?
 
         add_commentTV.setOnClickListener {
@@ -116,13 +125,8 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
             seconds = 0
             recorder.stop()
             runnable?.let { it1 -> handler.removeCallbacks(it1) }
-            taskModel?.id?.let { it1 ->
-                viewModel.addMediaComment(
-                    it1,
-                    outputMediaFile,
-                    parentCommentId
-                )
-            }
+            outputMediaFile?.let { it1 -> uploadImageTos3(it1) }
+
         }
 
         recordBtn.setOnClickListener {
@@ -275,5 +279,40 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
             running = true
         }
     }
+
+    private fun uploadImageTos3(audioFile: File) {
+        val path = audioFile.absolutePath
+
+        s3uploaderObj?.initUpload(path)
+        s3uploaderObj?.setOns3UploadDone(object : S3Uploader.S3UploadInterface {
+            override fun onUploadSuccess(response: String?) {
+                if (response.equals("Success", ignoreCase = true)) {
+
+                    urlFromS3 = generates3ShareUrl(
+                        requireContext(),
+                        path,
+                        AWSKeys.FOLDER_NAME_TASK_COMMENT_MEDIA
+                    )
+                    if (!TextUtils.isEmpty(urlFromS3)) {
+                        Log.e("Uploaded :", " $urlFromS3")
+
+                        taskModel?.id?.let { it1 ->
+                            viewModel.addMediaComment(
+                                it1,
+                                outputMediaFile,
+                                parentCommentId
+                            )
+                        }
+                    }
+                }
+            }
+
+            override fun onUploadError(response: String?) {
+
+                Log.e("TAG", "Error Uploading: $response")
+            }
+        })
+    }
+
 
 }
