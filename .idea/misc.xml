@@ -18,6 +18,7 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/selectable_bg.xml" value="0.281" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/tab_selector.xml" value="0.281" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/tab_selector_blue.xml" value="0.281" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/act_log_recycler_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/activity_conversation.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/activity_image_edit.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/activity_log_item.xml" value="0.365625" />
@@ -25,6 +26,7 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/assigned_participant.xml" value="0.365625" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/back_to_setting_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/date_showed_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/date_showing_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_dialog_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_activity_log.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_add_admin.xml" value="0.36666666666666664" />
@@ -48,6 +50,7 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_search.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_task_details.xml" value="0.2111111111111111" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_view_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_comment.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_participant.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_picture.xml" value="0.18802083333333333" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_tag.xml" value="0.36666666666666664" />

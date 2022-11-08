@@ -108,10 +108,10 @@ object DateTimeUtils {
         }
     }
 
-    fun addStringTimeToDate(date: Date, time: String): Date {
-        val serverTime = SimpleDateFormat("HH:mm:ss", newLocale).parse(time)
+    fun addStringTimeToDate(date: Date?): Date {
+//        val serverTime = SimpleDateFormat("HH:mm:ss", newLocale).parse(time)
         val calendarTime = Calendar.getInstance()
-        calendarTime.time = serverTime
+//        calendarTime.time = serverTime
         val calendarDate = Calendar.getInstance()
         calendarDate.time = date
         calendarDate.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY))

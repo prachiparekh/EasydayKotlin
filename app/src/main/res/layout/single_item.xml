@@ -13,7 +13,8 @@
             android:id="@+id/Person_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_8sdp">
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_3sdp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"

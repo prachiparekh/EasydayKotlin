@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.app.easyday.R
 import kotlinx.android.synthetic.main.activity_conversation.*
+import kotlinx.android.synthetic.main.fragment_feedback.*
 
 class ConversationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,31 +21,24 @@ class ConversationActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p1 <= 1){
-                    cam.visibility = View.GONE
-                    mic.visibility = View.GONE
-                    attach.visibility = View.VISIBLE
-                    send.visibility = View.VISIBLE
-                }else if (p1 == 0){
-                    cam.visibility = View.VISIBLE
-                    mic.visibility = View.VISIBLE
-                    attach.visibility = View.VISIBLE
-                    send.visibility = View.GONE
-                }
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if (p0 != null) {
+                if (p0 != null && p0.length >= 1) {
                     cam.visibility = View.GONE
                     mic.visibility = View.GONE
                     attach.visibility = View.VISIBLE
                     send.visibility = View.VISIBLE
+
                 }else {
                     cam.visibility = View.VISIBLE
                     mic.visibility = View.VISIBLE
                     attach.visibility = View.VISIBLE
                     send.visibility = View.GONE
                 }
+
+
+
             }
 
         })

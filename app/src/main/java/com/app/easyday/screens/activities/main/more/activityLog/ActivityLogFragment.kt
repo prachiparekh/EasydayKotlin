@@ -1,17 +1,22 @@
 package com.app.easyday.screens.activities.main.more.activityLog
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.View
-import com.app.easyday.screens.base.BaseFragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.easyday.R
 import com.app.easyday.app.sources.remote.model.UserActivityResponse
 import com.app.easyday.screens.activities.main.home.HomeFragment.Companion.selectedProjectID
+import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.utils.DateTimeUtils
+import com.app.easyday.utils.DateTimeUtils.getNowSeconds
+import com.app.easyday.utils.DateTimeUtils.getTitleDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_activity_log.*
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
@@ -23,17 +28,11 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
 
     private val listItems = java.util.ArrayList<ListItem>()
     private val invisibleListItems = java.util.ArrayList<ListItem>()
+    private val dateItems = ArrayList<String>()
 
     override fun getContentView() = R.layout.fragment_activity_log
 
     override fun initUi() {
-
-        val dot = requireContext().resources.getString(R.string.dot)
-
-//        time4?.text = requireContext().resources.getString(R.string.hyderabad, dot)
-//        time5?.text = requireContext().resources.getString(R.string.hyderabad, dot)
-//        time6?.text = requireContext().resources.getString(R.string.hyderabad, dot)
-//        time7?.text = requireContext().resources.getString(R.string.hyderabad, dot)
 
         back.setOnClickListener {
             Navigation.findNavController(requireView()).popBackStack()
@@ -64,34 +63,47 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
                 )
                 Act_log_Recy.adapter = adapter
 
+                Collections.reverse(userActivityList)
+
 //                sortList(userActivityList)
+
             }
 
 //            Log.e("userActivityList", userActivityList.toString())
+
         }
     }
 
-    /*@SuppressLint("SimpleDateFormat")
-    private fun sortList(reminderList: java.util.ArrayList<UserActivityResponse>) {
-        reminderList.sortWith { o1, o2 ->
-            if (o1.createdAt != null && o2.createdAt != null && o1.createdAt != null && o2.createdAt != null) {
-                val date1 = DateTimeUtils.addStringTimeToDate(o1.createdAt, o1.createdAt)
-                val date2 = DateTimeUtils.addStringTimeToDate(o2.createdAt, o2.createdAt)
+
+    /*@SuppressLint("SimpleDateFormat", "NewApi")
+    private fun sortList(userActivityList: ArrayList<UserActivityResponse>) {
+
+        val listDate : UserActivityResponse? = null
+        val odt = OffsetDateTime.parse(listDate?.createdAt)
+        val dtf = DateTimeFormatter.ofPattern("MMM dd,yyyy", Locale.ENGLISH)
+        val dtf1 = DateTimeFormatter.ofPattern("HH:MMa", Locale.ENGLISH)
+
+        val date: Date? = dtf.format(odt)
+
+        userActivityList.sortWith { o1, o2 ->
+            if (date != null && date != null) {
+                val date1 = DateTimeUtils.addStringTimeToDate(date)
+                val date2 = DateTimeUtils.addStringTimeToDate(date)
                 date1.compareTo(date2)
             } else {
-                o1.createdAt!!.compareTo(o2.createdAt)
+                date!!.compareTo(date)
             }
 
         }
         if (adapter != null) {
-            adapter?.clearAll()
+//            adapter?.clearAll()
             listItems.clear()
             invisibleListItems.clear()
             var prevCode = ""
             val now = getNowSeconds()
             val today = getTitleDate(now, requireContext(), true)
             var reachedCurrentMonth = false
-            reminderList.forEach {
+            userActivityList.forEach {
                 if (it.createdAt != null) {
                     val date = it.createdAt
                     val code = getTitleDate(date.time, requireContext(), false)
@@ -117,9 +129,31 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
                     }
                 }
             }
-            adapter?.setItems(listItems, allFilterList, invisibleListItems)
-            snapToCurrentReminder()
+//            adapter?.setItems(listItems, allFilterList, invisibleListItems)
+//            snapToCurrentReminder()
         }
+    }*/
+    /*private fun snapToCurrentReminder() {
+        val smoothScroller: RecyclerView.SmoothScroller = object : LinearSmoothScroller(context) {
+            override fun getVerticalSnapPreference(): Int {
+                return SNAP_TO_START
+            }
+        }
+        smoothScroller.targetPosition = getPositionOfTheClosestTimePeriod()
+        Act_log_Recy.layoutManager?.startSmoothScroll(smoothScroller)
+    }
+
+
+    private fun getPositionOfTheClosestTimePeriod(): Int {
+
+        var position = 0
+        listItems.forEachIndexed { index, listItem ->
+            if (listItem is ListSection && listItem.title == "This Month") {
+                position = index
+                return position
+            }
+        }
+        return position
     }*/
 
 }
