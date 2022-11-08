@@ -116,9 +116,17 @@ interface EasyDayApi {
     fun addComment(
         @Part("task_id") task_id: Int,
         @Part("comment") comment: RequestBody?,
-        @Part("parent_id") parent_id: Int?,
-        @Part task_comment_media: ArrayList<MultipartBody.Part>?,
+        @Part("parent_id") parent_id: Int?
     ): Observable<ApiResponse<ArrayList<CommentResponseItem>>>
+
+    @Multipart
+    @POST("task/add-comment")
+    fun addCommentMedia(
+        @Part("task_id") task_id: Int,
+        @Part task_comment_media: MultipartBody.Part?,
+        @Part("parent_id") parent_id: Int?
+    ): Observable<ApiResponse<ArrayList<CommentResponseItem>>>
+
 
     @GET("user/get-user-activity")
     fun getUserActivityDetails(

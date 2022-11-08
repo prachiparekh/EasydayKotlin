@@ -9,7 +9,6 @@ import android.os.Environment
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.navigation.Navigation
@@ -42,12 +41,14 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     private val recorder = MediaRecorder()
     private var taskModel: TaskResponse? = null
     var outputMediaFile: File? = null
+    var parentCommentId: Int? = null
 
     override fun initUi() {
 
         taskModel = arguments?.getParcelable("taskModel") as TaskResponse?
 
         add_commentTV.setOnClickListener {
+            parentCommentId = null
             bottom_RL.isVisible = true
         }
 
@@ -77,18 +78,21 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
         cta.setOnClickListener {
             if (taskModel?.id != null) {
+
                 val comment = commentET.text
                 val commentBody: RequestBody = comment.toString()
                     .toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                taskModel?.id.let {
-                    if (it != null) {
-                        viewModel.addComment(it, commentBody, null, null)
+                taskModel?.id.let { id ->
+                    if (id != null) {
+                        viewModel.addComment(id, commentBody, parentCommentId)
                     }
                 }
             }
         }
 
         commentList = taskModel?.taskComments as ArrayList<CommentResponseItem>?
+        commentList?.sortByDescending { it.createdAt }
+
         discussionCount.text = requireContext().resources.getString(
             R.string.discussion_str,
             commentList?.size.toString()
@@ -112,10 +116,17 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
             seconds = 0
             recorder.stop()
             runnable?.let { it1 -> handler.removeCallbacks(it1) }
-            taskModel?.id?.let { it1 -> viewModel.addComment(it1, null, null, null) }
+            taskModel?.id?.let { it1 ->
+                viewModel.addMediaComment(
+                    it1,
+                    outputMediaFile,
+                    parentCommentId
+                )
+            }
         }
 
         recordBtn.setOnClickListener {
+
             if (IntentUtil.readPermission(
                     requireActivity()
                 ) && IntentUtil.writePermission(
@@ -134,10 +145,12 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     }
 
     override fun setObservers() {
-        viewModel.commentList.observe(viewLifecycleOwner) {
+        viewModel.commentList.observe(viewLifecycleOwner) { list ->
+            commentET.text = null
             commentList?.clear()
-            if (it != null) {
-                commentList?.addAll(it)
+            if (list != null) {
+                commentList?.addAll(list)
+                commentList?.sortByDescending { it.createdAt }
                 discussionCount.text = requireContext().resources.getString(
                     R.string.discussion_str,
                     commentList?.size.toString()
@@ -147,11 +160,14 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         }
     }
 
-    override fun onLikeClick() {
+    override fun onLikeClick(commentID: Int) {
 
     }
 
-    override fun onReplyClick() {
+    override fun onReplyClick(parentCommentID: Int) {
+        commentET.text = null
+        bottom_RL.isVisible = true
+        this.parentCommentId = parentCommentID
     }
 
     private fun onAudioPermission() {
@@ -186,22 +202,21 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         outputMediaFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val cw = ContextWrapper(requireContext().applicationContext)
             val directory = cw.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
-            File(directory.toString() + "/" + System.currentTimeMillis() + ".m4a")
+            File(directory.toString() + "/" + System.currentTimeMillis() + ".mp3")
         } else {
             val folder = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
                     .toString() + "/EasyDay"
             )
             if (!folder.exists()) folder.mkdirs()
-            File(folder.absolutePath + "/" + System.currentTimeMillis() + ".m4a")
+            File(folder.absolutePath + "/" + System.currentTimeMillis() + ".mp3")
         }
 
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         recorder.setOutputFile(outputMediaFile?.path)
-//            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);         for mp3 audio
-        //            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);         for mp3 audio
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)       //  for mp3 audio
+//        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
         recorder.prepare()
         recorder.start()
 

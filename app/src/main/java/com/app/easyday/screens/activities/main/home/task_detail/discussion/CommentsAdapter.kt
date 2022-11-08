@@ -54,7 +54,13 @@ class CommentsAdapter(
             timeTV.text = dtf.format(odt)
             commentTV.text = item.comment
 
+            reply.setOnClickListener {
+                item.id?.let { it1 -> anInterface.onReplyClick(it1) }
+            }
 
+            likeTV.setOnClickListener {
+                item.id?.let { it1 -> anInterface.onLikeClick(it1) }
+            }
         }
     }
 

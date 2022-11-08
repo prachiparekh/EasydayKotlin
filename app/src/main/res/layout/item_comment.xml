@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/topRL"
@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
+        android:paddingVertical="@dimen/_5sdp"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -38,7 +39,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:fontFamily="@font/dm_sans_700"
-                    android:text="Toni Lagros"
                     android:textColor="@color/accent_blue"
                     android:textSize="@dimen/_11sdp" />
 
@@ -60,9 +60,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/dm_sans_400"
                 android:paddingVertical="@dimen/_5sdp"
-                android:text="@string/laborum_distinctio"
+                android:text="Laborum distinctio autem voluptate dignissimos ut quo"
                 android:textColor="@color/light_text"
-                android:textSize="12sp" />
+                android:textSize="@dimen/_10sdp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                     android:drawablePadding="@dimen/_7sdp"
                     android:fontFamily="@font/inter_medium_500"
                     android:src="@drawable/ic_reply"
-                    android:text="Reply" />
+                    android:text="@string/reply" />
 
                 <TextView
                     android:id="@+id/likeTV"

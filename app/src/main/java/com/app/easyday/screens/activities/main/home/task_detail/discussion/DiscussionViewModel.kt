@@ -3,6 +3,7 @@ package com.app.easyday.screens.activities.main.home.task_detail.discussion
 import androidx.lifecycle.MutableLiveData
 import com.app.easyday.app.sources.remote.apis.EasyDayApi
 import com.app.easyday.app.sources.remote.model.CommentResponseItem
+import com.app.easyday.navigation.UiEvent
 import com.app.easyday.screens.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -23,28 +24,10 @@ class DiscussionViewModel @Inject constructor(
 
     fun addComment(
         task_id: Int,
-        comment: RequestBody?,
-        parent_id: Int?,
-        audioList: ArrayList<File>?
+        comment: RequestBody?, parent_id: Int?
     ) {
-
-        val attachmentBodyList: ArrayList<MultipartBody.Part> = ArrayList()
-        audioList?.indices?.forEach { i ->
-            val requestList: RequestBody =
-                audioList[i].asRequestBody("*/*".toMediaTypeOrNull())
-
-            val attachmentBody =
-                MultipartBody.Part.createFormData(
-                    "task_comment_media",
-                    audioList[i].name,
-                    requestList
-                )
-
-
-            attachmentBodyList.add(attachmentBody)
-        }
-
-        api.addComment(task_id, comment, parent_id, attachmentBodyList)
+        uiEventStream.value = UiEvent.HideKeyboard
+        api.addComment(task_id, comment, parent_id)
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({ resp ->
                 commentList.value = resp.data
@@ -52,6 +35,36 @@ class DiscussionViewModel @Inject constructor(
                 commentList.value = null
             })
     }
+
+
+    fun addMediaComment(
+        task_id: Int,
+        audioFile: File?,
+        parent_id: Int?
+    ) {
+
+        uiEventStream.value = UiEvent.HideKeyboard
+        val requestBody: RequestBody? =
+            audioFile?.asRequestBody("*/*".toMediaTypeOrNull())
+
+        val attachmentBody =
+            requestBody?.let {
+                MultipartBody.Part.createFormData(
+                    "task_comment_media",
+                    audioFile.name,
+                    it
+                )
+            }
+
+        api.addCommentMedia(task_id, attachmentBody, parent_id)
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ resp ->
+                commentList.value = resp.data
+            }, {
+                commentList.value = null
+            })
+    }
+
 
 }
 
