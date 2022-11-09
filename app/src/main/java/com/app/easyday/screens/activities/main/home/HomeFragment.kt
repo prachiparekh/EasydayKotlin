@@ -62,6 +62,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     override fun initUi() {
 
         DeviceUtils.initProgress(requireContext())
+        DeviceUtils.showProgress()
 //        Log.e("token:", AppPreferencesDelegates.get().token)
         if (!AppPreferencesDelegates.get().showcaseSeen) {
 
@@ -151,7 +152,9 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         }
 
         viewModel.projectList.observe(viewLifecycleOwner) { projectList ->
+            DeviceUtils.dismissProgress()
             if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+
                 if (!projectList.isNullOrEmpty()) {
 
                     this.projectList = projectList
@@ -175,8 +178,11 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                         )
                     )
 
+                    DeviceUtils.showProgress()
                     selectedProjectID?.let { viewModel.getAllTask(it) }
                 }
+
+
                 activeProject.setOnClickListener {
                     DeviceUtils.showProgress()
                     val fragment = ProjectListDialog(this, projectList, selectedProjectPosition)
@@ -197,6 +203,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                 taskRV.isVisible = true
                 taskRV.adapter = TaskAdapter(requireContext(), it, this)
             }
+            DeviceUtils.dismissProgress()
         }
     }
 

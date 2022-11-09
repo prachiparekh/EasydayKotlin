@@ -7,13 +7,12 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.viewpager2.widget.ViewPager2
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.*
 import com.app.easyday.app.sources.local.model.ContactModel
@@ -41,6 +40,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
 
+
 @AndroidEntryPoint
 class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterface,
     AttributeSelectionInterface,
@@ -56,11 +56,6 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     var selectedUriList = ArrayList<Media>()
     var mediaAdapter: MediaAdapter? = null
 
-    companion object {
-//        val contactList = ArrayList<ContactModel>()
-    }
-
-//    *****************
 
     var tagBSFDialog: AddTagBottomSheetDialog? = null
     var spaceZoneBSFDialog: AddSpaceZoneBottomSheetDialog? = null
@@ -92,6 +87,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     }
 
     override fun initUi() {
+
         selectedUriList = arguments?.getParcelableArrayList<Media>("uriList") as ArrayList<Media>
 
 
@@ -127,8 +123,6 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
             }
         )
 
-
-
         pagerPhotos.apply {
             adapter = mediaAdapter?.apply { submitList(selectedUriList) }
         }
@@ -162,10 +156,26 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
         filterRV.adapter = taskAdapter
 
         imgAdapter =
-            BottomImageAdapter(requireContext(), selectedUriList, onItemClick = { position, item ->
-                pagerPhotos.currentItem = position
-            })
+            BottomImageAdapter(
+                requireContext(),
+                selectedUriList,
+                0,
+                onItemClick = { position, item ->
+                    pagerPhotos.currentItem = position
+                })
         imgRV.adapter = imgAdapter
+
+        pagerPhotos.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                imgAdapter?.setPosition(position)
+            }
+        })
 
 
         edit.setOnClickListener {
@@ -227,10 +237,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                 dialog.setCancelable(false)
                 dialog.setContentView(R.layout.delete_dialog_layout)
                 dialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
-                dialog.window?.setLayout(
-                    WindowManager.LayoutParams.MATCH_PARENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT
-                )
+
                 dialog.show()
 
                 dialog.sure_delete_Tv.setOnClickListener {
@@ -255,12 +262,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
 
                     filterRV.visibility = View.VISIBLE
                 }
-
-            } else {
-                Toast.makeText(context, "Please add item for Delete", Toast.LENGTH_SHORT).show()
             }
-
-
         }
 
         imgAdd.setOnClickListener {
@@ -270,32 +272,39 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
         send.setOnClickListener {
             if (taskNameET.text?.isNotEmpty() == true) {
 
-                val contactList = ArrayList<ContactModel>()
-                if (!projectparticipantList.isNullOrEmpty()) {
-                    projectparticipantList?.indices?.forEach { i ->
-                        contactList.add(
-                            ContactModel(
-                                id = projectparticipantList?.get(i)?.id.toString(),
-                                name = projectparticipantList?.get(i)?.user?.fullname,
-                                role = projectparticipantList?.get(i)?.role,
-                                phoneNumber = projectparticipantList?.get(i)?.user?.phoneNumber.toString(),
-                                photoURI = projectparticipantList?.get(i)?.user?.profileImage
+                if (selectedDate != null) {
+                    val contactList = ArrayList<ContactModel>()
+                    if (!projectparticipantList.isNullOrEmpty()) {
+                        projectparticipantList?.indices?.forEach { i ->
+                            contactList.add(
+                                ContactModel(
+                                    id = projectparticipantList?.get(i)?.id.toString(),
+                                    name = projectparticipantList?.get(i)?.user?.fullname,
+                                    role = projectparticipantList?.get(i)?.role,
+                                    phoneNumber = projectparticipantList?.get(i)?.user?.phoneNumber.toString(),
+                                    photoURI = projectparticipantList?.get(i)?.user?.profileImage
+                                )
+
                             )
-
-                        )
+                        }
                     }
-                }
 
-                val fragment =
-                    AsigneeSelectionBottomSheetDialog(
+                    val fragment =
+                        AsigneeSelectionBottomSheetDialog(
+                            requireContext(),
+                            contactList,
+                            this, this
+                        )
+                    childFragmentManager.let {
+                        fragment.show(it, "Space")
+                    }
+                } else {
+                    Toast.makeText(
                         requireContext(),
-                        contactList,
-                        this, this
-                    )
-                childFragmentManager.let {
-                    fragment.show(it, "Space")
+                        requireContext().resources.getString(R.string.due_date_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-
 
             } else {
                 Toast.makeText(
@@ -337,9 +346,11 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                     }
                 }
                 is CreateTaskViewModel.ACTION.showError -> {
+                    DeviceUtils.dismissProgress()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 is CreateTaskViewModel.ACTION.taskResponse -> {
+                    DeviceUtils.dismissProgress()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
 
                     val action = CreateTaskFragmentDirections.createTaskToDashboard()
@@ -507,12 +518,10 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                     requestList
                 )
 
-
             attachmentBodyList.add(attachmentBody)
         }
 
         var duedate: String? = null
-
         if (selectedDate != null) {
             var spf = SimpleDateFormat("dd/MM/yy")
             val newDate = spf.parse(selectedDate)
@@ -536,5 +545,6 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
             )
         )
     }
+
 
 }

@@ -77,7 +77,7 @@ class CreateTaskViewModel @Inject constructor(
     }
 
     fun addTask(addTaskRequestModel: AddTaskRequestModel) {
-        DeviceUtils.showProgress()
+
 
         val part_project_id: RequestBody = addTaskRequestModel.project_id.toString()
             .toRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -116,11 +116,11 @@ class CreateTaskViewModel @Inject constructor(
                 if(resp.success)
                     actionStream.value= resp.message?.let { ACTION.taskResponse(it) }
 
-                DeviceUtils.dismissProgress()
+
             }, {throwable->
                 actionStream.value = ErrorUtil.onError(throwable)
                     ?.let { ACTION.showError(it) }
-                DeviceUtils.dismissProgress()
+
             })
     }
 }

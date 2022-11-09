@@ -16,22 +16,18 @@ import com.app.easyday.app.sources.local.model.Media
 import com.app.easyday.utils.camera_utils.MediaDiffCallback
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
-import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 
 class BottomImageAdapter(
     val mContext: Context,
     private var mediaList: ArrayList<Media>,
+    var selectedPosition: Int,
     private val onItemClick: (Int, Media) -> Unit
 ) : ListAdapter<Media, BottomImageAdapter.PicturesViewHolder>(MediaDiffCallback()) {
 
-    var loadFail = false
     private val inflater: LayoutInflater = LayoutInflater.from(mContext)
-    var selectedPosition = 0
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         PicturesViewHolder(inflater.inflate(R.layout.item_bottom_image, parent, false))
@@ -63,44 +59,6 @@ class BottomImageAdapter(
                     .into(imagePreview)
             } else {
                 Glide.with(mContext)
-                    .asBitmap()
-                    .load(item.uri)
-                    .apply(
-                        options.centerCrop()
-                            .skipMemoryCache(true)
-                            .priority(Priority.HIGH)
-                            .format(DecodeFormat.PREFER_ARGB_8888)
-                    ).listener(
-                        object : RequestListener<Bitmap> {
-
-                            override fun onResourceReady(
-                                resource: Bitmap?,
-                                model: Any?,
-                                target: com.bumptech.glide.request.target.Target<Bitmap>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                return false
-                            }
-
-                            override fun onLoadFailed(
-                                e: GlideException?,
-                                model: Any?,
-                                target: Target<Bitmap>?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                loadFail = true
-                                notifyItemChanged(adapterPosition)
-                                return false
-                            }
-
-                        }
-                    )
-                    .into(imagePreview)
-            }
-
-            if (loadFail) {
-                Glide.with(mContext)
                     .load(item.uri?.let {
                         getThumbnailImage(
                             it.toString()
@@ -114,6 +72,7 @@ class BottomImageAdapter(
                     )
                     .into(imagePreview)
             }
+
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (selectedPosition == adapterPosition) {
@@ -140,5 +99,10 @@ class BottomImageAdapter(
         return videoPath?.let { ThumbnailUtils.createVideoThumbnail(it, MINI_KIND) }
     }
 
-
+    fun setPosition(selectedPosition: Int) {
+        val lastPosition = this.selectedPosition
+        this.selectedPosition = selectedPosition
+        notifyItemChanged(lastPosition)
+        notifyItemChanged(selectedPosition)
+    }
 }

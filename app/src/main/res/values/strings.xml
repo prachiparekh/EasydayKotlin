@@ -210,6 +210,7 @@
     <string name="select_assignee">Select Assignee</string>
     <string name="user_role">user</string>
     <string name="task_title_required">Task title is required !</string>
+    <string name="due_date_required">Due date is required !</string>
     <string name="assign">Assign</string>
     <string name="dot">•</string>
     <string name="recent_searches">Recent Searches</string>
@@ -248,4 +249,7 @@
     <string name="audio_permission_denied_feedback">Audio permission is required.</string>
     <string name="delete_image">Delete Image?</string>
     <string name="reply">Reply</string>
+    <string name="slide_to_cancel">Slide to cancel</string>
+
+    <bool name="is_right_to_left">false</bool>
 </resources>

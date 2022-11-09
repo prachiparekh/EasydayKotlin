@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -148,7 +148,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/start_recordRL"
+            android:id="@+id/commentRL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/selected_id_RL"
@@ -201,9 +201,21 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
 
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/layoutMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/audioLayout"
+                layout="@layout/record_view"
+                android:paddingVertical="@dimen/_10sdp"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/stop_recordRL"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/selected_id_RL"
             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -212,45 +224,43 @@
 
             <TextView
                 android:id="@+id/audioTime"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@+id/stop_recordTV"
                 android:drawableLeft="@drawable/ic_red_record"
                 android:drawablePadding="@dimen/_5sdp"
                 android:fontFamily="@font/inter_medium_500"
                 android:textColor="@color/light_text"
-                android:textSize="15sp" />
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/stop_recordTV"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true">
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_toLeftOf="@+id/stop_recordIV"
+                android:drawableLeft="@drawable/ic_arrow_left"
+                android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="@font/inter_medium_500"
+                android:text="@string/slide_to_cancel"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintEnd_toStartOf="@id/stop_recordIV"
+                app:layout_constraintTop_toTopOf="@id/stop_recordIV" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_toLeftOf="@+id/stop_recordIV"
-                    android:drawableLeft="@drawable/ic_arrow_left"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:fontFamily="@font/inter_medium_500"
-                    android:text="Slide to cancel"
-                    android:textColor="@color/light_text"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:id="@id/stop_recordIV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:src="@drawable/ic_stop_record" />
-            </LinearLayout>
+            <ImageView
+                android:id="@id/stop_recordIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:src="@drawable/ic_stop_record"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

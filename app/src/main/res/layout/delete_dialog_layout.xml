@@ -26,16 +26,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/sure_Tv"
-            android:layout_marginHorizontal="@dimen/_25sdp"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:layout_marginVertical="@dimen/_20sdp"
+            android:paddingHorizontal="@dimen/_10sdp">
 
             <TextView
                 android:id="@+id/cancel_dismis_Tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="@font/inter_medium_500"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/cancel"
@@ -48,7 +46,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="@font/inter_medium_500"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/delete_for_me"

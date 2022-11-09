@@ -11,7 +11,7 @@ import java.io.File
 class S3Uploader(var context: Context, var folderName: String) {
     private val transferUtility: TransferUtility? = AmazonUtil.getTransferUtility(context)
     private var s3UploadInterface: S3UploadInterface? = null
-    fun initUpload(filePath: String?) {
+    fun initUpload(filePath: String) {
         val file = File(filePath)
         val myObjectMetadata = ObjectMetadata()
         myObjectMetadata.contentType = "*/*"

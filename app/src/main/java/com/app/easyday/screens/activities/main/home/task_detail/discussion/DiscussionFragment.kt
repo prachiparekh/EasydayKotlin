@@ -22,7 +22,9 @@ import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
 import com.app.easyday.app.sources.remote.model.CommentResponseItem
 import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.base.BaseFragment
+import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.IntentUtil
+import com.app.easyday.views.AudioRecordView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -38,7 +40,8 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterface {
+class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterface,
+    AudioRecordView.RecordingListener {
 
     override fun getContentView() = R.layout.fragment_discussion
     var commentAdapter: CommentsAdapter? = null
@@ -50,9 +53,11 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
     private var s3uploaderObj: S3Uploader? = null
     private var urlFromS3: String? = null
+    var audioRecordView: AudioRecordView? = null
 
 
     override fun initUi() {
+        DeviceUtils.initProgress(requireContext())
         s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_TASK_COMMENT_MEDIA)
         taskModel = arguments?.getParcelable("taskModel") as TaskResponse?
 
@@ -87,7 +92,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
         cta.setOnClickListener {
             if (taskModel?.id != null) {
-
+                DeviceUtils.showProgress()
                 val comment = commentET.text
                 val commentBody: RequestBody = comment.toString()
                     .toRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -114,38 +119,26 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         }
         commentRV.adapter = commentAdapter
 
+
+        // this is to make your layout the root of audio record view, root layout supposed to be empty..
+        audioRecordView?.initView(layoutMain)
+        audioRecordView?.setRecordingListener(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        stop_recordTV.setOnClickListener {
-            start_recordRL.isVisible = true
-            stop_recordRL.isVisible = false
-            running = false
-            seconds = 0
-            recorder.stop()
-            runnable?.let { it1 -> handler.removeCallbacks(it1) }
-            outputMediaFile?.let { it1 -> uploadImageTos3(it1) }
+        stop_recordRL.setOnClickListener {
+
 
         }
+
 
         recordBtn.setOnClickListener {
-
-            if (IntentUtil.readPermission(
-                    requireActivity()
-                ) && IntentUtil.writePermission(
-                    requireActivity()
-                ) && IntentUtil.recordAudioPermission(
-                    requireActivity()
-                )
-            ) {
-
-                startRecording()
-            } else {
-                onAudioPermission()
-            }
-
+            audioLayout.isVisible = true
+            commentRL.isVisible = false
         }
+
+
     }
 
     override fun setObservers() {
@@ -161,6 +154,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
                 )
                 commentAdapter?.notifyDataSetChanged()
             }
+            DeviceUtils.dismissProgress()
         }
     }
 
@@ -200,7 +194,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     }
 
     private fun startRecording() {
-        start_recordRL.isVisible = false
+        commentRL.isVisible = false
         stop_recordRL.isVisible = true
 
         outputMediaFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -270,9 +264,6 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         running = false
     }
 
-    // If the activity is resumed,
-    // start the stopwatch
-    // again if it was running previously.
     override fun onResume() {
         super.onResume()
         if (wasRunning) {
@@ -280,7 +271,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         }
     }
 
-    private fun uploadImageTos3(audioFile: File) {
+    private fun uploadAudioTos3(audioFile: File) {
         val path = audioFile.absolutePath
 
         s3uploaderObj?.initUpload(path)
@@ -312,6 +303,38 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
                 Log.e("TAG", "Error Uploading: $response")
             }
         })
+    }
+
+    override fun onRecordingStarted() {
+        if (IntentUtil.readPermission(
+                requireActivity()
+            ) && IntentUtil.writePermission(
+                requireActivity()
+            ) && IntentUtil.recordAudioPermission(
+                requireActivity()
+            )
+        ) {
+
+            startRecording()
+        } else {
+            onAudioPermission()
+        }
+    }
+
+    override fun onRecordingCompleted() {
+        commentRL.isVisible = true
+        stop_recordRL.isVisible = false
+        running = false
+        seconds = 0
+        recorder.stop()
+        DeviceUtils.showProgress()
+
+        runnable?.let { it1 -> handler.removeCallbacks(it1) }
+        outputMediaFile?.let { it1 -> uploadAudioTos3(it1) }
+    }
+
+    override fun onRecordingCanceled() {
+        audioLayout.isVisible = false
     }
 
 
