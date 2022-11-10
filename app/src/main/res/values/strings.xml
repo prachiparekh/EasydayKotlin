@@ -142,6 +142,7 @@
     <string name="device">Devices</string>
     <string name="you_commented">You commented on Door Fix on second floor</string>
     <string name="activity_time">%s • %s</string>
+    <string name="notification_time">Mar 16 %s 01:54pm</string>
     <string name="my_activity_log">My Activity Log</string>
     <string name="one_plus">OnePlus OnePlus Nord CE2</string>
     <string name="hyderabad">Hyderabad, India %s Online</string>

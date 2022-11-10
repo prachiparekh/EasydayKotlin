@@ -25,65 +25,60 @@
             android:textStyle="bold"
             android:visibility="gone"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/today"
-            >
+            android:layout_marginHorizontal="@dimen/_10sdp">
 
             <View
                 android:id="@+id/v_line"
                 android:layout_width="@dimen/_1sdp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/_15sdp"
-                app:layout_constraintBottom_toBottomOf="@id/commentRL"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/line_color" />
-
-            <View
-                android:id="@+id/h_line"
-                android:layout_width="@dimen/_11sdp"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_centerVertical="true"
-                app:layout_constraintTop_toTopOf="@id/v_line"
-                app:layout_constraintBottom_toBottomOf="@id/v_line"
-                app:layout_constraintStart_toEndOf="@id/v_line"
-                android:background="@color/line_color" />
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/commentRL"
+                android:layout_alignBottom="@+id/commentRL"
+                android:background="@color/line_color"
+                android:visibility="visible" />
 
             <RelativeLayout
                 android:id="@+id/commentRL"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/h_line"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:paddingVertical="@dimen/_5sdp">
+                android:layout_toEndOf="@+id/v_line"
+                android:paddingVertical="@dimen/_7sdp">
+
+                <View
+                    android:id="@+id/h_line"
+                    android:layout_width="@dimen/_11sdp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_centerVertical="true"
+                    android:background="@color/line_color" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/comm"
+                    android:id="@+id/user_image"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_toRightOf="@+id/h_line"
                     android:src="@drawable/ic_comment" />
 
                 <LinearLayout
+                    android:id="@+id/inf_LL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_toRightOf="@+id/comm"
+                    android:layout_toRightOf="@+id/user_image"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/comment_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:fontFamily="@font/inter_medium_500"
                         android:text="@string/you_commented"
-                        android:textColor="@color/accent_blue"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textColor="@color/actlog_text"
+                        android:textSize="@dimen/_13sdp" />
 
                     <TextView
                         android:id="@+id/time"
@@ -93,12 +88,12 @@
                         android:fontFamily="@font/inter_medium_500"
                         android:text="@string/activity_time"
                         android:textColor="@color/hint_color"
-                        android:textSize="@dimen/_11sdp" />
+                        android:textSize="@dimen/_10sdp" />
 
 
                 </LinearLayout>
             </RelativeLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
 

@@ -2,14 +2,11 @@ package com.app.easyday.screens.activities.main.more.notifications
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
-import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.view.View
 import android.widget.TextView
 import androidx.navigation.Navigation
@@ -25,10 +22,10 @@ class NotificationsFragment : BaseFragment<NotificationsViewModel>() {
     @SuppressLint("StringFormatMatches")
     override fun initUi() {
         val dot = requireContext().resources.getString(R.string.dot)
-        time_1?.text = requireContext().resources.getString(R.string.activity_time, dot)
-        time_2?.text = requireContext().resources.getString(R.string.activity_time, dot)
-        time_3?.text = requireContext().resources.getString(R.string.activity_time, dot)
-        time_4?.text = requireContext().resources.getString(R.string.activity_time, dot)
+        time_1?.text = requireContext().resources.getString(R.string.notification_time, dot)
+        time_2?.text = requireContext().resources.getString(R.string.notification_time, dot)
+        time_3?.text = requireContext().resources.getString(R.string.notification_time, dot)
+        time_4?.text = requireContext().resources.getString(R.string.notification_time, dot)
 
         val fullText: String = requireContext().resources.getString(R.string.full_peter_assigned)
         val normalText: String = requireContext().resources.getString(R.string.peter_assigned_you)
@@ -36,10 +33,6 @@ class NotificationsFragment : BaseFragment<NotificationsViewModel>() {
 
         MarkAll.paintFlags = MarkAll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-        val spanStringbold = SpannableString(boldText)
-        val spanString = SpannableString(fullText)
-        spanStringbold.setSpan(UnderlineSpan(), 0, spanStringbold.length, 0)
-        spanStringbold.setSpan(StyleSpan(Typeface.BOLD), 0, spanStringbold.length, 0)
 
         setHighLightedText(fst_comment, requireContext().resources.getString(R.string.door_fix_on))
         setHighLightedText(sec_comment, requireContext().resources.getString(R.string.julia_okina))

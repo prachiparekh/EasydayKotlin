@@ -2,8 +2,6 @@ package com.app.easyday.utils
 
 import android.content.Context
 import com.app.easyday.R
-import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
-
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -108,10 +106,10 @@ object DateTimeUtils {
         }
     }
 
-    fun addStringTimeToDate(date: Date, time: String): Date {
-        val serverTime = SimpleDateFormat("HH:mm:ss", newLocale).parse(time)
+    fun addStringTimeToDate(date: Date?): Date {
+//        val serverTime = SimpleDateFormat("HH:mm:ss", newLocale).parse(time)
         val calendarTime = Calendar.getInstance()
-        calendarTime.time = serverTime
+//        calendarTime.time = serverTime
         val calendarDate = Calendar.getInstance()
         calendarDate.time = date
         calendarDate.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY))

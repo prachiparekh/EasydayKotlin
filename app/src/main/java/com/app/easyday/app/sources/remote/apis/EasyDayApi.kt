@@ -133,5 +133,12 @@ interface EasyDayApi {
         @Query("project_id") project_id: Int
     ): Observable<ApiResponse<ArrayList<UserActivityResponse>>>
 
+    @FormUrlEncoded
+    @POST("user/add-feedback")
+    fun submitFeedback(
+        @Field("rating") rating: String,
+        @Field("tags") tags: String,
+        @Field("feedback_text") feedback_text: String
+    ): Observable<ApiResponse<FeedbackResponse>>
 }
 
