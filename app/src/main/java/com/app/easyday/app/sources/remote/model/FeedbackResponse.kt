@@ -2,13 +2,8 @@ package com.app.easyday.app.sources.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class FeedbackResponse(
-	val data: Data? = null,
-	val success: Boolean? = null,
-	val message: String? = null
-)
 
-data class Data(
+data class FeedbackResponse(
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,
 
@@ -29,5 +24,9 @@ data class Data(
 
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
-)
+) {
+	override fun toString(): String {
+		return "FeedbackResponse(createdAt=$createdAt, userId=$userId, rating=$rating, id=$id, feedbackText=$feedbackText, tags=$tags, updatedAt=$updatedAt)"
+	}
+}
 

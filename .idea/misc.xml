@@ -23,11 +23,13 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/activity_image_edit.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/activity_log_item.xml" value="0.365625" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/add_assignee_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/add_tag_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/assigned_participant.xml" value="0.365625" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/back_to_setting_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/date_showed_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/date_showing_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_dialog_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/feedback_tag_items.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_activity_log.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_add_admin.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_add_participants.xml" value="0.36666666666666664" />

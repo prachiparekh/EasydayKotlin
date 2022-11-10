@@ -3,20 +3,31 @@ package com.app.easyday.screens.activities.main.more.feedback
 import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.app.easyday.R
-import com.app.easyday.screens.activities.main.home.HomeFragment
+import com.app.easyday.app.sources.local.interfaces.FeedBackTagInterfaceClick
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.screens.dialogs.BackTosettingDialog
+import com.app.easyday.screens.dialogs.adapters.TagsAdapter
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_feedback.*
+import kotlinx.android.synthetic.main.fragment_feedback.back
 
 @AndroidEntryPoint
-class FeedbackFragment : BaseFragment<FeedbackViewModel>() {
+class FeedbackFragment : BaseFragment<FeedbackViewModel>(), FeedBackTagInterfaceClick {
 
-
+    val list: ArrayList<String> = ArrayList()
+    val taglist: ArrayList<String> = ArrayList()
     override fun getContentView() = R.layout.fragment_feedback
+    var layoutManager: FlexboxLayoutManager? = null
+    private var adapter: FeedTagsAdapter? = null
 
     @SuppressLint("ResourceAsColor")
     override fun initUi() {
@@ -24,38 +35,58 @@ class FeedbackFragment : BaseFragment<FeedbackViewModel>() {
         back.setOnClickListener {
             Navigation.findNavController(requireView()).popBackStack()
         }
-        val list: ArrayList<String> = ArrayList()
-        cs_Tv.setOnClickListener {
+
+       /* cs_Tv.setOnClickListener {
             cs_Tv.isSelected = !cs_Tv.isSelected
-           if (cs_Tv.isSelected){
-               list.add("Customer Service")
-           }
+            if (cs_Tv.isSelected) {
+                list.add("Customer Support")
+                cs_Tv.isSelected = true
+            } else {
+                cs_Tv.isSelected = false
+                list.remove("Customer Support")
+            }
 
         }
         tr_Tv.setOnClickListener {
             tr_Tv.isSelected = !tr_Tv.isSelected
-//            if (cs_Tv.isSelected){
-//                list.add("Transparency")
-//            }
+            if (tr_Tv.isSelected) {
+                list.add("Transparency")
+                tr_Tv.isSelected = true
+            } else {
+                tr_Tv.isSelected = false
+                list.remove("Transparency")
+            }
         }
         tslo_Tv.setOnClickListener {
             tslo_Tv.isSelected = !tslo_Tv.isSelected
-//            if (cs_Tv.isSelected){
-//                list.add("Too Slow")
-//            }
+            if (tslo_Tv.isSelected) {
+                list.add("Too Slow")
+                tslo_Tv.isSelected = true
+            } else {
+                tslo_Tv.isSelected = false
+                list.remove("Too Slow")
+            }
         }
         se_Tv.setOnClickListener {
             se_Tv.isSelected = !se_Tv.isSelected
-//            if (cs_Tv.isSelected){
-//                list.add("Speed & Efficiency")
-//            }
+            if (se_Tv.isSelected) {
+                list.add("Speed & Efficiency")
+                se_Tv.isSelected = true
+            } else {
+                se_Tv.isSelected = false
+                list.remove("Speed & Efficiency")
+            }
         }
         ibg_Tv.setOnClickListener {
             ibg_Tv.isSelected = !ibg_Tv.isSelected
-//            if (cs_Tv.isSelected){
-//                list.add("Improve Bugs")
-//            }
-        }
+            if (ibg_Tv.isSelected) {
+                list.add("Improve Bugs")
+                ibg_Tv.isSelected = true
+            } else {
+                ibg_Tv.isSelected = false
+                list.remove("Improve Bugs")
+            }
+        }*/
         inputET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -72,55 +103,61 @@ class FeedbackFragment : BaseFragment<FeedbackViewModel>() {
         })
         val feedText = inputET.text
 
-        if(cs_Tv.isSelected && tr_Tv.isSelected && tslo_Tv.isSelected && se_Tv.isSelected && ibg_Tv.isSelected ){
-            list.addAll(listOf("Customer Support", "Transparency", "Too Slow", "Speed & Efficiency", "Improve Bugs"))
-        }else if (cs_Tv.isSelected && !tr_Tv.isSelected && !tslo_Tv.isSelected && !se_Tv.isSelected && !ibg_Tv.isSelected ){
-            list.add("Customer Support")
-        }else if (cs_Tv.isSelected && tr_Tv.isSelected && !tslo_Tv.isSelected && !se_Tv.isSelected && !ibg_Tv.isSelected ){
-//            list.add("Transparency")
-                list.addAll(listOf("Customer Support", "Transparency"))
-        }else if (tslo_Tv.isSelected && !cs_Tv.isSelected && !tr_Tv.isSelected && !se_Tv.isSelected && !ibg_Tv.isSelected){
-            list.add("Too Slow")
-        }else if (se_Tv.isSelected && !cs_Tv.isSelected && !tslo_Tv.isSelected && !tr_Tv.isSelected && !ibg_Tv.isSelected){
-            list.add("Speed & Efficiency")
-        }else if (ibg_Tv.isSelected && !cs_Tv.isSelected && !tslo_Tv.isSelected && !se_Tv.isSelected && !tr_Tv.isSelected){
-            list.add("Improve Bugs")
-            }
-//        else if (cs_Tv.isSelected && tr_Tv.isSelected && tslo_Tv.isSelected && se_Tv.isSelected && ibg_Tv.isSelected){
-//            list.addAll(listOf("Customer Support", "Transparency", "Too Slow", "Speed & Efficiency", "Improve Bugs"))
-//        }else
-            else{
-                list.removeAll(listOf("Customer Service", "Transparency", "Too Slow", "Speed & Efficiency", "Improve Bugs"))
-            }
-//            else{
-//            list.addAll(listOf("Customer Service", "Transparency", "Too Slow", "Speed & Efficiency", "Improve Bugs"))
-////            list.removeAll(listOf("Customer Service", "Transparency", "Too Slow", "Speed & Efficiency", "Improve Bugs"))
-//        }
         submit_btnRL.setOnClickListener {
-
-//            viewModel.api.submitFeedback(rating, tags, feedback_text)
-//                .subscribe { resp ->
-//                if (resp.success) {
-
-                    val dialog = BackTosettingDialog()
-                    if (!dialog.isAdded) {
-                        dialog.show(childFragmentManager, "back")
-                    }
-
-                    val rating = rating.rating.toString()
-//            val tags = rating.rating.toString()
-                    HomeFragment.selectedProjectID?.let { viewModel.submitFeedback(rating, list.toString(), feedText.toString()) }
-                    Toast.makeText(context, list.toString(), Toast.LENGTH_SHORT).show()
-
-//                }
-//            }
+            val rating = rating.rating.toString()
+            viewModel.submitFeedback(
+                rating,
+                taglist.toString(),
+                feedText.toString()
+            )
 
         }
+
+        list.addAll(listOf("Customer Support", "Transparency", "Too Slow", "Speed & Efficiency", "Improve Bugs"))
+
+        tags_RecV?.layoutManager = FlexboxLayoutManager(requireContext())
+        adapter = FeedTagsAdapter(requireContext(), list, this)
+        tags_RecV?.adapter = adapter
 
     }
 
     override fun setObservers() {
+        viewModel.userFeedbackData.observe(viewLifecycleOwner) { response ->
+
+            Log.e("res", response.toString())
+            if (response != null) {
+
+                val dialog = BackTosettingDialog()
+                if (!dialog.isAdded) {
+                    dialog.show(childFragmentManager, "back")
+                }
+
+            }
+        }
+    }
+
+    override fun onTagClick(position: Int, title_bg: RelativeLayout) {
+        if (title_bg.isSelected){
+            when (position) {
+                0 -> taglist.add("Customer Support")
+                1 -> taglist.add("Transparency")
+                2 -> taglist.add("Too Slow")
+                3 -> taglist.add("Speed & Efficiency")
+                4 -> taglist.add("Improve Bugs")
+
+            }
+        }else{
+            when (position) {
+                0 -> taglist.remove("Customer Support")
+                1 -> taglist.remove("Transparency")
+                2 -> taglist.remove("Too Slow")
+                3 -> taglist.remove("Speed & Efficiency")
+                4 -> taglist.remove("Improve Bugs")
+
+            }
+        }
 
     }
+
 
 }
