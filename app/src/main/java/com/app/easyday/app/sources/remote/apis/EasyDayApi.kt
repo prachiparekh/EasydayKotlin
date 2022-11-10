@@ -119,12 +119,9 @@ interface EasyDayApi {
         @Part("parent_id") parent_id: Int?
     ): Observable<ApiResponse<ArrayList<CommentResponseItem>>>
 
-    @Multipart
     @POST("task/add-comment")
     fun addCommentMedia(
-        @Part("task_id") task_id: Int,
-        @Part task_comment_media: MultipartBody.Part?,
-        @Part("parent_id") parent_id: Int?
+        @Body taskCommentRequestModel: CommentMediaRequest
     ): Observable<ApiResponse<ArrayList<CommentResponseItem>>>
 
 
@@ -132,6 +129,11 @@ interface EasyDayApi {
     fun getUserActivityDetails(
         @Query("project_id") project_id: Int
     ): Observable<ApiResponse<ArrayList<UserActivityResponse>>>
+
+    @GET("task/get-comment")
+    fun getTaskComments(
+        @Query("task_id") task_id: Int
+    ): Observable<ApiResponse<ArrayList<CommentResponseItem>>>
 
     @FormUrlEncoded
     @POST("user/add-feedback")

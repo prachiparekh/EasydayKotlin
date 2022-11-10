@@ -123,9 +123,6 @@ class TaskAdapter(
                 item.taskTags as ArrayList<TaskAttributeResponse>
             )
 
-//            itemView.setOnClickListener {
-//                anInterfaceClick.onTaskClick(position)
-//            }
             itemView.setOnClickListener {
                 position.let { it1 ->
                     anInterfaceClick.onTaskClick(item)
@@ -133,10 +130,13 @@ class TaskAdapter(
             }
 
             discussion.setOnClickListener {
-                item.let { it1 -> anInterfaceClick.onDiscussionClick(it1) }
+                item.id.let { it1 ->
+                    if (it1 != null) {
+                        anInterfaceClick.onDiscussionClick(it1)
+                    }
+                }
             }
             taskStatus.setOnClickListener {
-//                anInterfaceClick.onDiscussionClick()
             }
 
         }

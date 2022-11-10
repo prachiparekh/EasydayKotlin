@@ -32,16 +32,11 @@ class S3Uploader(var context: Context, var folderName: String) {
         }
 
         override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
-            Log.e(
-                TAG, String.format(
-                    "onProgressChanged: %d, total: %d, current: %d",
-                    id, bytesTotal, bytesCurrent
-                )
-            )
+
         }
 
         override fun onStateChanged(id: Int, newState: TransferState) {
-            Log.e(TAG, "onStateChanged: $id, $newState")
+
             if (newState == TransferState.COMPLETED) {
                 s3UploadInterface?.onUploadSuccess("Success")
             }

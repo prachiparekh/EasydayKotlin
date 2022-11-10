@@ -3,7 +3,6 @@ package com.app.easyday.screens.activities.main.more.feedback
 import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.RelativeLayout
 import androidx.navigation.Navigation
 import com.app.easyday.R
@@ -126,8 +125,8 @@ class FeedbackFragment : BaseFragment<FeedbackViewModel>(), FeedBackTagInterface
     override fun setObservers() {
         viewModel.userFeedbackData.observe(viewLifecycleOwner) { response ->
 
-            Log.e("res", response.toString())
-            if (response != null) {
+
+        if (response != null) {
 
                 val dialog = BackTosettingDialog()
                 if (!dialog.isAdded) {

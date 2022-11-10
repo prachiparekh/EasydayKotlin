@@ -3,7 +3,6 @@ package com.app.easyday.views
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -140,8 +139,8 @@ class AudioRecordView {
         )?.start()
 
         imageViewAudio?.setOnTouchListener(View.OnTouchListener { view, motionEvent ->
-            Log.e("isDeleting", isDeleting.toString())
-            if (isDeleting) {
+
+        if (isDeleting) {
                 return@OnTouchListener true
             }
             if (motionEvent.action == MotionEvent.ACTION_DOWN) {
@@ -265,7 +264,7 @@ class AudioRecordView {
             return
         }
 
-        Log.e("RecordingBehaviour", recordingBehaviour.toString())
+
         if (recordingBehaviour == RecordingBehaviour.CANCELED) {
             timeText?.visibility = View.INVISIBLE
 
@@ -330,7 +329,7 @@ class AudioRecordView {
     }
 
     private fun showErrorLog(s: String) {
-        Log.e(TAG, s)
+
     }
 
 }

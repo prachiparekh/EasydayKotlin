@@ -2,18 +2,16 @@ package com.app.easyday.screens.activities.main.home.task_detail
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.util.Log
 import android.view.View
-import androidx.compose.ui.graphics.Color
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.app.easyday.R
-import com.app.easyday.app.sources.local.model.ContactModel
-import com.app.easyday.app.sources.remote.model.*
+import com.app.easyday.app.sources.remote.model.TaskAttributeResponse
+import com.app.easyday.app.sources.remote.model.TaskParticipantsItem
+import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.base.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.back_to_setting_layout.view.*
 import kotlinx.android.synthetic.main.fragment_task_details.*
 
 class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
@@ -92,7 +90,7 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
             view_s_z.visibility = View.VISIBLE
         }
 
-        Log.e("spaceStr", zoneStr.toString())
+
         zones_Tv.text = zoneStr
 
         taskTitle.text = title

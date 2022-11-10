@@ -2,7 +2,6 @@ package com.app.easyday.screens.activities.main.more.activityLog
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.fragment_chart.view.*
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -170,7 +168,6 @@ class ActivityLogAdapter(private var context: Context,
             val dtf1 = DateTimeFormatter.ofPattern("HH:MMa", Locale.ENGLISH)
 
 
-            Log.e("title", dtf.format(odt).toString())
             time.text = context.resources.getString(
                 R.string.activity_time,
                 dtf.format(odt),

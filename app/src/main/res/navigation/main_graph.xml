@@ -72,12 +72,6 @@
             app:exitAnim="@anim/slide_out_to_the_left"
             app:popEnterAnim="@anim/slide_in_from_the_left"
             app:popExitAnim="@anim/slide_out_to_the_right">
-
-<!--            <argument-->
-<!--                android:name="userActivityModel"-->
-<!--                android:defaultValue="@null"-->
-<!--                app:argType="com.app.easyday.app.sources.remote.model.UserActivityResponse"-->
-<!--                app:nullable="true" />-->
         </action>
         <action
             android:id="@+id/dashboard_to_task_details"
@@ -111,10 +105,9 @@
             app:popExitAnim="@anim/slide_out_to_the_right">
 
             <argument
-                android:name="taskModel"
-                android:defaultValue="@null"
-                app:argType="com.app.easyday.app.sources.remote.model.TaskResponse"
-                app:nullable="true" />
+                android:name="taskId"
+                android:defaultValue="0"
+                app:argType="integer" />
         </action>
     </fragment>
     <fragment
@@ -274,11 +267,6 @@
         android:name="com.app.easyday.screens.activities.main.more.activityLog.ActivityLogFragment"
         android:label="fragment_activity_log"
         tools:layout="@layout/fragment_activity_log">
-<!--        <argument-->
-<!--            android:name="userActivityModel"-->
-<!--            android:defaultValue="@null"-->
-<!--            app:argType="com.app.easyday.app.sources.remote.model.UserActivityResponse"-->
-<!--            app:nullable="true" />-->
     </fragment>
 
 

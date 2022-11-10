@@ -2,7 +2,6 @@ package com.app.easyday.screens.activities.main.home.search_task
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -14,7 +13,6 @@ import com.app.easyday.app.sources.local.interfaces.SearchHintInterface
 import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.app.sources.remote.model.TaskResponse
-import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
 import com.app.easyday.screens.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -75,7 +73,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
                     }
 
-                    override fun onDiscussionClick(taskModel: TaskResponse) {
+                    override fun onDiscussionClick(taskId: Int) {
 
                     }
 

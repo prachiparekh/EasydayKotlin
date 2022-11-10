@@ -153,7 +153,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
         viewModel.projectList.observe(viewLifecycleOwner) { projectList ->
 
-        if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
 
                 if (!projectList.isNullOrEmpty()) {
 
@@ -194,13 +194,15 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         }
 
         viewModel.taskList.observe(viewLifecycleOwner) {
-            if (it.isNullOrEmpty()) {
-                noTaskCL.isVisible = true
-                taskRV.isVisible = false
-            } else {
-                noTaskCL.isVisible = false
-                taskRV.isVisible = true
-                taskRV.adapter = TaskAdapter(requireContext(), it, this)
+            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                if (it.isNullOrEmpty()) {
+                    noTaskCL.isVisible = true
+                    taskRV.isVisible = false
+                } else {
+                    noTaskCL.isVisible = false
+                    taskRV.isVisible = true
+                    taskRV.adapter = TaskAdapter(requireContext(), it, this)
+                }
             }
             DeviceUtils.dismissProgress()
         }
@@ -283,9 +285,9 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         }
     }
 
-    override fun onDiscussionClick(taskModel: TaskResponse) {
+    override fun onDiscussionClick(taskId: Int) {
         val action = DashboardFragmentDirections.dashboardToDiscussion()
-        action.taskModel = taskModel
+        action.taskId = taskId
         Navigation.findNavController(requireView()).navigate(action)
     }
 

@@ -64,5 +64,11 @@ class CommentsAdapter(
         }
     }
 
+    fun setItemList(list: ArrayList<CommentResponseItem>) {
+        this.commentList.clear()
+        this.commentList.addAll(list)
+        notifyDataSetChanged()
+    }
+
 
 }

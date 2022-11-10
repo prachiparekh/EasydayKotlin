@@ -2,10 +2,13 @@ package com.app.easyday.screens.activities.main.home.task_detail.discussion
 
 import android.Manifest
 import android.content.ContextWrapper
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -18,8 +21,7 @@ import com.app.easyday.app.sources.aws.AWSKeys
 import com.app.easyday.app.sources.aws.S3Uploader
 import com.app.easyday.app.sources.aws.S3Utils.generates3ShareUrl
 import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
-import com.app.easyday.app.sources.remote.model.CommentResponseItem
-import com.app.easyday.app.sources.remote.model.TaskResponse
+import com.app.easyday.app.sources.remote.model.TaskCommentMedia
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.IntentUtil
@@ -35,6 +37,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 @AndroidEntryPoint
@@ -43,21 +47,26 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
     override fun getContentView() = R.layout.fragment_discussion
     var commentAdapter: CommentsAdapter? = null
-    private var commentList: ArrayList<CommentResponseItem>? = null
     private val recorder = MediaRecorder()
-    private var taskModel: TaskResponse? = null
+    private var taskId: Int? = null
     var outputMediaFile: File? = null
     var parentCommentId: Int? = null
 
     private var s3uploaderObj: S3Uploader? = null
     private var urlFromS3: String? = null
+
     var audioRecordView: AudioRecordView? = null
+
+    private var timerTask: TimerTask? = null
+    private var audioTimer: Timer? = null
+    private var handler: Handler? = null
 
 
     override fun initUi() {
         DeviceUtils.initProgress(requireContext())
         s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_TASK_COMMENT_MEDIA)
-        taskModel = arguments?.getParcelable("taskModel") as TaskResponse?
+        taskId = arguments?.getInt("taskId")
+        taskId?.let { viewModel.getComments(it) }
 
         add_commentTV.setOnClickListener {
             parentCommentId = null
@@ -89,33 +98,18 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         })
 
         cta.setOnClickListener {
-            if (taskModel?.id != null) {
+            if (taskId != null) {
                 DeviceUtils.showProgress()
                 val comment = commentET.text
                 val commentBody: RequestBody = comment.toString()
                     .toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                taskModel?.id.let { id ->
+                taskId.let { id ->
                     if (id != null) {
                         viewModel.addComment(id, commentBody, parentCommentId)
                     }
                 }
             }
         }
-
-        commentList = taskModel?.taskComments as ArrayList<CommentResponseItem>?
-        commentList?.sortByDescending { it.createdAt }
-
-        discussionCount.text = requireContext().resources.getString(
-            R.string.discussion_str,
-            commentList?.size.toString()
-        )
-        commentAdapter = commentList?.let {
-            CommentsAdapter(
-                requireContext(),
-                it, this
-            )
-        }
-        commentRV.adapter = commentAdapter
 
     }
 
@@ -134,17 +128,31 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
     override fun setObservers() {
         viewModel.commentList.observe(viewLifecycleOwner) { list ->
+
             commentET.text = null
-            commentList?.clear()
             if (list != null) {
-                commentList?.addAll(list)
-                commentList?.sortByDescending { it.createdAt }
+                list.sortByDescending { it.createdAt }
+                if (commentAdapter == null) {
+                    commentAdapter =
+                        CommentsAdapter(
+                            requireContext(),
+                            list, this
+                        )
+
+                    commentRV.adapter = commentAdapter
+                } else {
+                    commentAdapter?.setItemList(list)
+                    commentAdapter?.notifyDataSetChanged()
+                }
+
                 discussionCount.text = requireContext().resources.getString(
                     R.string.discussion_str,
-                    commentList?.size.toString()
+                    list.size.toString()
                 )
-                commentAdapter?.notifyDataSetChanged()
+            } else {
+                discussionCount.isVisible = false
             }
+
             DeviceUtils.dismissProgress()
         }
     }
@@ -210,8 +218,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     }
 
 
-
-    private fun uploadAudioTos3(audioFile: File) {
+    private fun uploadAudioTos3(audioFile: File, duration: Int?) {
         val path = audioFile.absolutePath
 
         s3uploaderObj?.initUpload(path)
@@ -225,12 +232,16 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
                         AWSKeys.FOLDER_NAME_TASK_COMMENT_MEDIA
                     )
                     if (!TextUtils.isEmpty(urlFromS3)) {
-                        Log.e("Uploaded :", " $urlFromS3")
 
-                        taskModel?.id?.let { it1 ->
+
+                        taskId?.let { it1 ->
                             viewModel.addMediaComment(
                                 it1,
-                                outputMediaFile,
+                                TaskCommentMedia(
+                                    media_url = urlFromS3,
+                                    type = 2,
+                                    duration = duration
+                                ),
                                 parentCommentId
                             )
                         }
@@ -262,11 +273,51 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     }
 
     override fun onRecordingCompleted() {
-        commentRL.isVisible = true
+        videoProgressCL.isVisible = true
         layoutMain.isVisible = false
         recorder.stop()
-        DeviceUtils.showProgress()
-        outputMediaFile?.let { it1 -> uploadAudioTos3(it1) }
+
+        val mediaPlayer = MediaPlayer()
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+        try {
+            mediaPlayer.setDataSource(outputMediaFile?.absolutePath)
+            mediaPlayer.prepare()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        val duration = mediaPlayer.duration
+        vidDuration.text = String.format(
+            "%d:%d",
+            TimeUnit.MILLISECONDS.toMinutes(duration.toLong()),
+            TimeUnit.MILLISECONDS.toSeconds(duration.toLong()) -
+                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration.toLong()))
+        )
+
+        vidPlayerButton.setOnClickListener {
+            if (mediaPlayer.isPlaying)
+                mediaPlayer.pause()
+            else {
+                mediaPlayer.start()
+            }
+        }
+
+        ctaMedia.setOnClickListener {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+            mediaPlayer.release()
+            DeviceUtils.showProgress()
+            outputMediaFile?.let { it1 -> uploadAudioTos3(it1, duration) }
+        }
+
+        if (audioTimer == null) {
+            audioTimer = Timer()
+        }
+
+        vidProgress.max = duration
+
+
     }
 
     override fun onRecordingCanceled() {
