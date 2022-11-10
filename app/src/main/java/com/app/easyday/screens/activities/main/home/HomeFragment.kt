@@ -152,8 +152,8 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         }
 
         viewModel.projectList.observe(viewLifecycleOwner) { projectList ->
-            DeviceUtils.dismissProgress()
-            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+
+        if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
 
                 if (!projectList.isNullOrEmpty()) {
 
@@ -178,7 +178,6 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                         )
                     )
 
-                    DeviceUtils.showProgress()
                     selectedProjectID?.let { viewModel.getAllTask(it) }
                 }
 

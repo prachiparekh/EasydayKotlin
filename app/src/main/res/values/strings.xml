@@ -251,5 +251,7 @@
     <string name="reply">Reply</string>
     <string name="slide_to_cancel">Slide to cancel</string>
 
+    <string name="add_comment">Add Comment</string>
+
     <bool name="is_right_to_left">false</bool>
 </resources>

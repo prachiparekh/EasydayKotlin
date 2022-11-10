@@ -6,7 +6,6 @@ import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -36,7 +35,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
-import java.util.*
 
 
 @AndroidEntryPoint
@@ -119,26 +117,19 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         }
         commentRV.adapter = commentAdapter
 
-
-        // this is to make your layout the root of audio record view, root layout supposed to be empty..
-        audioRecordView?.initView(layoutMain)
-        audioRecordView?.setRecordingListener(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        stop_recordRL.setOnClickListener {
-
-
-        }
-
 
         recordBtn.setOnClickListener {
-            audioLayout.isVisible = true
+            layoutMain.isVisible = true
             commentRL.isVisible = false
+            // this is to make your layout the root of audio record view, root layout supposed to be empty..
+            audioRecordView = AudioRecordView()
+            audioRecordView?.initView(layoutMain)
+            audioRecordView?.setRecordingListener(this)
         }
-
-
     }
 
     override fun setObservers() {
@@ -195,7 +186,6 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
     private fun startRecording() {
         commentRL.isVisible = false
-        stop_recordRL.isVisible = true
 
         outputMediaFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val cw = ContextWrapper(requireContext().applicationContext)
@@ -214,62 +204,12 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         recorder.setOutputFile(outputMediaFile?.path)
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)       //  for mp3 audio
-//        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
         recorder.prepare()
         recorder.start()
 
-        running = true
-        runTimer()
     }
 
 
-    var seconds = 0
-    var running = false
-    var wasRunning = false
-    val handler = Handler()
-    var runnable: Runnable? = null
-    private fun runTimer() {
-
-        runnable = object : Runnable {
-
-            override fun run() {
-                val hours: Int = seconds / 3600
-                val minutes: Int = seconds % 3600 / 60
-                val secs: Int = seconds % 60
-
-                // Format the seconds into hours, minutes,
-                // and seconds.
-                val time: String = java.lang.String
-                    .format(
-                        Locale.getDefault(),
-                        "%02d:%02d",
-                        minutes, secs
-                    )
-
-                audioTime.text = time
-
-                if (running) {
-                    seconds++
-                }
-
-                handler.postDelayed(this, 1000)
-            }
-        }
-        handler.post(runnable as Runnable)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        wasRunning = running
-        running = false
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (wasRunning) {
-            running = true
-        }
-    }
 
     private fun uploadAudioTos3(audioFile: File) {
         val path = audioFile.absolutePath
@@ -323,18 +263,16 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
     override fun onRecordingCompleted() {
         commentRL.isVisible = true
-        stop_recordRL.isVisible = false
-        running = false
-        seconds = 0
+        layoutMain.isVisible = false
         recorder.stop()
         DeviceUtils.showProgress()
-
-        runnable?.let { it1 -> handler.removeCallbacks(it1) }
         outputMediaFile?.let { it1 -> uploadAudioTos3(it1) }
     }
 
     override fun onRecordingCanceled() {
-        audioLayout.isVisible = false
+        commentRL.isVisible = true
+        layoutMain.isVisible = false
+        recorder.stop()
     }
 
 
