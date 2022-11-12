@@ -22,7 +22,10 @@ data class TaskMediaItem(
     val mediaUrl: String? = null,
 
     @field:SerializedName("updatedAt")
-    val updatedAt: String? = null
+    val updatedAt: String? = null,
+
+    @field:SerializedName("duration")
+    val duration: Int? = null
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -31,8 +34,7 @@ data class TaskMediaItem(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(createdAt)

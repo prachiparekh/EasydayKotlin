@@ -2,17 +2,19 @@ package com.app.easyday.screens.activities.main.home.task_detail.discussion
 
 import android.Manifest
 import android.content.ContextWrapper
-import android.media.AudioManager
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Environment
-import android.os.Handler
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.navigation.Navigation
@@ -37,8 +39,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 @AndroidEntryPoint
@@ -56,11 +58,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     private var urlFromS3: String? = null
 
     var audioRecordView: AudioRecordView? = null
-
-    private var timerTask: TimerTask? = null
-    private var audioTimer: Timer? = null
-    private var handler: Handler? = null
-
+    var mTimer: CountDownTimer? = null
 
     override fun initUi() {
         DeviceUtils.initProgress(requireContext())
@@ -71,6 +69,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         add_commentTV.setOnClickListener {
             parentCommentId = null
             bottom_RL.isVisible = true
+            commentRL.isVisible = true
         }
 
         back.setOnClickListener {
@@ -111,17 +110,46 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
             }
         }
 
+        requireView().isFocusableInTouchMode = true
+        requireView().requestFocus()
+        requireView().setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                if (mTimer != null)
+                    mTimer?.cancel()
+                if (layoutAudio.isVisible || videoProgressCL.isVisible) {
+                    layoutAudio.isVisible = false
+                    videoProgressCL.isVisible = false
+                    bottom_RL.isVisible = false
+                } else {
+                    Navigation.findNavController(requireView()).popBackStack()
+                }
+                true
+            } else false
+        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         recordBtn.setOnClickListener {
-            layoutMain.isVisible = true
-            commentRL.isVisible = false
-            // this is to make your layout the root of audio record view, root layout supposed to be empty..
+
+            if (IntentUtil.readPermission(
+                    requireActivity()
+                ) && IntentUtil.writePermission(
+                    requireActivity()
+                ) && IntentUtil.recordAudioPermission(
+                    requireActivity()
+                )
+            ) {
+                layoutAudio.isVisible = true
+                commentRL.isVisible = false
+            } else {
+                onAudioPermission()
+            }
+
             audioRecordView = AudioRecordView()
-            audioRecordView?.initView(layoutMain)
+            audioRecordView?.initView(layoutAudio)
             audioRecordView?.setRecordingListener(this)
         }
     }
@@ -150,9 +178,15 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
                     list.size.toString()
                 )
             } else {
-                discussionCount.isVisible = false
+                discussionCount.text = requireContext().resources.getString(
+                    R.string.discussion_str,
+                    "0"
+                )
             }
 
+            videoProgressCL.isVisible = false
+            layoutAudio.isVisible = false
+            bottom_RL.isVisible = false
             DeviceUtils.dismissProgress()
         }
     }
@@ -167,6 +201,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         this.parentCommentId = parentCommentID
     }
 
+
     private fun onAudioPermission() {
 
         Dexter.withContext(requireContext())
@@ -177,8 +212,12 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
             )
             .withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
-                    if (p0?.areAllPermissionsGranted() == true)
-                        startRecording()
+//                    if (p0?.areAllPermissionsGranted() == true)
+                    layoutAudio.isVisible = true
+                    commentRL.isVisible = false
+                    // this is to make your layout the root of audio record view, root layout supposed to be empty..
+
+//                        startRecording()
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
@@ -257,49 +296,64 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     }
 
     override fun onRecordingStarted() {
-        if (IntentUtil.readPermission(
-                requireActivity()
-            ) && IntentUtil.writePermission(
-                requireActivity()
-            ) && IntentUtil.recordAudioPermission(
-                requireActivity()
-            )
-        ) {
 
-            startRecording()
-        } else {
-            onAudioPermission()
-        }
+
+        startRecording()
+
     }
 
     override fun onRecordingCompleted() {
         videoProgressCL.isVisible = true
-        layoutMain.isVisible = false
-        recorder.stop()
-
-        val mediaPlayer = MediaPlayer()
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+        layoutAudio.isVisible = false
         try {
-            mediaPlayer.setDataSource(outputMediaFile?.absolutePath)
-            mediaPlayer.prepare()
+            recorder.stop()
+        } catch (stopException: RuntimeException) {
 
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
 
-        val duration = mediaPlayer.duration
-        vidDuration.text = String.format(
-            "%d:%d",
-            TimeUnit.MILLISECONDS.toMinutes(duration.toLong()),
-            TimeUnit.MILLISECONDS.toSeconds(duration.toLong()) -
-                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration.toLong()))
-        )
+        val mediaPlayer = MediaPlayer().apply {
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
+            setDataSource(requireContext(), Uri.parse(outputMediaFile?.absolutePath))
+            prepare()
 
+        }
+
+        /* val mediaPlayer = MediaPlayer()
+         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+         try {
+             mediaPlayer.setDataSource(outputMediaFile?.absolutePath)
+             mediaPlayer.prepare()
+
+         } catch (e: Exception) {
+             Log.e("error:",e.message.toString())
+             e.printStackTrace()
+         }*/
+
+        val duration = mediaPlayer.duration
+        Log.e("duration:", duration.toString())
+        val timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
+        timeFormatter.timeZone = TimeZone.getTimeZone("UTC")
+        vidDuration.text = timeFormatter.format(Date(duration.toLong()))
+
+        milliSecLeft = duration.toLong()
+        vidProgress.max = duration
+        vidProgress.progress = 0
         vidPlayerButton.setOnClickListener {
-            if (mediaPlayer.isPlaying)
+            if (mediaPlayer.isPlaying) {
                 mediaPlayer.pause()
-            else {
+                mTimer?.cancel()
+            } else {
                 mediaPlayer.start()
+                if (milliSecLeft == duration.toLong()) {
+                    timerStart(duration.toLong(), duration)
+                } else {
+                    timerStart(milliSecLeft, duration)
+                }
             }
         }
 
@@ -310,21 +364,35 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
             DeviceUtils.showProgress()
             outputMediaFile?.let { it1 -> uploadAudioTos3(it1, duration) }
         }
+    }
 
-        if (audioTimer == null) {
-            audioTimer = Timer()
-        }
+    var milliSecLeft: Long = 0
+    private fun timerStart(timeLengthMilli: Long, totalDuration: Int) {
 
-        vidProgress.max = duration
+        milliSecLeft = timeLengthMilli
+        val timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
+        timeFormatter.timeZone = TimeZone.getTimeZone("UTC")
+        mTimer = object : CountDownTimer(timeLengthMilli, 1000) {
+            override fun onTick(milliTillFinish: Long) {
+                milliSecLeft = milliTillFinish
+                vidDuration.text = timeFormatter.format(Date(milliSecLeft))
+                vidProgress.progress = totalDuration - milliSecLeft.toInt()
+            }
 
+            override fun onFinish() {
+                mTimer?.cancel()
+                milliSecLeft = totalDuration.toLong()
+                vidProgress.progress = 0
+                vidDuration.text = timeFormatter.format(Date(totalDuration.toLong()))
+            }
+        }.start()
 
     }
 
     override fun onRecordingCanceled() {
-        commentRL.isVisible = true
-        layoutMain.isVisible = false
+        bottom_RL.isVisible = true
+        layoutAudio.isVisible = false
         recorder.stop()
     }
-
 
 }
