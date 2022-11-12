@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.AddAttributeInterface
+import com.app.easyday.app.sources.local.interfaces.AddSpaceZoneAttributeInterface
 import com.app.easyday.app.sources.local.interfaces.FilterCloseInterface
-import com.app.easyday.app.sources.local.interfaces.AttributeSelectionInterface
 import com.app.easyday.app.sources.remote.model.AttributeResponse
 import com.app.easyday.databinding.AddSpaceZoneLayoutBinding
 import com.app.easyday.screens.dialogs.adapters.SpaceZoneAdapter
@@ -22,8 +22,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class AddSpaceZoneBottomSheetDialog (
     var mContext: Context,
     var attrList: ArrayList<AttributeResponse>,
-    private var selectedAttrList: java.util.ArrayList<Int>,
-    var attrInterface: AttributeSelectionInterface,
+    private var selectedAttr: Int?,
+    var attrSpZnInterface: AddSpaceZoneAttributeInterface,
     var closeInterface: FilterCloseInterface,
     var attributeType:Int,
     var addAttributeInterface: AddAttributeInterface
@@ -40,7 +40,7 @@ class AddSpaceZoneBottomSheetDialog (
         isCancelable = false
 
         binding?.tagRV?.layoutManager= FlexboxLayoutManager(requireContext())
-        adapter=SpaceZoneAdapter(mContext,attrList,selectedAttrList)
+        adapter=SpaceZoneAdapter(mContext,attrList,selectedAttr)
         binding?.tagRV?.adapter= adapter
 
         if(attributeType==1){
@@ -60,8 +60,7 @@ class AddSpaceZoneBottomSheetDialog (
 
         binding?.cta?.setOnClickListener {
             dismiss()
-            adapter?.getSelectedList()
-                ?.let { it1 -> attrInterface.onClickAttribute(it1,attributeType) }
+            adapter?.getSelectedAttr()?.let { it1 -> attrSpZnInterface.onClickSpaceZoneAttribute(it1,attributeType) }
         }
 
         return binding?.root

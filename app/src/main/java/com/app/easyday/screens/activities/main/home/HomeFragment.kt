@@ -134,28 +134,31 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     override fun setObservers() {
 
         viewModel.userProfileData.observe(viewLifecycleOwner) { userData ->
-            if (userData?.profileImage != null) {
-                val options = RequestOptions()
-                profile.clipToOutline = true
-                Glide.with(requireContext())
-                    .load(userData.profileImage)
-                    .error(requireContext().resources.getDrawable(R.drawable.ic_profile_circle))
-                    .apply(
-                        options.centerCrop()
-                            .skipMemoryCache(true)
-                            .priority(Priority.HIGH)
-                            .format(DecodeFormat.PREFER_ARGB_8888)
-                    )
-                    .into(profile)
 
-            }
+                if (userData?.profileImage != null) {
+                    val options = RequestOptions()
+                    profile.clipToOutline = true
+                    Glide.with(requireContext())
+                        .load(userData.profileImage)
+                        .error(requireContext().resources.getDrawable(R.drawable.ic_profile_circle))
+                        .apply(
+                            options.centerCrop()
+                                .skipMemoryCache(true)
+                                .priority(Priority.HIGH)
+                                .format(DecodeFormat.PREFER_ARGB_8888)
+                        )
+                        .into(profile)
+
+                }
+
         }
 
         viewModel.projectList.observe(viewLifecycleOwner) { projectList ->
 
-        if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
 
-                if (!projectList.isNullOrEmpty()) {
+//                if (!AppPreferencesDelegates.get().activeProject) {
+                    if (!projectList.isNullOrEmpty()) {
 
                     this.projectList = projectList
                     TextViewCompat.setCompoundDrawableTintList(
@@ -181,7 +184,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                     selectedProjectID?.let { viewModel.getAllTask(it) }
                 }
 
-
+//                }
                 activeProject.setOnClickListener {
                     DeviceUtils.showProgress()
                     val fragment = ProjectListDialog(this, projectList, selectedProjectPosition)
@@ -249,17 +252,26 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
             }
         } else {
 //            Switch with ProjectID
-            selectedProjectPosition = projectPosition
-            TextViewCompat.setCompoundDrawableTintList(
-                activeProject,
-                ColorStateList.valueOf(
-                    Color.parseColor(projectList[projectPosition].assignColor)
+
+                selectedProjectPosition = projectPosition
+                TextViewCompat.setCompoundDrawableTintList(
+                    activeProject,
+                    ColorStateList.valueOf(
+                        Color.parseColor(projectList[projectPosition].assignColor)
+                    )
                 )
-            )
-            selectedProjectID = projectList[projectPosition].id
-            activeProject.text = projectList[projectPosition].projectName
-            selectedColor = projectList[projectPosition].assignColor
-            selectedProjectID?.let { viewModel.getAllTask(it) }
+                selectedProjectID = projectList[projectPosition].id
+                activeProject.text = projectList[projectPosition].projectName
+                selectedColor = projectList[projectPosition].assignColor
+                selectedProjectID?.let { viewModel.getAllTask(it) }
+            AppPreferencesDelegates.get().activeProject = true
+
+            if (!AppPreferencesDelegates.get().activeProject) {
+//                val lastPosition = selectedProjectPosition
+//                selectedProjectPosition = position
+//                notifyItemChanged(lastPosition)
+//                notifyItemChanged(selectedProjectPosition)
+            }
         }
 
 

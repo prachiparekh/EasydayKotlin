@@ -13,6 +13,7 @@ import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.ProjectInterface
+import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.app.sources.remote.model.AttributeResponse
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 
@@ -61,12 +62,17 @@ class ProjectAdapter(
                 radio.setImageDrawable(context.resources.getDrawable(R.drawable.ic_uncheck_radio))
             }
 
+
             itemView.setOnClickListener {
-                val lastPosition=selectedProjectPosition
-                selectedProjectPosition =position
+                val lastPosition = selectedProjectPosition
+                selectedProjectPosition = position
                 notifyItemChanged(lastPosition)
                 notifyItemChanged(selectedProjectPosition)
+
+                AppPreferencesDelegates.get().activeProject = true
             }
+
+
         }
     }
 
@@ -74,7 +80,6 @@ class ProjectAdapter(
     fun selectedProjectPosition(): Int {
         return selectedProjectPosition
     }
-
 
 
 }

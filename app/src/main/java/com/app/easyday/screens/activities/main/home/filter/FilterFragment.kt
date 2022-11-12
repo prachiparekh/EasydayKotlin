@@ -1,7 +1,6 @@
 package com.app.easyday.screens.activities.main.home.filter
 
 import android.app.DatePickerDialog
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -155,7 +154,11 @@ class FilterFragment(val anInterface: TaskFilterApplyInterface) : BaseFragment<F
         changeFilterUI(selectedFilterPosition)
     }
 
-    override fun onFilterSingleChildClick(childList: ArrayList<String>, childPosition: Int) {
+    override fun onFilterSingleChildClick(
+        childList: ArrayList<String>,
+        childLabel: TextView,
+        childPosition: Int
+    ) {
 
     }
 

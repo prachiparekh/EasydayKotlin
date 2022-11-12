@@ -6,6 +6,7 @@ class AppPreferencesDelegates private constructor() {
     var token by TokenDelegate()
     var showcaseSeen by ShowcaseSeenDelegate()
     var searchList by SearchTaskDelegate()
+    var activeProject by ActiveProjectDelegate()
 
     companion object {
         private var INSTANCE: AppPreferencesDelegates? = null

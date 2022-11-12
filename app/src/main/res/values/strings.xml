@@ -125,6 +125,7 @@
     <string name="task_status">Task Status</string>
     <string name="priority_status">Priority Status</string>
     <string name="in_review">In Review</string>
+    <string name="re_opened">Reopened</string>
     <string name="completed_task">Completed</string>
 
     <string name="urgent_p">Urgent</string>
@@ -255,4 +256,6 @@
     <string name="add_comment">Add Comment</string>
 
     <bool name="is_right_to_left">false</bool>
+    <string name="task_count">%s Tasks</string>
+    <string name="tag_name">• %s</string>
 </resources>

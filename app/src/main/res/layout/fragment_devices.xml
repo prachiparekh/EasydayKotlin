@@ -157,10 +157,10 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="@dimen/_19sdp"
+                        android:fontFamily="@font/inter_medium_500"
                         android:text="This device"
                         android:textColor="@color/color4"
-                        android:textSize="@dimen/_11sdp"
-                        android:fontFamily="@font/inter_medium_500"/>
+                        android:textSize="@dimen/_10sdp" />
 
                     <RelativeLayout
                         android:id="@+id/first"
@@ -191,10 +191,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/mulish_700"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/one_plus"
                                     android:textColor="@color/accent_blue"
-                                    android:textSize="@dimen/_13sdp"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:textStyle="bold"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -204,7 +205,7 @@
                                     android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/android"
                                     android:textColor="@color/navy_blue"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textSize="@dimen/_10sdp" />
 
                                 <TextView
                                     android:id="@+id/location"
@@ -213,7 +214,7 @@
                                     android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/hyderabad"
                                     android:textColor="@color/hint_color"
-                                    android:textSize="@dimen/_9sdp" />
+                                    android:textSize="@dimen/_8sdp" />
 
 
                             </LinearLayout>
@@ -257,10 +258,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/mulish_700"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/one_plus"
                                     android:textColor="@color/accent_blue"
-                                    android:textSize="@dimen/_13sdp"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:textStyle="bold"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -278,7 +280,7 @@
                                     android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/hyderabad"
                                     android:textColor="@color/hint_color"
-                                    android:textSize="@dimen/_9sdp" />
+                                    android:textSize="@dimen/_8sdp" />
 
 
                             </LinearLayout>
@@ -321,10 +323,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/mulish_700"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/one_plus"
                                     android:textColor="@color/accent_blue"
-                                    android:textSize="@dimen/_13sdp"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:textStyle="bold"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -342,7 +345,7 @@
                                     android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/hyderabad"
                                     android:textColor="@color/hint_color"
-                                    android:textSize="@dimen/_9sdp" />
+                                    android:textSize="@dimen/_8sdp" />
 
 
                             </LinearLayout>

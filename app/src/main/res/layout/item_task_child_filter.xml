@@ -13,7 +13,7 @@
         android:paddingHorizontal="@dimen/_5sdp"
         android:paddingVertical="@dimen/_7sdp"
         android:text="@string/f_priority"
-        android:textColor="@color/white"
+        android:textColor="@color/light_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

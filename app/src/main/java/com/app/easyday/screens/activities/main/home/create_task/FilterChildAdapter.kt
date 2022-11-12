@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.FilterTypeInterface
@@ -16,6 +18,11 @@ class FilterChildAdapter(
     val filterTypeInterface: FilterTypeInterface
 ) : RecyclerView.Adapter<FilterChildAdapter.ViewHolder>() {
 
+    var isSelected: Boolean = false
+
+
+    var priorityItemPosition = -1
+    var priority: Boolean = false
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getItemCount(): Int = priorityList.size
@@ -27,25 +34,49 @@ class FilterChildAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.bind(position)
+        holder.bind(position, priority)
+
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val childLabel = itemView.findViewById<TextView>(R.id.childLabel)
 
         @SuppressLint("NewApi")
-        fun bind(position: Int) {
+        fun bind(position: Int, priority: Boolean) {
 
             childLabel.text = priorityList[position]
 
-            itemView.setOnClickListener {
-                position.let { it1 ->
-                    filterTypeInterface.onFilterSingleChildClick(
-                        priorityList,
-                        it1
-                    )
+            childLabel.setOnClickListener {
+                priorityItemPosition = position
+                if (!priority) {
+                    position.let { it1 ->
+                        filterTypeInterface.onFilterSingleChildClick(
+                            priorityList, childLabel, it1)
+                    }
                 }
+                notifyDataSetChanged()
+            }
+
+            if (priorityItemPosition != -1) {
+                when (priorityItemPosition) {
+                    0, 1, 2, 3 -> {
+                        itemChange(position)
+                    }
+
+                }
+            }
+
+        }
+
+        private fun itemChange(position: Int) {
+            if (position == priorityItemPosition) {
+                childLabel.setTextColor(context.resources.getColor(R.color.white))
+//                priority = true
+            } else {
+                childLabel.setTextColor(context.resources.getColor(R.color.light_white))
+//                priority = false
             }
         }
     }
+
 }

@@ -9,13 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
-import com.app.easyday.app.sources.local.interfaces.AttributeSelectionInterface
 import com.app.easyday.app.sources.remote.model.AttributeResponse
 
 class SpaceZoneAdapter (
     private val context: Context,
     private var attrList: java.util.ArrayList<AttributeResponse>,
-    private var selectedAttrList: java.util.ArrayList<Int>
+    private var selectedAttr: Int?
 ) : RecyclerView.Adapter<SpaceZoneAdapter.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -42,27 +41,22 @@ class SpaceZoneAdapter (
 
             attrName.text = attrList[position].attributeName
 
-            if (selectedAttrList.contains(attrList[position].id)) {
-                selection.setImageDrawable(context.resources.getDrawable(R.drawable.ic_check_radio))
-            } else {
-                selection.setImageDrawable(context.resources.getDrawable(R.drawable.ic_uncheck_radio))
-            }
 
             itemView.setOnClickListener {
-                if (selectedAttrList.contains(attrList[position].id)) {
-                    selectedAttrList.remove(attrList[position].id)
-                } else {
-                    attrList[position].id?.let { it1 -> selectedAttrList.add(it1) }
-                }
-
-
+                selectedAttr = attrList[position].id
                 notifyDataSetChanged()
+            }
+
+            if (attrList[position].id == selectedAttr){
+                selection.setImageDrawable(context.resources.getDrawable(R.drawable.ic_check_radio))
+            }else{
+                selection.setImageDrawable(context.resources.getDrawable(R.drawable.ic_uncheck_radio))
             }
         }
     }
 
-    fun getSelectedList():ArrayList<Int>{
-        return selectedAttrList
+    fun getSelectedAttr(): Int? {
+        return selectedAttr
     }
 
     fun clearList() {

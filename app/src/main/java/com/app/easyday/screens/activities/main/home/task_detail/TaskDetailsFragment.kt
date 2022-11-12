@@ -60,20 +60,16 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
 
         var spaceStr=""
         taskModel?.taskSpaces?.indices?.forEach { i ->
-            if (i == 0)
-                spaceStr += taskModel?.taskSpaces?.get(i)?.projectAttribute?.attributeName
-            else
-                spaceStr += "," + taskModel?.taskSpaces?.get(i)?.projectAttribute?.attributeName
+            spaceStr += taskModel?.taskSpaces?.get(i)?.projectAttribute?.attributeName
         }
         space_Tv.text = spaceStr
 
         var zoneStr=""
         taskModel?.taskZones?.indices?.forEach { i ->
-            if (i == 0)
-                zoneStr += taskModel?.taskZones?.get(i)?.projectAttribute?.attributeName
-            else
-                zoneStr += "," + taskModel?.taskZones?.get(i)?.projectAttribute?.attributeName
+            zoneStr += taskModel?.taskZones?.get(i)?.projectAttribute?.attributeName
         }
+        Log.e("spaceStr", zoneStr.toString())
+        zones_Tv.text = zoneStr
 
         if (spaceStr.isEmpty() && zoneStr.isEmpty()){
             spaceLL.visibility = View.GONE
@@ -92,8 +88,6 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
             view_s_z.visibility = View.VISIBLE
         }
 
-        Log.e("spaceStr", zoneStr.toString())
-        zones_Tv.text = zoneStr
 
         taskTitle.text = title
         taskDescription.text = description

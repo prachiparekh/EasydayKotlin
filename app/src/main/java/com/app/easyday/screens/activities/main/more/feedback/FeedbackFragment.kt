@@ -30,57 +30,6 @@ class FeedbackFragment : BaseFragment<FeedbackViewModel>(), FeedBackTagInterface
             Navigation.findNavController(requireView()).popBackStack()
         }
 
-        /* cs_Tv.setOnClickListener {
-             cs_Tv.isSelected = !cs_Tv.isSelected
-             if (cs_Tv.isSelected) {
-                 list.add("Customer Support")
-                 cs_Tv.isSelected = true
-             } else {
-                 cs_Tv.isSelected = false
-                 list.remove("Customer Support")
-             }
-
-         }
-         tr_Tv.setOnClickListener {
-             tr_Tv.isSelected = !tr_Tv.isSelected
-             if (tr_Tv.isSelected) {
-                 list.add("Transparency")
-                 tr_Tv.isSelected = true
-             } else {
-                 tr_Tv.isSelected = false
-                 list.remove("Transparency")
-             }
-         }
-         tslo_Tv.setOnClickListener {
-             tslo_Tv.isSelected = !tslo_Tv.isSelected
-             if (tslo_Tv.isSelected) {
-                 list.add("Too Slow")
-                 tslo_Tv.isSelected = true
-             } else {
-                 tslo_Tv.isSelected = false
-                 list.remove("Too Slow")
-             }
-         }
-         se_Tv.setOnClickListener {
-             se_Tv.isSelected = !se_Tv.isSelected
-             if (se_Tv.isSelected) {
-                 list.add("Speed & Efficiency")
-                 se_Tv.isSelected = true
-             } else {
-                 se_Tv.isSelected = false
-                 list.remove("Speed & Efficiency")
-             }
-         }
-         ibg_Tv.setOnClickListener {
-             ibg_Tv.isSelected = !ibg_Tv.isSelected
-             if (ibg_Tv.isSelected) {
-                 list.add("Improve Bugs")
-                 ibg_Tv.isSelected = true
-             } else {
-                 ibg_Tv.isSelected = false
-                 list.remove("Improve Bugs")
-             }
-         }*/
         inputET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
