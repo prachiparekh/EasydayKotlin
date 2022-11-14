@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +70,6 @@ class ProjectAdapter(
                 notifyItemChanged(selectedProjectPosition)
 
                 AppPreferencesDelegates.get().activeProject = projectList[position].id ?: 0
-                Log.e("prjId", projectList[position].id.toString())
             }
 
         }

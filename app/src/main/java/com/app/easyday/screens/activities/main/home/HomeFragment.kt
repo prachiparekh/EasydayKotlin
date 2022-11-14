@@ -4,6 +4,7 @@ package com.app.easyday.screens.activities.main.home
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -206,16 +207,17 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         }
 
         viewModel.taskList.observe(viewLifecycleOwner) {
-            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                if (it.isNullOrEmpty()) {
-                    noTaskCL.isVisible = true
-                    taskRV.isVisible = false
-                } else {
-                    noTaskCL.isVisible = false
-                    taskRV.isVisible = true
-                    taskRV.adapter = TaskAdapter(requireContext(), it, this)
-                }
+            Log.e("it:", it.toString())
+//            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+            if (it.isNullOrEmpty()) {
+                noTaskCL.isVisible = true
+                taskRV.isVisible = false
+            } else {
+                noTaskCL.isVisible = false
+                taskRV.isVisible = true
+                taskRV.adapter = TaskAdapter(requireContext(), it, this)
             }
+//            }
             DeviceUtils.dismissProgress()
         }
     }

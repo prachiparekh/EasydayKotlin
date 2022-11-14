@@ -3,6 +3,7 @@ package com.app.easyday.screens.activities.main.home.task_detail.discussion
 import android.Manifest
 import android.content.ContextWrapper
 import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -16,8 +17,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
@@ -27,7 +26,6 @@ import com.app.easyday.app.sources.aws.S3Uploader
 import com.app.easyday.app.sources.aws.S3Utils.generates3ShareUrl
 import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
 import com.app.easyday.app.sources.remote.model.TaskCommentMedia
-import com.app.easyday.app.sources.remote.model.TaskMediaItem
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.IntentUtil
@@ -62,11 +60,9 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     private var urlFromS3: String? = null
 
     var audioRecordView: AudioRecordView? = null
-    var mTimer: CountDownTimer? = null
 
-    companion object {
-        var mediaPlayer: MediaPlayer? = null
-    }
+    var mediaPlayer: MediaPlayer? = null
+    var mTimer: CountDownTimer? = null
 
     override fun initUi() {
         DeviceUtils.initProgress(requireContext())
@@ -82,20 +78,6 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
                     .build()
             )
         }
-
-        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-             mediaPlayer=MediaPlayer().apply {
-                 setAudioAttributes(
-                     AudioAttributes.Builder()
-                         .setUsage(AudioAttributes.USAGE_MEDIA)
-                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                         .build()
-                 )
-             }
-         } else {
-             mediaPlayer=MediaPlayer()
-             mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
-         }*/
 
         add_commentTV.setOnClickListener {
             parentCommentId = null
@@ -148,8 +130,8 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
                 if (mediaPlayer?.isPlaying == true) {
                     mediaPlayer?.stop()
                     mediaPlayer?.reset()
-                    mediaPlayer?.release()
-                    mediaPlayer = null
+//                    mediaPlayer?.release()
+//                    mediaPlayer = null
                 }
                 if (mTimer != null)
                     mTimer?.cancel()
@@ -239,14 +221,6 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         this.parentCommentId = parentCommentID
     }
 
-    override fun onAudioBtnClick(
-        mediaModel: TaskMediaItem,
-        progressBar: ProgressBar,
-        durationTV: TextView
-    ) {
-//        initializeMediaPlayer(mediaModel, progressBar, durationTV)
-    }
-
 
     private fun onAudioPermission() {
 
@@ -258,12 +232,10 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
             )
             .withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
-//                    if (p0?.areAllPermissionsGranted() == true)
-                    layoutAudio.isVisible = true
-                    commentRL.isVisible = false
-                    // this is to make your layout the root of audio record view, root layout supposed to be empty..
-
-//                        startRecording()
+                    if (p0?.areAllPermissionsGranted() == true) {
+                        layoutAudio.isVisible = true
+                        commentRL.isVisible = false
+                    }
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
@@ -354,48 +326,63 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
         }
 
-//        mediaPlayer?.setDataSource(requireContext(), Uri.parse(outputMediaFile?.absolutePath))
-        mediaPlayer?.setDataSource(
-            requireContext(), Uri.parse(
-                "https://s3.eu-west-1.amazonaws.com/easyday-bucket/task_comment_media/1668160340642.mp3?response-content-type=audio%2Fmpeg&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEJL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCWV1LXdlc3QtMSJHMEUCIHQEkTNLlL9EdTFLWgVZubuKuP2fl%2FJV43DJDuKuKOuhAiEAxYGEEs79rVxwxk1SmKQzzRsazruh2dREX7V79Yh9wkIqmwYIi%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgwyMjA3MDEzMjEwMjciDNV35JrZQXNksgbSVirvBQUgTS9bMw0J8FJ52h%2BbZhHtLzldxvhPfIzzqHlCXFPGj6qQ3%2FMFVlDtpcmtEGYRybeDtxkkHOUxSxaOAaM7TQqvGAU8%2BsOZ%2FgFgepeKuU5UjdrRkP0hKxIhf%2FW8rQjGsh822r6aP%2FgpuJGmoobfgwGtvFIbLKv5EEX%2BQSYZa9M53O%2F2OI%2FAr7lq8HcSXRLLb89BsZBaC975bqzk3B0fZ%2B1y9%2Bgc8MjLz0hKPEAX5Akm3rJvNQhT7KvKeo3KrAr8eCS6JzU9Q7Doh9ne8v4ha414eDcII%2Fj0p2cPOAa3zFx%2F6f7O8CGvhENR04ikGQQZxI71Gp5QhDhEKNy%2Bdb8kJVoAZf%2F%2FAgrYSMS7c76tHd5NbdAl6%2BmWpsyDfY%2FubZPk2GiRM8A4DJNg8WKJYYe8EmHnYD4WhGRJbH8BIfmjS0o%2BSuEQ2h5wdu026F1Qnkkd%2Bdi%2FLBO2gS5I8ReCY7eC2Es7ZTfS79uw4hDYjAK3PPw8mWwofzsjGtNQUThE85h1DH%2BchIAe9rBSGk62XrHn12KyCKxw7bYhyLjfvpkBYuBOYNbrWElyVCgOFhcavEHDQs76rn63I1Hn0Nv7zHUspmv%2B9CZXxWpKY7eBd8Y2OCeF9oKK7ms28rlTj7AZhmrM4mk6eW8bYMa5kLYnkQXDb7xyTFB34izmbEaoi7zUz2dFavnH1jKKsbADqmhY8w5XLqjylkqEdOMsT8S8gvJMQTUJA49mUE7sMvh5tivhnEOvJ4SNpajwJsGhaEjh5p7rKRr3kkFIVxk%2FJ%2FWrrLRFX6PFIer1Ojn0gLbl93rK%2BzGOVQosgpgkzeMsCBWRBhcY9jO7VVNCs8P9c%2Fr6%2FURpQHhOOEVQefpy8sEf6Mayj28%2BWQ4XugbI0Gv6QPSSnkUg78MVPLxgv4oxp9wozD30C%2FuPVaQRGQo2srLzqiZLhMNQlpHb04urrgYaw8DprFr1GS556G1YfQpZ13%2FDFsYjTasgfKpY8Z50U9TjJLeQD%2FUw37a4mwY6hwIgGhA5xXS8KSFa7Nsz9DY7Z9Va5BhqW3vbi4HyT2uccFjfgQsYApTOmPFteMPelZlYdM5Aw6opVVuw%2FsEDvFX%2FogPZQxJHOzcA2TlXKVJkFqnab7wHvQvM4yG%2BIZle%2BOUTbpzyALNXsNaFFfHw4Xj03tGCptX%2BsdRdyLZCUa7CxjSah9FFTXfvKIiocY5AD4I77UOKTgkgqr%2BzC13a6T9elawjiEsG93Mkhz%2FZ2ORN8crS1%2BGrp5N4X9qHJkK0vjONqirPJmoqKHJvVToJ2BfbXnhfzzSpQcWtNjWAKu3ZCMu8UQlPHLGKp4KtuzPTQfcTyGi7lsFRyWtEu1Y9wxnNxhrAWLD4Eg%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20221111T095231Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3599&X-Amz-Credential=ASIATGYWS45BST5KKEGK%2F20221111%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Signature=2c9b22016a2fa246b6131e1102460b5d0fafa4db0090781fa4a3b0b0b44cd785"
-            )
-        )
-        mediaPlayer?.prepare()
-
-        val duration = mediaPlayer?.duration
-        Log.e("duration:", duration.toString())
-        val timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
-        timeFormatter.timeZone = TimeZone.getTimeZone("UTC")
-        vidDuration.text = timeFormatter.format(duration?.toLong()?.let { Date(it) })
-
-        milliSecLeft = duration?.toLong() ?: 0
-        if (duration != null) {
-            vidProgress.max = duration
-        }
-        vidProgress.progress = 0
-        vidPlayerButton.setOnClickListener {
+        try {
             if (mediaPlayer?.isPlaying == true) {
-                mediaPlayer?.pause()
-                mTimer?.cancel()
-            } else {
-                mediaPlayer?.start()
-                if (milliSecLeft == duration?.toLong()) {
-                    timerStart(duration.toLong(), duration)
-                } else {
-                    if (duration != null) {
-                        timerStart(milliSecLeft, duration)
+                mediaPlayer?.stop()
+
+            }
+            mediaPlayer?.reset()
+            mediaPlayer?.setOnPreparedListener { mp ->
+
+                val duration = mediaPlayer?.duration
+                Log.e("duration:", duration.toString())
+                val timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
+                timeFormatter.timeZone = TimeZone.getTimeZone("UTC")
+                vidDuration.text = duration?.toLong()?.let { Date(it) }
+                    ?.let { timeFormatter.format(it) }
+
+                milliSecLeft = duration?.toLong() ?: 0
+                if (duration != null) {
+                    vidProgress.max = duration
+                }
+                vidProgress.progress = 0
+
+                vidPlayerButton.setOnClickListener {
+                    if (mediaPlayer?.isPlaying == true) {
+                        mediaPlayer?.pause()
+                        mTimer?.cancel()
+                    } else {
+                        mediaPlayer?.start()
+                        if (milliSecLeft == duration?.toLong()) {
+                            timerStart(duration.toLong(), duration)
+                        } else {
+                            if (duration != null) {
+                                timerStart(milliSecLeft, duration)
+                            }
+                        }
                     }
                 }
+
+                ctaMedia.setOnClickListener {
+                    mediaPlayer?.stop()
+                    mediaPlayer?.reset()
+//                    mediaPlayer?.release()
+                    DeviceUtils.showProgress()
+                    outputMediaFile?.let { it1 -> uploadAudioTos3(it1, duration) }
+                }
             }
+
+            mediaPlayer?.setDataSource(requireContext(), Uri.parse(outputMediaFile?.absolutePath))
+            mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
+            mediaPlayer?.prepareAsync()
+
+
+        } catch (e: Exception) {
+            Log.e("eee::", e.message.toString())
+            e.printStackTrace()
         }
 
-        ctaMedia.setOnClickListener {
-            mediaPlayer?.stop()
-            mediaPlayer?.reset()
-            mediaPlayer?.release()
-            DeviceUtils.showProgress()
-            outputMediaFile?.let { it1 -> uploadAudioTos3(it1, duration) }
-        }
+
     }
 
     var milliSecLeft: Long = 0

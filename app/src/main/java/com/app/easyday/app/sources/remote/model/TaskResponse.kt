@@ -28,10 +28,10 @@ data class TaskResponse(
     val createdAt: String? = null,
 
     @field:SerializedName("task_spaces")
-    val taskSpaces: TaskAttributeResponse? = null,
+    val taskSpaces: List<TaskAttributeResponse?>? = null,
 
     @field:SerializedName("task_zones")
-    val taskZones: TaskAttributeResponse? = null,
+    val taskZones: List<TaskAttributeResponse?>? = null,
 
     @field:SerializedName("task_comments")
     val taskComments: List<CommentResponseItem?>? = null,
@@ -68,8 +68,8 @@ data class TaskResponse(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readString(),
-        parcel.readParcelable(TaskAttributeResponse::class.java.classLoader),
-        parcel.readParcelable(TaskAttributeResponse::class.java.classLoader),
+        parcel.createTypedArrayList(TaskAttributeResponse),
+        parcel.createTypedArrayList(TaskAttributeResponse),
         parcel.createTypedArrayList(CommentResponseItem),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
@@ -89,8 +89,8 @@ data class TaskResponse(
         parcel.writeValue(priority)
         parcel.writeValue(redFlag)
         parcel.writeString(createdAt)
-        parcel.writeParcelable(taskSpaces, flags)
-        parcel.writeParcelable(taskZones, flags)
+        parcel.writeTypedList(taskSpaces)
+        parcel.writeTypedList(taskZones)
         parcel.writeTypedList(taskComments)
         parcel.writeValue(projectId)
         parcel.writeValue(userId)
