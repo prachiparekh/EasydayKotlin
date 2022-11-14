@@ -2,18 +2,26 @@ package com.app.easyday.screens.activities.main.home.task_detail.discussion
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.CountDownTimer
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
 import com.app.easyday.app.sources.remote.model.CommentResponseItem
+import com.app.easyday.app.sources.remote.model.TaskMediaItem
+import com.app.easyday.screens.activities.main.home.task_detail.discussion.DiscussionFragment.Companion.mediaPlayer
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class CommentsAdapter(
     private val context: Context,
@@ -22,8 +30,9 @@ class CommentsAdapter(
 ) : RecyclerView.Adapter<CommentsAdapter.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    var mTimer: CountDownTimer? = null
-    var milliSecLeftAdp: Long = 0
+
+    var duration = 0
+    var hdlr = Handler()
 
     override fun getItemCount(): Int = commentList.size
 
@@ -43,10 +52,10 @@ class CommentsAdapter(
         val commentTV = itemView.findViewById<TextView>(R.id.commentTV)
         val reply = itemView.findViewById<TextView>(R.id.reply)
         val likeTV = itemView.findViewById<TextView>(R.id.likeTV)
-        /* val videoProgressCL = itemView.findViewById<ConstraintLayout>(R.id.videoProgressCL)
-         val vidPlayerButton = itemView.findViewById<ImageView>(R.id.vidPlayerButton)
-         val vidProgress = itemView.findViewById<ProgressBar>(R.id.vidProgress)
-         val vidDuration = itemView.findViewById<TextView>(R.id.vidDuration)*/
+        val videoProgressCL = itemView.findViewById<ConstraintLayout>(R.id.videoProgressCL1)
+        val vidPlayerButton = itemView.findViewById<ImageView>(R.id.vidPlayerButton1)
+        val vidProgress = itemView.findViewById<ProgressBar>(R.id.vidProgress1)
+        val vidDuration = itemView.findViewById<TextView>(R.id.vidDuration1)
 
         @SuppressLint("NewApi")
         fun bind(position: Int) {
@@ -58,38 +67,43 @@ class CommentsAdapter(
             val dtf = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
 
             timeTV.text = dtf.format(odt)
-            commentTV.text = item.comment
-//            if (item.comment != null && item.taskCommentMedia?.isEmpty() == true) {
-//                commentTV.text = item.comment
-//                commentTV.isVisible = true
-//                videoProgressCL.isVisible = false
-//            } else {
-//                commentTV.isVisible = false
-//                videoProgressCL.isVisible = true
-//
-//                /*if (item.taskCommentMedia?.isNotEmpty() == true) {
-//                    if (item.taskCommentMedia[0]?.duration != null) {
-//                        val duration = item.taskCommentMedia[0]?.duration
-//                        vidDuration.text = String.format(
-//                            "%d:%d",
-//                            duration?.toLong()?.let { TimeUnit.MILLISECONDS.toMinutes(it) },
-//                            duration?.toLong()?.let { TimeUnit.MILLISECONDS.toSeconds(it) }
-//                                ?.minus(
-//                                    TimeUnit.MINUTES.toSeconds(
-//                                        TimeUnit.MILLISECONDS.toMinutes(
-//                                            duration.toLong()
-//                                        )
-//                                    )
-//                                ) ?: 0
-//                        )
-//
-//
-//                        vidPlayerButton.setOnClickListener {
-////                            item.taskCommentMedia[0]?.let { it1 -> onAudioBtnClick(it1,vidProgress,vidDuration) }
-//                        }
-//                    }
-//                }*/
-//            }
+            if (item.comment != null && item.taskCommentMedia?.isEmpty() == true) {
+                commentTV.text = item.comment
+                commentTV.isVisible = true
+                videoProgressCL.isVisible = false
+            } else {
+                commentTV.isVisible = false
+                videoProgressCL.isVisible = true
+
+                if (item.taskCommentMedia?.isNotEmpty() == true) {
+                    if (item.taskCommentMedia[0]?.duration != null) {
+                        val duration = item.taskCommentMedia[0]?.duration
+                        vidDuration.text = String.format(
+                            "%d:%d",
+                            duration?.toLong()?.let { TimeUnit.MILLISECONDS.toMinutes(it) },
+                            duration?.toLong()?.let { TimeUnit.MILLISECONDS.toSeconds(it) }
+                                ?.minus(
+                                    TimeUnit.MINUTES.toSeconds(
+                                        TimeUnit.MILLISECONDS.toMinutes(
+                                            duration.toLong()
+                                        )
+                                    )
+                                ) ?: 0
+                        )
+
+
+                        vidPlayerButton.setOnClickListener {
+                            item.taskCommentMedia[0]?.let { it1 ->
+                                initializeMediaPlayer(
+                                    it1,
+                                    vidProgress,
+                                    vidDuration
+                                )
+                            }
+                        }
+                    }
+                }
+            }
 
             reply.setOnClickListener {
                 item.id?.let { it1 -> anInterface.onReplyClick(it1) }
@@ -97,6 +111,104 @@ class CommentsAdapter(
 
             likeTV.setOnClickListener {
                 item.id?.let { it1 -> anInterface.onLikeClick(it1) }
+            }
+        }
+
+        private fun initializeMediaPlayer(
+            mediaModel: TaskMediaItem, progressBar: ProgressBar,
+            durationTV: TextView
+        ) {
+            if (mediaPlayer?.isPlaying == true) {
+                mediaPlayer?.stop()
+                mediaPlayer?.reset()
+                mediaPlayer?.release()
+            }
+
+
+            Log.e("mediaPlayer::", mediaPlayer.toString())
+            try {
+                mediaPlayer?.setOnPreparedListener { mp ->
+                    Log.e("mp::", "Start")
+                    mp.start()
+                    ChangeMusic(progressBar, durationTV)
+                }
+                mediaPlayer?.setDataSource(mediaModel.mediaUrl)
+                mediaPlayer?.prepareAsync()
+
+            } catch (e: Exception) {
+                Log.e("eee::", e.message.toString())
+                e.printStackTrace()
+            }
+        }
+
+        private fun ChangeMusic(
+            progressBar: ProgressBar,
+            durationTV: TextView
+
+        ) {
+            /*if (mp != null) {
+                if (mp?.isPlaying == true) {
+                    mp?.stop()
+                    mp?.reset()
+                    mp?.release()
+                    mp =
+                        null
+                    mp =
+                        MediaPlayer()
+                }
+            } else {
+                mp =
+                    MediaPlayer()
+            }*/
+
+            duration =
+                mediaPlayer?.duration?.div(1000) ?: 0
+            Log.e("duration::", duration.toString())
+            if (mediaPlayer?.isPlaying == true) {
+//            mPlay.setVisibility(View.GONE)
+//            mPause.setVisibility(View.VISIBLE)
+            }
+            progressBar.max = duration
+            //            //   Log.e("Player duration ",seekbar.getMax() + " ");
+            val hours: Int = duration / 3600
+            val minutes: Int = duration / 60 - hours * 60
+            val seconds: Int = duration - hours * 3600 - minutes * 60
+            val formatted: String = if (hours == 0) {
+                String.format("%02d:%02d", minutes, seconds)
+            } else {
+                String.format("%d:%02d:%02d", hours, minutes, seconds)
+            }
+            durationTV.text = formatted + ""
+            progressBarAdp = progressBar
+            durationTVAdp = durationTV
+            hdlr.postDelayed(UpdateSongTime, 100)
+        }
+
+
+        //    From File explorer & transfer
+        var progressBarAdp: ProgressBar? = null
+        var durationTVAdp: TextView? = null
+        private val UpdateSongTime: Runnable = object : Runnable {
+            override fun run() {
+                if (mediaPlayer != null) {
+                    val current: Int =
+                        mediaPlayer?.currentPosition?.div(1000) ?: 0
+                    progressBarAdp?.progress = current
+                    val hours = current / 3600
+                    val minutes = current / 60 - hours * 60
+                    val seconds = current - hours * 3600 - minutes * 60
+                    val formatted: String = if (hours == 0) {
+                        String.format("%02d:%02d", minutes, seconds)
+                    } else {
+                        String.format("%d:%02d:%02d", hours, minutes, seconds)
+                    }
+                    durationTVAdp?.text = formatted
+                    /*  if (startTime.getText() == endTime.getText()) {
+                          mPlay.setVisibility(View.VISIBLE)
+                          mPause.setVisibility(View.GONE)
+                      }*/
+                    hdlr.postDelayed(this, 100)
+                }
             }
         }
 
@@ -109,58 +221,5 @@ class CommentsAdapter(
         notifyDataSetChanged()
     }
 
-
-    /*fun onAudioBtnClick(
-        mediaModel: TaskMediaItem,
-        progressBar: ProgressBar,
-        durationTV: TextView
-    ) {
-        val mediaPlayerAdp = MediaPlayer()
-        mediaPlayerAdp.setAudioStreamType(AudioManager.STREAM_MUSIC)
-        try {
-            mediaPlayerAdp.setDataSource(mediaModel.mediaUrl)
-            mediaPlayerAdp.prepare()
-
-        } catch (e: Exception) {
-            Log.e("e:",e.message.toString())
-            e.printStackTrace()
-        }
-        if (mediaPlayerAdp.isPlaying) {
-            mediaPlayerAdp.pause()
-            mTimer?.cancel()
-        } else {
-            mediaPlayerAdp.start()
-            if (milliSecLeftAdp == mediaModel.duration?.toLong()) {
-                mediaModel.duration.toLong()
-                    .let { timerStartAdp(it, mediaModel.duration,progressBar,durationTV) }
-            } else {
-                mediaModel.duration?.let { timerStartAdp(milliSecLeftAdp, it,progressBar,durationTV) }
-            }
-        }
-    }*/
-
-
-    /* private fun timerStartAdp(timeLengthMilli: Long, totalDuration: Int,progressBar: ProgressBar,
-                               durationTV: TextView) {
-
-         milliSecLeftAdp = timeLengthMilli
-         val timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
-         timeFormatter.timeZone = TimeZone.getTimeZone("UTC")
-         mTimer = object : CountDownTimer(timeLengthMilli, 1000) {
-             override fun onTick(milliTillFinish: Long) {
-                 milliSecLeftAdp = milliTillFinish
-                 durationTV.text = timeFormatter.format(Date(milliSecLeftAdp))
-                 progressBar.progress = totalDuration - milliSecLeftAdp.toInt()
-             }
-
-             override fun onFinish() {
-                 mTimer?.cancel()
-                 milliSecLeftAdp = totalDuration.toLong()
-                 progressBar.progress = 0
-                 durationTV.text = timeFormatter.format(Date(totalDuration.toLong()))
-             }
-         }.start()
-
-     }*/
 
 }

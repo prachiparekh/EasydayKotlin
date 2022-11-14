@@ -16,7 +16,10 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.app.sources.aws.AWSKeys
@@ -24,6 +27,7 @@ import com.app.easyday.app.sources.aws.S3Uploader
 import com.app.easyday.app.sources.aws.S3Utils.generates3ShareUrl
 import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
 import com.app.easyday.app.sources.remote.model.TaskCommentMedia
+import com.app.easyday.app.sources.remote.model.TaskMediaItem
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.IntentUtil
@@ -60,11 +64,38 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     var audioRecordView: AudioRecordView? = null
     var mTimer: CountDownTimer? = null
 
+    companion object {
+        var mediaPlayer: MediaPlayer? = null
+    }
+
     override fun initUi() {
         DeviceUtils.initProgress(requireContext())
         s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_TASK_COMMENT_MEDIA)
         taskId = arguments?.getInt("taskId")
         taskId?.let { viewModel.getComments(it) }
+
+        mediaPlayer = MediaPlayer().apply {
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
+        }
+
+        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+             mediaPlayer=MediaPlayer().apply {
+                 setAudioAttributes(
+                     AudioAttributes.Builder()
+                         .setUsage(AudioAttributes.USAGE_MEDIA)
+                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                         .build()
+                 )
+             }
+         } else {
+             mediaPlayer=MediaPlayer()
+             mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
+         }*/
 
         add_commentTV.setOnClickListener {
             parentCommentId = null
@@ -114,6 +145,12 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         requireView().requestFocus()
         requireView().setOnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                if (mediaPlayer?.isPlaying == true) {
+                    mediaPlayer?.stop()
+                    mediaPlayer?.reset()
+                    mediaPlayer?.release()
+                    mediaPlayer = null
+                }
                 if (mTimer != null)
                     mTimer?.cancel()
                 if (layoutAudio.isVisible || videoProgressCL.isVisible) {
@@ -156,37 +193,38 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
     override fun setObservers() {
         viewModel.commentList.observe(viewLifecycleOwner) { list ->
+            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                commentET.text = null
+                if (list != null) {
+                    list.sortByDescending { it.createdAt }
+                    if (commentAdapter == null) {
+                        commentAdapter =
+                            CommentsAdapter(
+                                requireContext(),
+                                list, this
+                            )
 
-            commentET.text = null
-            if (list != null) {
-                list.sortByDescending { it.createdAt }
-                if (commentAdapter == null) {
-                    commentAdapter =
-                        CommentsAdapter(
-                            requireContext(),
-                            list, this
-                        )
+                        commentRV.adapter = commentAdapter
+                    } else {
+                        commentAdapter?.setItemList(list)
+                        commentAdapter?.notifyDataSetChanged()
+                    }
 
-                    commentRV.adapter = commentAdapter
+                    discussionCount.text = requireContext().resources.getString(
+                        R.string.discussion_str,
+                        list.size.toString()
+                    )
                 } else {
-                    commentAdapter?.setItemList(list)
-                    commentAdapter?.notifyDataSetChanged()
+                    discussionCount.text = requireContext().resources.getString(
+                        R.string.discussion_str,
+                        "0"
+                    )
                 }
 
-                discussionCount.text = requireContext().resources.getString(
-                    R.string.discussion_str,
-                    list.size.toString()
-                )
-            } else {
-                discussionCount.text = requireContext().resources.getString(
-                    R.string.discussion_str,
-                    "0"
-                )
+                videoProgressCL.isVisible = false
+                layoutAudio.isVisible = false
+                bottom_RL.isVisible = false
             }
-
-            videoProgressCL.isVisible = false
-            layoutAudio.isVisible = false
-            bottom_RL.isVisible = false
             DeviceUtils.dismissProgress()
         }
     }
@@ -199,6 +237,14 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         commentET.text = null
         bottom_RL.isVisible = true
         this.parentCommentId = parentCommentID
+    }
+
+    override fun onAudioBtnClick(
+        mediaModel: TaskMediaItem,
+        progressBar: ProgressBar,
+        durationTV: TextView
+    ) {
+//        initializeMediaPlayer(mediaModel, progressBar, durationTV)
     }
 
 
@@ -296,10 +342,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
     }
 
     override fun onRecordingStarted() {
-
-
         startRecording()
-
     }
 
     override fun onRecordingCompleted() {
@@ -311,56 +354,45 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
         }
 
-        val mediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
+//        mediaPlayer?.setDataSource(requireContext(), Uri.parse(outputMediaFile?.absolutePath))
+        mediaPlayer?.setDataSource(
+            requireContext(), Uri.parse(
+                "https://s3.eu-west-1.amazonaws.com/easyday-bucket/task_comment_media/1668160340642.mp3?response-content-type=audio%2Fmpeg&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEJL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCWV1LXdlc3QtMSJHMEUCIHQEkTNLlL9EdTFLWgVZubuKuP2fl%2FJV43DJDuKuKOuhAiEAxYGEEs79rVxwxk1SmKQzzRsazruh2dREX7V79Yh9wkIqmwYIi%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgwyMjA3MDEzMjEwMjciDNV35JrZQXNksgbSVirvBQUgTS9bMw0J8FJ52h%2BbZhHtLzldxvhPfIzzqHlCXFPGj6qQ3%2FMFVlDtpcmtEGYRybeDtxkkHOUxSxaOAaM7TQqvGAU8%2BsOZ%2FgFgepeKuU5UjdrRkP0hKxIhf%2FW8rQjGsh822r6aP%2FgpuJGmoobfgwGtvFIbLKv5EEX%2BQSYZa9M53O%2F2OI%2FAr7lq8HcSXRLLb89BsZBaC975bqzk3B0fZ%2B1y9%2Bgc8MjLz0hKPEAX5Akm3rJvNQhT7KvKeo3KrAr8eCS6JzU9Q7Doh9ne8v4ha414eDcII%2Fj0p2cPOAa3zFx%2F6f7O8CGvhENR04ikGQQZxI71Gp5QhDhEKNy%2Bdb8kJVoAZf%2F%2FAgrYSMS7c76tHd5NbdAl6%2BmWpsyDfY%2FubZPk2GiRM8A4DJNg8WKJYYe8EmHnYD4WhGRJbH8BIfmjS0o%2BSuEQ2h5wdu026F1Qnkkd%2Bdi%2FLBO2gS5I8ReCY7eC2Es7ZTfS79uw4hDYjAK3PPw8mWwofzsjGtNQUThE85h1DH%2BchIAe9rBSGk62XrHn12KyCKxw7bYhyLjfvpkBYuBOYNbrWElyVCgOFhcavEHDQs76rn63I1Hn0Nv7zHUspmv%2B9CZXxWpKY7eBd8Y2OCeF9oKK7ms28rlTj7AZhmrM4mk6eW8bYMa5kLYnkQXDb7xyTFB34izmbEaoi7zUz2dFavnH1jKKsbADqmhY8w5XLqjylkqEdOMsT8S8gvJMQTUJA49mUE7sMvh5tivhnEOvJ4SNpajwJsGhaEjh5p7rKRr3kkFIVxk%2FJ%2FWrrLRFX6PFIer1Ojn0gLbl93rK%2BzGOVQosgpgkzeMsCBWRBhcY9jO7VVNCs8P9c%2Fr6%2FURpQHhOOEVQefpy8sEf6Mayj28%2BWQ4XugbI0Gv6QPSSnkUg78MVPLxgv4oxp9wozD30C%2FuPVaQRGQo2srLzqiZLhMNQlpHb04urrgYaw8DprFr1GS556G1YfQpZ13%2FDFsYjTasgfKpY8Z50U9TjJLeQD%2FUw37a4mwY6hwIgGhA5xXS8KSFa7Nsz9DY7Z9Va5BhqW3vbi4HyT2uccFjfgQsYApTOmPFteMPelZlYdM5Aw6opVVuw%2FsEDvFX%2FogPZQxJHOzcA2TlXKVJkFqnab7wHvQvM4yG%2BIZle%2BOUTbpzyALNXsNaFFfHw4Xj03tGCptX%2BsdRdyLZCUa7CxjSah9FFTXfvKIiocY5AD4I77UOKTgkgqr%2BzC13a6T9elawjiEsG93Mkhz%2FZ2ORN8crS1%2BGrp5N4X9qHJkK0vjONqirPJmoqKHJvVToJ2BfbXnhfzzSpQcWtNjWAKu3ZCMu8UQlPHLGKp4KtuzPTQfcTyGi7lsFRyWtEu1Y9wxnNxhrAWLD4Eg%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20221111T095231Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3599&X-Amz-Credential=ASIATGYWS45BST5KKEGK%2F20221111%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Signature=2c9b22016a2fa246b6131e1102460b5d0fafa4db0090781fa4a3b0b0b44cd785"
             )
-            setDataSource(requireContext(), Uri.parse(outputMediaFile?.absolutePath))
-            prepare()
+        )
+        mediaPlayer?.prepare()
 
-        }
-
-        /* val mediaPlayer = MediaPlayer()
-         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-         try {
-             mediaPlayer.setDataSource(outputMediaFile?.absolutePath)
-             mediaPlayer.prepare()
-
-         } catch (e: Exception) {
-             Log.e("error:",e.message.toString())
-             e.printStackTrace()
-         }*/
-
-        val duration = mediaPlayer.duration
+        val duration = mediaPlayer?.duration
         Log.e("duration:", duration.toString())
         val timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
         timeFormatter.timeZone = TimeZone.getTimeZone("UTC")
-        vidDuration.text = timeFormatter.format(Date(duration.toLong()))
+        vidDuration.text = timeFormatter.format(duration?.toLong()?.let { Date(it) })
 
-        milliSecLeft = duration.toLong()
-        vidProgress.max = duration
+        milliSecLeft = duration?.toLong() ?: 0
+        if (duration != null) {
+            vidProgress.max = duration
+        }
         vidProgress.progress = 0
         vidPlayerButton.setOnClickListener {
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
+            if (mediaPlayer?.isPlaying == true) {
+                mediaPlayer?.pause()
                 mTimer?.cancel()
             } else {
-                mediaPlayer.start()
-                if (milliSecLeft == duration.toLong()) {
+                mediaPlayer?.start()
+                if (milliSecLeft == duration?.toLong()) {
                     timerStart(duration.toLong(), duration)
                 } else {
-                    timerStart(milliSecLeft, duration)
+                    if (duration != null) {
+                        timerStart(milliSecLeft, duration)
+                    }
                 }
             }
         }
 
         ctaMedia.setOnClickListener {
-            mediaPlayer.stop()
-            mediaPlayer.reset()
-            mediaPlayer.release()
+            mediaPlayer?.stop()
+            mediaPlayer?.reset()
+            mediaPlayer?.release()
             DeviceUtils.showProgress()
             outputMediaFile?.let { it1 -> uploadAudioTos3(it1, duration) }
         }
@@ -394,5 +426,6 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         layoutAudio.isVisible = false
         recorder.stop()
     }
+
 
 }
