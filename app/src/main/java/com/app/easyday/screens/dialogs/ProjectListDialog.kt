@@ -44,6 +44,11 @@ class ProjectListDialog(
 
         binding?.projectRV?.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
+        if (selectedProjectPosition == AppPreferencesDelegates.get().activeProject){
+
+        }
+
         adapter = projectList?.let {
             ProjectAdapter(
                 requireContext(),
@@ -65,6 +70,7 @@ class ProjectListDialog(
                 binding?.cta?.setOnClickListener {
                     adapter?.selectedProjectPosition().let { it1 ->
                         if (it1 != null) {
+
                             projectInterface.onClickProject(it1)
                         }
                     }

@@ -260,7 +260,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="64"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -299,7 +299,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="50"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -335,7 +335,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="48"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -434,7 +434,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="112"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -469,7 +469,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="50"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,8 @@ class ProjectAdapter(
     var selectedProjectPosition: Int
 ) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
 
-
+    var btn: ImageView? = null
+    var pos: Int? = null
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getItemCount(): Int = projectList.size
@@ -61,7 +63,8 @@ class ProjectAdapter(
             } else {
                 radio.setImageDrawable(context.resources.getDrawable(R.drawable.ic_uncheck_radio))
             }
-
+            btn = radio
+            pos = position
 
             itemView.setOnClickListener {
                 val lastPosition = selectedProjectPosition
@@ -69,15 +72,22 @@ class ProjectAdapter(
                 notifyItemChanged(lastPosition)
                 notifyItemChanged(selectedProjectPosition)
 
-                AppPreferencesDelegates.get().activeProject = true
+                AppPreferencesDelegates.get().activeProject = projectList[position].id ?:0
+                Log.e("prjId", projectList[position].id.toString())
             }
-
 
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun selectedProjectPosition(): Int {
+//        AppPreferencesDelegates.get().activeProject = selectedProjectPosition
+//
+//        if (selectedProjectPosition == pos){
+//            btn?.setImageDrawable(context.resources.getDrawable(R.drawable.ic_check_radio))
+//        } else {
+//            btn?.setImageDrawable(context.resources.getDrawable(R.drawable.ic_uncheck_radio))
+//        }
         return selectedProjectPosition
     }
 

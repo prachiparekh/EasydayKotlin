@@ -55,7 +55,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/dm_sans_700"
                 android:gravity="center"
-                android:text="04"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold" />

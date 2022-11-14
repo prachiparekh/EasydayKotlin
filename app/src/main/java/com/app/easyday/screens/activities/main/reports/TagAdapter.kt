@@ -34,8 +34,6 @@ class TagAdapter(
     override fun getItemCount(): Int = tagList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//        val view = inflater.inflate(R.layout.item_tag_line_report, parent, false)
-//        return ViewHolder(view)
 
         return if (viewType == Line && isLineFragment) {
 
@@ -54,7 +52,6 @@ class TagAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        holder.bind(position)
         if (holder.itemViewType == Line) {
             val holder = holder as TagAdapter.ViewHolder
             holder.bind(position)

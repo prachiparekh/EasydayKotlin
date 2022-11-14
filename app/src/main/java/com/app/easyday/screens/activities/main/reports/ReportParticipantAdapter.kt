@@ -36,8 +36,7 @@ class ReportParticipantAdapter(
     override fun getItemCount(): Int = contactList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//        val view = inflater.inflate(R.layout.report_participant_layout, parent, false)
-//        return ViewHolder(view)
+
         return if (viewType == Line && isLineFragment) {
 
             // view for normal data.
@@ -60,7 +59,6 @@ class ReportParticipantAdapter(
             Chart
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        holder.bind(position)
         if (holder.itemViewType == Line) {
             val holder = holder as ViewHolder
             holder.bind(position)

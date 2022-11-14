@@ -9,6 +9,7 @@ import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.DeleteLogoutProfileInterface
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.screens.activities.auth.AuthActivity
+import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.screens.dialogs.DeleteUserDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,6 +87,7 @@ class PrivacySecurityFragment : BaseFragment<PrivacySecurityViewModel>(),
 
     override fun OnDeleteClick() {
         viewModel.deleteProfile()
+        AppPreferencesDelegates.get().activeProject = HomeFragment.selectedProjectID!!
     }
 
     override fun OnLogoutClick() {

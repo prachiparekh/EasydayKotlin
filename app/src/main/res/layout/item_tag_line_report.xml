@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/dm_sans_700"
             android:padding="@dimen/_5sdp"
-            android:text="340"
+            android:text="0"
             android:textColor="@color/accent_blue"
             android:textSize="@dimen/_13sdp"
             android:layout_alignParentStart="true"

@@ -4,21 +4,23 @@ import com.pixplicity.easyprefs.library.Prefs
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class ActiveProjectDelegate : ReadWriteProperty<AppPreferencesDelegates, Boolean> {
+class ActiveProjectDelegate : ReadWriteProperty<AppPreferencesDelegates, Int> {
 
     companion object {
-        const val PREF_KEY_ACTIVE_PROJECT = "showcase_seen"
+        const val PREF_KEY_APP_RUN_COUNT = "active_project"
+        const val run_count = 0
     }
 
-    override fun getValue(thisRef: AppPreferencesDelegates, property: KProperty<*>): Boolean =
-        Prefs.getBoolean(PREF_KEY_ACTIVE_PROJECT, false)
+    override fun getValue(thisRef: AppPreferencesDelegates, property: KProperty<*>): Int =
+        Prefs.getInt(PREF_KEY_APP_RUN_COUNT, run_count)
 
 
     override fun setValue(
         thisRef: AppPreferencesDelegates,
         property: KProperty<*>,
-        value: Boolean
+        value: Int
     ) {
-        Prefs.putBoolean(PREF_KEY_ACTIVE_PROJECT, value)
+        Prefs.putInt(PREF_KEY_APP_RUN_COUNT, value)
     }
+
 }

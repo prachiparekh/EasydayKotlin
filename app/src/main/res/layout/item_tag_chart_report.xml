@@ -51,7 +51,7 @@
                 android:layout_weight="0.3"
                 android:fontFamily="@font/dm_sans_700"
                 android:gravity="center"
-                android:text="010"
+                android:text="0"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_13sdp" />
 
