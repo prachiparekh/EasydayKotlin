@@ -27,10 +27,10 @@ data class AddTaskRequestModel(
     var tags: ArrayList<Int>? = null,
 
     @field:SerializedName("zones")
-    var zones: ArrayList<Int>? = null,
+    var zones: Int? = null,
 
     @field:SerializedName("spaces")
-    var spaces: ArrayList<Int>? = null,
+    var spaces: Int? = null,
 
     @field:SerializedName("task_media")
     var task_media: List<MultipartBody.Part>? = null,

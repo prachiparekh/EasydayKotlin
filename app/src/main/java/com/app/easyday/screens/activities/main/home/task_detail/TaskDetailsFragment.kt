@@ -56,42 +56,29 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
             )
         }
 
-        var spaceStr=""
-        taskModel?.taskSpaces?.indices?.forEach { i ->
-            if (i == 0)
-                spaceStr += taskModel?.taskSpaces?.get(i)?.projectAttribute?.attributeName
-            else
-                spaceStr += "," + taskModel?.taskSpaces?.get(i)?.projectAttribute?.attributeName
-        }
+        val spaceStr = taskModel?.taskSpaces?.projectAttribute?.attributeName.toString()
         space_Tv.text = spaceStr
 
-        var zoneStr=""
-        taskModel?.taskZones?.indices?.forEach { i ->
-            if (i == 0)
-                zoneStr += taskModel?.taskZones?.get(i)?.projectAttribute?.attributeName
-            else
-                zoneStr += "," + taskModel?.taskZones?.get(i)?.projectAttribute?.attributeName
-        }
+        val zoneStr = taskModel?.taskZones?.projectAttribute?.attributeName
 
-        if (spaceStr.isEmpty() && zoneStr.isEmpty()){
+        zones_Tv.text = zoneStr
+
+        if (spaceStr.isEmpty() && zoneStr?.isEmpty() == true) {
             spaceLL.visibility = View.GONE
             view7.visibility = View.GONE
 
-        }else if (spaceStr.isEmpty() && !zoneStr.isEmpty()){
+        } else if (spaceStr.isEmpty() && zoneStr?.isNotEmpty() == true) {
             spc.visibility = View.GONE
             view_s_z.visibility = View.GONE
-        }else if (zoneStr.isEmpty() && !spaceStr.isEmpty()){
+        } else if (zoneStr?.isEmpty() == true && !spaceStr.isEmpty()) {
             zn.visibility = View.GONE
             view_s_z.visibility = View.GONE
-        }
-        else{
+        } else {
             spaceLL.visibility = View.VISIBLE
             view7.visibility = View.VISIBLE
             view_s_z.visibility = View.VISIBLE
         }
 
-
-        zones_Tv.text = zoneStr
 
         taskTitle.text = title
         taskDescription.text = description

@@ -65,11 +65,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/dm_sans_400"
+                    android:fontFamily="@font/inter_medium_500"
                     android:gravity="center"
                     android:text="@string/today"
                     android:textColor="@color/black"
-                    android:textSize="19sp"
+                    android:textSize="@dimen/_14sdp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -84,7 +84,7 @@
                     android:gravity="center"
                     android:text="@string/mark_all_read"
                     android:textColor="@color/green"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -128,10 +128,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="@dimen/_10sdp"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/notification_time"
-                                    android:textColor="@color/tab_gray"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textColor="@color/hint_color"
+                                    android:textSize="@dimen/_8sdp" />
 
                                 <TextView
                                     android:id="@+id/fst_comment"
@@ -182,10 +182,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="@dimen/_10sdp"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/notification_time"
-                                    android:textColor="@color/tab_gray"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textColor="@color/hint_color"
+                                    android:textSize="@dimen/_8sdp" />
 
                                 <TextView
                                     android:id="@+id/sec_comment"
@@ -218,7 +218,7 @@
                                         android:text="@string/great_i_ll"
                                         android:textColor="@color/light_text"
                                         android:textColorLink="@color/black"
-                                        android:textSize="15sp" />
+                                        android:textSize="@dimen/_12sdp" />
                                 </RelativeLayout>
 
 
@@ -259,10 +259,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="@dimen/_10sdp"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/notification_time"
-                                    android:textColor="@color/tab_gray"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textColor="@color/hint_color"
+                                    android:textSize="@dimen/_8sdp" />
 
                                 <TextView
                                     android:id="@+id/trd_comment"
@@ -314,10 +314,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="@dimen/_10sdp"
-                                    android:fontFamily="@font/dm_sans_400"
+                                    android:fontFamily="@font/inter_medium_500"
                                     android:text="@string/notification_time"
-                                    android:textColor="@color/tab_gray"
-                                    android:textSize="@dimen/_11sdp" />
+                                    android:textColor="@color/hint_color"
+                                    android:textSize="@dimen/_8sdp" />
 
                                 <TextView
                                     android:id="@+id/four_comment"
@@ -350,7 +350,7 @@
                                         android:text="@string/great_i_ll"
                                         android:textColor="@color/light_text"
                                         android:textColorLink="@color/black"
-                                        android:textSize="15sp" />
+                                        android:textSize="@dimen/_12sdp" />
                                 </RelativeLayout>
 
 

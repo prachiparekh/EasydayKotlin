@@ -138,6 +138,7 @@ class MoreFragment : Fragment(), OnClickListener,DeleteLogoutProfileInterface {
         HomeFragment.selectedProjectID = null
         selectedTabID = R.id.home
         AppPreferencesDelegates.get().token = null.toString()
+        AppPreferencesDelegates.get().activeProject = HomeFragment.selectedProjectID!!
         requireContext().startActivity(Intent(requireContext(), AuthActivity::class.java))
     }
 

@@ -68,8 +68,8 @@ interface EasyDayApi {
         @Part("red_flag") red_flag: RequestBody,
         @Part("due_date") due_date: RequestBody,
         @Part("tags[]") tags: ArrayList<Int>?,
-        @Part("zones[]") zones: ArrayList<Int>?,
-        @Part("spaces[]") spaces: ArrayList<Int>?,
+        @Part("zones[]") zones: Int?,
+        @Part("spaces[]") spaces: Int?,
         @Part task_media: ArrayList<MultipartBody.Part>,
         @Part("task_participants") task_participants: ArrayList<Int>?,
     ): Observable<ApiResponse<TaskResponse>>
@@ -142,5 +142,11 @@ interface EasyDayApi {
         @Field("tags") tags: String,
         @Field("feedback_text") feedback_text: String
     ): Observable<ApiResponse<FeedbackResponse>>
+
+    @GET("project/get-report")
+    fun getReport(
+        @Query("project_id") project_id: Int,
+
+        ): Observable<ApiResponse<ReportResponse>>
 }
 

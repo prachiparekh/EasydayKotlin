@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="20 Tasks"
+                        android:text="@string/task_count"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="12 Tasks"
+                        android:text="@string/task_count"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -154,7 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="44 Tasks"
+                        android:text="@string/task_count"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -178,7 +178,7 @@
                         android:drawableStart="@drawable/ic_warning"
                         android:drawablePadding="@dimen/_5sdp"
                         android:fontFamily="@font/inter_medium_500"
-                        android:text="@string/in_review"
+                        android:text="@string/re_opened"
                         android:textColor="@color/red"
                         android:textSize="@dimen/_11sdp" />
 
@@ -188,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="86 Tasks"
+                        android:text="@string/task_count"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -260,7 +260,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="64"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -299,7 +299,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="50"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -335,7 +335,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="48"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -434,7 +434,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="112"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -469,7 +469,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/dm_sans_700"
-                        android:text="50"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -519,188 +519,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_10sdp"
                 android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/teamLabel">
 
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/report_participant_RV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_rounded_rect"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_5sdp"
-                    android:weightSum="2">
+                    android:paddingBottom="@dimen/_20sdp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/report_participant_layout" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/bg_circle_white"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_profile_circle" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="1.5"
-                        android:fontFamily="@font/dm_sans_400"
-                        android:padding="@dimen/_5sdp"
-                        android:text="John Doe"
-                        android:textColor="@color/accent_blue"
-                        android:textSize="@dimen/_11sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="0.5"
-                        android:fontFamily="@font/dm_sans_700"
-                        android:gravity="center"
-                        android:text="04"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13sdp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/bg_rounded_rect"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_5sdp"
-                    android:weightSum="2">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/bg_circle_white"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_profile_circle" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="1.5"
-                        android:fontFamily="@font/dm_sans_400"
-                        android:padding="@dimen/_5sdp"
-                        android:text="Guy Hawkins"
-                        android:textColor="@color/accent_blue"
-                        android:textSize="@dimen/_11sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="0.5"
-                        android:fontFamily="@font/dm_sans_700"
-                        android:gravity="center"
-                        android:text="02"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13sdp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/bg_rounded_rect"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_5sdp"
-                    android:weightSum="2">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/bg_circle_white"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_profile_circle" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="1.5"
-                        android:fontFamily="@font/dm_sans_400"
-                        android:padding="@dimen/_5sdp"
-                        android:text="Cody Fisher"
-                        android:textColor="@color/accent_blue"
-                        android:textSize="@dimen/_11sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="0.5"
-                        android:fontFamily="@font/dm_sans_700"
-                        android:gravity="center"
-                        android:text="01"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13sdp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/bg_rounded_rect"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_5sdp"
-                    android:weightSum="2">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/bg_circle_white"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_profile_circle" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="1.5"
-                        android:fontFamily="@font/dm_sans_400"
-                        android:padding="@dimen/_5sdp"
-                        android:text="Dianne Russell"
-                        android:textColor="@color/accent_blue"
-                        android:textSize="@dimen/_11sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="0.5"
-                        android:fontFamily="@font/dm_sans_700"
-                        android:gravity="center"
-                        android:text="06"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13sdp" />
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -746,6 +578,7 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_10sdp"
+                app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
                 tools:listitem="@layout/item_tag_line_report"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

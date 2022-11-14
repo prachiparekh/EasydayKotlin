@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.ProjectInterface
+import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 import com.app.easyday.databinding.ProjectListBdialogBinding
 import com.app.easyday.screens.dialogs.adapters.ProjectAdapter
@@ -43,6 +44,11 @@ class ProjectListDialog(
 
         binding?.projectRV?.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
+        if (selectedProjectPosition == AppPreferencesDelegates.get().activeProject) {
+
+        }
+
         adapter = projectList?.let {
             ProjectAdapter(
                 requireContext(),
@@ -64,6 +70,7 @@ class ProjectListDialog(
                 binding?.cta?.setOnClickListener {
                     adapter?.selectedProjectPosition().let { it1 ->
                         if (it1 != null) {
+
                             projectInterface.onClickProject(it1)
                         }
                     }
@@ -71,6 +78,8 @@ class ProjectListDialog(
                 }
             }
         }
+
+
 
         binding?.projectRV
         return binding?.root

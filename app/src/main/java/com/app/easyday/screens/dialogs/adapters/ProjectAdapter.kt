@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,7 @@ import android.widget.TextView
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
-import com.app.easyday.app.sources.local.interfaces.ProjectInterface
-import com.app.easyday.app.sources.remote.model.AttributeResponse
+import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 
 
@@ -23,7 +23,8 @@ class ProjectAdapter(
     var selectedProjectPosition: Int
 ) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
 
-
+    var btn: ImageView? = null
+    var pos: Int? = null
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getItemCount(): Int = projectList.size
@@ -60,21 +61,33 @@ class ProjectAdapter(
             } else {
                 radio.setImageDrawable(context.resources.getDrawable(R.drawable.ic_uncheck_radio))
             }
+            btn = radio
+            pos = position
 
             itemView.setOnClickListener {
-                val lastPosition=selectedProjectPosition
-                selectedProjectPosition =position
+                val lastPosition = selectedProjectPosition
+                selectedProjectPosition = position
                 notifyItemChanged(lastPosition)
                 notifyItemChanged(selectedProjectPosition)
+
+                AppPreferencesDelegates.get().activeProject = projectList[position].id ?: 0
+                Log.e("prjId", projectList[position].id.toString())
             }
+
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun selectedProjectPosition(): Int {
+//        AppPreferencesDelegates.get().activeProject = selectedProjectPosition
+//
+//        if (selectedProjectPosition == pos){
+//            btn?.setImageDrawable(context.resources.getDrawable(R.drawable.ic_check_radio))
+//        } else {
+//            btn?.setImageDrawable(context.resources.getDrawable(R.drawable.ic_uncheck_radio))
+//        }
         return selectedProjectPosition
     }
-
 
 
 }

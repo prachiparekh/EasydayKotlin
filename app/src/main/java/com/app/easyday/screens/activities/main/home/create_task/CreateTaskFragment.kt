@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
 import android.view.Window
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -43,7 +44,7 @@ import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterface,
-    AttributeSelectionInterface,
+    AttributeSelectionInterface, AddSpaceZoneAttributeInterface,
     FilterCloseInterface, AddAttributeInterface,
     AssigneeInterface {
 
@@ -55,6 +56,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     private var imgAdapter: BottomImageAdapter? = null
     var selectedUriList = ArrayList<Media>()
     var mediaAdapter: MediaAdapter? = null
+    var isSelected: Boolean = false
 
 
     var tagBSFDialog: AddTagBottomSheetDialog? = null
@@ -65,10 +67,11 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     var spaceList = arrayListOf<AttributeResponse>()
 
     private var selectedTagList = arrayListOf<Int>()
-    private var selectedZoneList = arrayListOf<Int>()
-    private var selectedSpaceList = arrayListOf<Int>()
+    private var selectedZone: Int? = null
+    private var selectedSpace: Int? = null
     private var selectedPriority: Int? = null
     var redFlag = 0 // False
+    var priorityClick = 0 // False
     var selectedDate: String? = null
 
 //    *****************
@@ -152,7 +155,14 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
         }
 
         taskAdapter =
-            TaskFilterAdapter(requireContext(), filterTypeList, priorityList, drawableList, this)
+            TaskFilterAdapter(
+                requireContext(),
+                filterTypeList,
+                priorityList,
+                isSelected,
+                drawableList,
+                this
+            )
         filterRV.adapter = taskAdapter
 
         imgAdapter =
@@ -384,7 +394,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                     AddSpaceZoneBottomSheetDialog(
                         requireContext(),
                         spaceList,
-                        arrayListOf(),
+                        selectedSpace,
                         this,
                         this,
                         2, this
@@ -401,7 +411,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                     AddSpaceZoneBottomSheetDialog(
                         requireContext(),
                         zoneList,
-                        arrayListOf(),
+                        selectedZone,
                         this,
                         this,
                         1, this
@@ -414,8 +424,13 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
         }
     }
 
-    override fun onFilterSingleChildClick(childList: ArrayList<String>, childPosition: Int) {
+    override fun onFilterSingleChildClick(
+        childList: ArrayList<String>,
+        childLabel: TextView,
+        childPosition: Int
+    ) {
         selectedPriority = childPosition
+
     }
 
 
@@ -435,23 +450,37 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
         }
     }
 
+    override fun onClickSpaceZoneAttribute(selectedAttrList: Int, type: Int) {
+        when (type) {
+
+            1 -> {
+                this.selectedZone = selectedAttrList
+
+            }
+            2 -> {
+                this.selectedSpace = selectedAttrList
+
+            }
+        }
+    }
+
     override fun onClickAttribute(selectedAttrList: ArrayList<Int>, type: Int) {
         when (type) {
             0 -> {
                 this.selectedTagList = selectedAttrList
 
             }
-            1 -> {
-                this.selectedZoneList = selectedAttrList
-
-            }
-            2 -> {
-                this.selectedSpaceList = selectedAttrList
-
-            }
+//            1 -> {
+//                this.selectedZoneList = selectedAttrList
+//
+//            }
+//            2 -> {
+//                this.selectedSpace = selectedAttrList
+//
+//            }
         }
-
     }
+
 
     override fun onCloseClick() {
         taskAdapter?.closeFilter()
@@ -538,8 +567,8 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                 redFlag,
                 duedate,
                 selectedTagList,
-                selectedZoneList,
-                selectedSpaceList,
+                selectedZone,
+                selectedSpace,
                 attachmentBodyList,
                 assigneeList
             )

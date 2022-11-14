@@ -134,6 +134,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     override fun setObservers() {
 
         viewModel.userProfileData.observe(viewLifecycleOwner) { userData ->
+
             if (userData?.profileImage != null) {
                 val options = RequestOptions()
                 profile.clipToOutline = true
@@ -149,6 +150,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                     .into(profile)
 
             }
+
         }
 
         viewModel.projectList.observe(viewLifecycleOwner) { projectList ->
@@ -165,12 +167,23 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                         )
                     )
 
-                    if (selectedProjectID == null) {
+                    if (AppPreferencesDelegates.get().activeProject == 0 && selectedProjectID == null) {
                         selectedProjectID = projectList[0].id
                         selectedColor = projectList[0].assignColor
+                    } else {
+                        selectedProjectID = AppPreferencesDelegates.get().activeProject
                     }
+
                     val mProject = projectList.find { it.id == selectedProjectID }
+                    selectedColor = mProject?.assignColor
                     activeProject.text = mProject?.projectName
+
+                    for (i in projectList.indices) {
+                        if (projectList[i].id == selectedProjectID) {
+                            selectedProjectPosition = i
+                        }
+
+                    }
                     TextViewCompat.setCompoundDrawableTintList(
                         activeProject,
                         ColorStateList.valueOf(
@@ -180,7 +193,6 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
                     selectedProjectID?.let { viewModel.getAllTask(it) }
                 }
-
 
                 activeProject.setOnClickListener {
                     DeviceUtils.showProgress()
@@ -251,6 +263,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
             }
         } else {
 //            Switch with ProjectID
+
             selectedProjectPosition = projectPosition
             TextViewCompat.setCompoundDrawableTintList(
                 activeProject,
@@ -262,6 +275,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
             activeProject.text = projectList[projectPosition].projectName
             selectedColor = projectList[projectPosition].assignColor
             selectedProjectID?.let { viewModel.getAllTask(it) }
+
         }
 
 

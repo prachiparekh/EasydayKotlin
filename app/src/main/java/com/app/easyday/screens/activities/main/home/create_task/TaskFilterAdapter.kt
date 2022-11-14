@@ -19,9 +19,10 @@ import com.app.easyday.app.sources.local.interfaces.FilterTypeInterface
 
 class TaskFilterAdapter(
     private val context: Context,
-    private var filterList: java.util.ArrayList<String>,
-    private var priorityList: java.util.ArrayList<String>,
-    private var drawableList: java.util.ArrayList<Drawable>,
+    private var filterList: ArrayList<String>,
+    private var priorityList: ArrayList<String>,
+    isSelected: Boolean,
+    private var drawableList: ArrayList<Drawable>,
     val filterTypeInterface: FilterTypeInterface
 ) : RecyclerView.Adapter<TaskFilterAdapter.ViewHolder>() {
 

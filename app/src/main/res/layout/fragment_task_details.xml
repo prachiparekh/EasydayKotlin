@@ -579,7 +579,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
-                app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_participant" />
 
         </LinearLayout>
