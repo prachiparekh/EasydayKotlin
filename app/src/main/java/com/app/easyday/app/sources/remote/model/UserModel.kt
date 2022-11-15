@@ -3,7 +3,6 @@ package com.app.easyday.app.sources.remote.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 data class UserModel(
 
@@ -35,7 +34,10 @@ data class UserModel(
 	val updatedAt: String? = null,
 
 	@field:SerializedName("token")
-	val token: String? = null
+	val token: String? = null,
+
+	@field:SerializedName("country_code")
+	val countryCode: String? = null
 ):Parcelable {
 	constructor(parcel: Parcel) : this(
 		parcel.readString(),
@@ -48,8 +50,7 @@ data class UserModel(
 		parcel.readString(),
 		parcel.readString(),
 		parcel.readString()
-	) {
-	}
+	)
 
 	override fun writeToParcel(parcel: Parcel, flags: Int) {
 		parcel.writeString(profession)

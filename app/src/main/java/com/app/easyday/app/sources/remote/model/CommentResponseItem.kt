@@ -16,7 +16,7 @@ data class CommentResponseItem(
     val userId: Int? = null,
 
     @field:SerializedName("children")
-    val children: List<CommentChildrenItem?>? = null,
+    val children: List<CommentResponseItem?>? = null,
 
     @field:SerializedName("parent_id")
     val parentId: Int? = null,
@@ -43,15 +43,20 @@ data class CommentResponseItem(
     val updatedAt: String? = null,
 
     @field:SerializedName("like_count")
-    val likeCount: Int? = null
+    val likeCount: Int? = null,
 
+    @field:SerializedName("is_liked")
+    val isLiked: Int? = null,
 
-):Parcelable {
+    @field:SerializedName("reply_to")
+    val replyTo: UserModel? = null
+
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.createTypedArrayList(TaskMediaItem),
         parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.createTypedArrayList(CommentChildrenItem),
+        parcel.createTypedArrayList(CommentResponseItem),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),

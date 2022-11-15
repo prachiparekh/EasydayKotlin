@@ -41,7 +41,7 @@ class CommentsAdapter(
     var mediaPlayer: MediaPlayer? = null
     var mTimer: CountDownTimer? = null
     var timeFormatter: SimpleDateFormat? = null
-    var mLikeTaskID: Int? = null
+    var mLikeTaskPosition: Int? = null
     var likeModel: LikeCommentResponse? = null
     override fun getItemCount(): Int = commentList.size
 
@@ -105,12 +105,10 @@ class CommentsAdapter(
                 }
             }
 
-
-
             if (item.likeCount?.equals(0) == false) {
                 likeTV.text = "+${item.likeCount}"
                 val likeList = item.taskCommentLikes
-                Log.e("likeList", likeList.toString())
+
                 likeList?.indices?.forEach { i ->
                     if (likeList[i]?.userId == userModel?.id) {
                         TextViewCompat.setCompoundDrawableTintList(
@@ -131,14 +129,35 @@ class CommentsAdapter(
                 likeTV.text = ""
             }
 
+            if (mLikeTaskPosition == position && likeModel != null) {
+                if (likeModel?.equals(0) == false) {
+                    likeTV.text = "+${likeModel?.likeCounts}"
+                } else {
+                    likeTV.text = ""
+                }
+
+                if (likeModel?.isLike == true) {
+                    TextViewCompat.setCompoundDrawableTintList(
+                        likeTV, ColorStateList.valueOf(
+                            ContextCompat.getColor(context, R.color.green)
+                        )
+                    )
+                } else {
+                    TextViewCompat.setCompoundDrawableTintList(
+                        likeTV, ColorStateList.valueOf(
+                            ContextCompat.getColor(context, R.color.hint_color)
+                        )
+                    )
+                }
+            }
 
             reply.setOnClickListener {
-                item.id?.let { it1 -> anInterface.onReplyClick(it1) }
+                item.let { it1 -> anInterface.onReplyClick(it1) }
             }
 
             likeTV.setOnClickListener {
                 item.id?.let { it1 ->
-                    mLikeTaskID = item.id
+                    mLikeTaskPosition = position
                     anInterface.onLikeClick(it1)
                 }
             }
@@ -223,6 +242,7 @@ class CommentsAdapter(
 
     fun setLikeButton(model: LikeCommentResponse) {
         this.likeModel = model
+        mLikeTaskPosition?.let { notifyItemChanged(it) }
     }
 
 

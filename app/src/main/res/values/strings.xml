@@ -238,8 +238,7 @@
     <string name="mark_all_read">Mark all read</string>
 
     <string name="feedback">Feedback</string>
-    <string name="replying_to_jane_cooper">Replying to Jane Cooper</string>
-    <string name="replying_to">Replying to</string>
+    <string name="replying_to">Replying to %s</string>
     <string name="jane_cooper">Jane Cooper </string>
     <string name="register"><u><b><i>Copyright</i></b></u></string>
 

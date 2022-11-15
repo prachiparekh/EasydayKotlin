@@ -25,6 +25,7 @@ import com.app.easyday.app.sources.aws.AWSKeys
 import com.app.easyday.app.sources.aws.S3Uploader
 import com.app.easyday.app.sources.aws.S3Utils.generates3ShareUrl
 import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
+import com.app.easyday.app.sources.remote.model.CommentResponseItem
 import com.app.easyday.app.sources.remote.model.TaskCommentMedia
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.utils.DeviceUtils
@@ -66,6 +67,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
     override fun initUi() {
         DeviceUtils.initProgress(requireContext())
+        DeviceUtils.showProgress()
         s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_TASK_COMMENT_MEDIA)
         taskId = arguments?.getInt("taskId")
         taskId?.let { viewModel.getComments(it) }
@@ -127,21 +129,26 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         requireView().requestFocus()
         requireView().setOnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                if (parentCommentId != null) {
+                    parentCommentId = null
+                    parentRL.isVisible = false
+                } else {
+                    if (layoutAudio.isVisible || videoProgressCL.isVisible) {
+                        layoutAudio.isVisible = false
+                        videoProgressCL.isVisible = false
+                        bottom_RL.isVisible = false
+                    } else {
+                        Navigation.findNavController(requireView()).popBackStack()
+                    }
+                }
+
                 if (mediaPlayer?.isPlaying == true) {
                     mediaPlayer?.stop()
                     mediaPlayer?.reset()
-//                    mediaPlayer?.release()
-//                    mediaPlayer = null
                 }
                 if (mTimer != null)
                     mTimer?.cancel()
-                if (layoutAudio.isVisible || videoProgressCL.isVisible) {
-                    layoutAudio.isVisible = false
-                    videoProgressCL.isVisible = false
-                    bottom_RL.isVisible = false
-                } else {
-                    Navigation.findNavController(requireView()).popBackStack()
-                }
+
                 true
             } else false
         }
@@ -206,12 +213,17 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
                 videoProgressCL.isVisible = false
                 layoutAudio.isVisible = false
                 bottom_RL.isVisible = false
+                discussionCount.isVisible = true
             }
             DeviceUtils.dismissProgress()
         }
 
         viewModel.likeResponse.observe(viewLifecycleOwner) {
-            taskId?.let { viewModel.getComments(it) }
+
+            if (it != null) {
+                commentAdapter?.setLikeButton(it)
+                DeviceUtils.dismissProgress()
+            }
         }
     }
 
@@ -220,10 +232,13 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         viewModel.likeComment(commentID)
     }
 
-    override fun onReplyClick(parentCommentID: Int) {
+    override fun onReplyClick(parentComment: CommentResponseItem) {
         commentET.text = null
         bottom_RL.isVisible = true
-        this.parentCommentId = parentCommentID
+        parentRL.isVisible = true
+        this.parentCommentId = parentComment.id
+        parentName.text =
+            requireContext().resources.getString(R.string.replying_to, parentComment.user?.fullname)
     }
 
     private fun onAudioPermission() {
@@ -312,7 +327,6 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
             override fun onUploadError(response: String?) {
 
-                Log.e("TAG", "Error Uploading: $response")
             }
         })
     }

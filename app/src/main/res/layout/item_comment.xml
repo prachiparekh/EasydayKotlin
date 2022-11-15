@@ -48,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/inter_medium_500"
-                    android:text="10s ago"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_10sdp" />
 
@@ -60,7 +59,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/dm_sans_400"
                 android:paddingVertical="@dimen/_5sdp"
-                android:text="Laborum distinctio autem voluptate dignissimos ut quo"
                 android:textColor="@color/light_text"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="visible" />
@@ -73,7 +71,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/selected_id_RL">
+              >
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/vidPlayerButton1"
