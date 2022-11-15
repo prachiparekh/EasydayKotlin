@@ -68,7 +68,7 @@
             android:background="@null"
             android:fontFamily="@font/mulish_700"
             android:gravity="top"
-            android:hint="@string/task_title"
+            android:hint="gfsgfhytssfgsdfgretwaerfadsfre"
             android:imeOptions="actionDone|flagNoEnterAction"
             android:inputType="textAutoCorrect|textCapSentences"
             android:maxLines="1"
@@ -83,6 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_2sdp"
             android:background="@null"
             android:cursorVisible="true"
             android:fontFamily="@font/inter_medium_500"
@@ -104,10 +105,11 @@
 
 
             <HorizontalScrollView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/actionBarItemBackground"
-                android:scrollbarStyle="outsideOverlay">
+                android:scrollbarStyle="outsideOverlay"
+                android:layout_gravity="center_horizontal">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -126,6 +128,7 @@
                             style="?attr/rte_ToolbarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/_2sdp"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@null"
                             android:src="@drawable/ic_note_paragraph" />
@@ -135,6 +138,7 @@
                             style="?attr/rte_ToolbarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/_2sdp"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@null"
                             android:src="@drawable/ic_note_heading1" />
@@ -144,6 +148,7 @@
                             style="?attr/rte_ToolbarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/_2sdp"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@null"
                             android:src="@drawable/ic_note_heading2" />
@@ -151,17 +156,19 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/toolbar_check"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="20dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@null"
-                            android:src="@drawable/ic_checkbox" />
+                            android:src="@drawable/ic_checkbox"
+                            android:visibility="gone"/>
 
                         <com.onegravity.rteditor.toolbar.RTToolbarImageButton
                             android:id="@+id/toolbar_bullet"
                             style="?attr/rte_ToolbarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/_2sdp"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@null"
                             android:src="@drawable/ic_note_bullet_list" />
@@ -171,6 +178,7 @@
                             style="?attr/rte_ToolbarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/_2sdp"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@null"
                             android:src="@drawable/ic_note_number_list" />
@@ -180,6 +188,7 @@
                             style="?attr/rte_ToolbarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/_2sdp"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@null"
                             android:src="@drawable/ic_note_underline" />
@@ -189,6 +198,7 @@
                             style="?attr/rte_ToolbarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/_2sdp"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@null"
                             android:src="@drawable/ic_note_undo" />
@@ -198,6 +208,7 @@
                             style="?attr/rte_ToolbarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/_2sdp"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:background="@null"
                             android:src="@drawable/ic_note_redo" />

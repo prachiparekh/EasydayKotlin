@@ -1,11 +1,14 @@
 package com.app.easyday.screens.activities.main.more.notepad
 
 import android.content.Context
+import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.os.Bundle
-import android.view.ContextThemeWrapper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -18,6 +21,8 @@ import com.onegravity.rteditor.api.RTProxyImpl
 import com.onegravity.rteditor.effects.Effects
 import com.onegravity.rteditor.utils.Helper
 import kotlinx.android.synthetic.main.fragment_activity_log.*
+import kotlinx.android.synthetic.main.fragment_create_note.*
+import kotlinx.android.synthetic.main.fragment_view_profile.*
 import java.util.*
 
 
@@ -71,10 +76,11 @@ class CreateNoteFragment : Fragment() {
 
         val month = Calendar.getInstance().get(Calendar.MONTH)
         val date = Calendar.getInstance().get(Calendar.DATE)
+        val year = Calendar.getInstance().get(Calendar.YEAR)
         binding?.subject?.setText(
             requireContext().resources.getString(
                 R.string.untitled_date,
-                "$date/${month + 1}"
+                "$date/${month + 1}/$year"
             )
         )
 
@@ -86,8 +92,39 @@ class CreateNoteFragment : Fragment() {
         binding?.back?.setOnClickListener {
             Navigation.findNavController(requireView()).popBackStack()
         }
+
+        binding?.option?.setOnClickListener {
+            showDialog()
+        }
+
+
         return binding?.root
     }
+
+    private fun showDialog() {
+        val popupView: View = View.inflate(requireContext(), R.layout.create_note_popup_window, null)
+
+        val width: Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        val height: Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        val focusable = true
+
+        val popupWindow = PopupWindow(popupView, width, height, focusable)
+        popupWindow.showAsDropDown(binding?.option, 0, 0, Gravity.END)
+        val convert = popupView.findViewById<TextView>(R.id.convertTV)
+        val share = popupView.findViewById<TextView>(R.id.shareTV)
+        val delete = popupView.findViewById<TextView>(R.id.deleteTV)
+
+        convert?.setOnClickListener {
+            popupWindow.dismiss()
+        }
+        share?.setOnClickListener {
+            popupWindow.dismiss()
+        }
+        delete?.setOnClickListener {
+            popupWindow.dismiss()
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

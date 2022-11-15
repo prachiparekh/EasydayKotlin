@@ -1,4 +1,4 @@
-package com.app.easyday.screens.activities.main.more.privacy
+package com.app.easyday.screens.activities.main.more
 
 import androidx.lifecycle.MutableLiveData
 import com.app.easyday.app.sources.remote.apis.EasyDayApi
@@ -12,22 +12,20 @@ import rx.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class PrivacySecurityViewModel @Inject constructor(
+class MoreViewModel @Inject constructor(
     val api: EasyDayApi
 ) : BaseViewModel() {
 
     val userData = MutableLiveData<DeletelogoutResponse?>()
-    fun deleteProfile() {
-
-        api.deleteUser()
+    fun logoutUser() {
+        api.logoutUser()
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({ resp ->
                 if (resp.success){
-                    userData.value = resp?.data
+                    userData.value = resp.data
                 }
                 DeviceUtils.dismissProgress()
             }, {
-
 
                 DeviceUtils.dismissProgress()
             })
