@@ -1,9 +1,11 @@
 package com.app.easyday.screens.activities.main.home.task_detail.discussion
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.app.easyday.app.sources.remote.apis.EasyDayApi
 import com.app.easyday.app.sources.remote.model.CommentMediaRequest
 import com.app.easyday.app.sources.remote.model.CommentResponseItem
+import com.app.easyday.app.sources.remote.model.LikeCommentResponse
 import com.app.easyday.app.sources.remote.model.TaskCommentMedia
 import com.app.easyday.navigation.UiEvent
 import com.app.easyday.screens.base.BaseViewModel
@@ -13,12 +15,14 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import javax.inject.Inject
 
+
 @HiltViewModel
 class DiscussionViewModel @Inject constructor(
     val api: EasyDayApi
 ) : BaseViewModel() {
 
     val commentList = MutableLiveData<ArrayList<CommentResponseItem>?>()
+    val likeResponse = MutableLiveData<LikeCommentResponse?>()
 
     fun getComments(taskId: Int) {
         api.getTaskComments(taskId)
@@ -44,7 +48,6 @@ class DiscussionViewModel @Inject constructor(
             })
     }
 
-
     fun addMediaComment(
         task_id: Int,
         taskCommentMedia: TaskCommentMedia?,
@@ -67,6 +70,18 @@ class DiscussionViewModel @Inject constructor(
                     commentList.value = null
                 })
         }
+    }
+
+    fun likeComment(commentID: Int) {
+
+        api.likeComment(commentID)
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ resp ->
+                likeResponse.value = resp.data
+                Log.e("resp", resp.toString())
+            }, {
+                Log.e("error", it.message.toString())
+            })
     }
 
 

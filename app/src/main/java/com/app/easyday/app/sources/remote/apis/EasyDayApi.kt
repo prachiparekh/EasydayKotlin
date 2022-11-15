@@ -124,6 +124,11 @@ interface EasyDayApi {
         @Body taskCommentRequestModel: CommentMediaRequest
     ): Observable<ApiResponse<ArrayList<CommentResponseItem>>>
 
+    @FormUrlEncoded
+    @POST("task/like-comment")
+    fun likeComment(
+        @Field("comment_id") comment_id: Int
+    ): Observable<ApiResponse<LikeCommentResponse>>
 
     @GET("user/get-user-activity")
     fun getUserActivityDetails(
@@ -146,7 +151,6 @@ interface EasyDayApi {
     @GET("project/get-report")
     fun getReport(
         @Query("project_id") project_id: Int,
-
         ): Observable<ApiResponse<ReportResponse>>
 }
 

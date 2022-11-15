@@ -135,6 +135,8 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_reply"
                     android:drawablePadding="@dimen/_7sdp"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingVertical="@dimen/_3sdp"
                     android:fontFamily="@font/inter_medium_500"
                     android:src="@drawable/ic_reply"
                     android:text="@string/reply" />
@@ -147,6 +149,9 @@
                     android:layout_toRightOf="@+id/reply"
                     android:drawableLeft="@drawable/ic_like"
                     android:drawablePadding="@dimen/_7sdp"
+                    android:drawableTint="@color/hint_color"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingVertical="@dimen/_3sdp"
                     android:fontFamily="@font/inter_medium_500"
                     android:src="@drawable/ic_reply"
                     android:text="+1" />

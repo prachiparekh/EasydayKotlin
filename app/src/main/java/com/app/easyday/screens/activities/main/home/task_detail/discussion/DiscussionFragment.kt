@@ -209,10 +209,15 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
             }
             DeviceUtils.dismissProgress()
         }
+
+        viewModel.likeResponse.observe(viewLifecycleOwner) {
+            taskId?.let { viewModel.getComments(it) }
+        }
     }
 
     override fun onLikeClick(commentID: Int) {
-
+        DeviceUtils.showProgress()
+        viewModel.likeComment(commentID)
     }
 
     override fun onReplyClick(parentCommentID: Int) {
@@ -220,7 +225,6 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         bottom_RL.isVisible = true
         this.parentCommentId = parentCommentID
     }
-
 
     private fun onAudioPermission() {
 

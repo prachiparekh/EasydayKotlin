@@ -4,7 +4,6 @@ package com.app.easyday.screens.activities.main.home
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -47,8 +46,6 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         var selectedProjectID: Int? = null
         var selectedColor: String? = null
         var createProjectTitle: ProjectRespModel? = null
-        var adapter: TaskAdapter? = null
-
     }
 
     private lateinit var queue: FancyShowCaseQueue
@@ -64,7 +61,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
         DeviceUtils.initProgress(requireContext())
         DeviceUtils.showProgress()
-//        Log.e("token:", AppPreferencesDelegates.get().token)
+
         if (!AppPreferencesDelegates.get().showcaseSeen) {
 
             fancyView2 = FancyShowCaseView.Builder(requireActivity())
@@ -207,7 +204,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         }
 
         viewModel.taskList.observe(viewLifecycleOwner) {
-            Log.e("it:", it.toString())
+
 //            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
             if (it.isNullOrEmpty()) {
                 noTaskCL.isVisible = true

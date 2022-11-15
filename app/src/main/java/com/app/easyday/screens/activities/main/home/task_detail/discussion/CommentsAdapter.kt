@@ -2,6 +2,7 @@ package com.app.easyday.screens.activities.main.home.task_detail.discussion
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -14,17 +15,20 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
 import com.app.easyday.app.sources.remote.model.CommentResponseItem
+import com.app.easyday.app.sources.remote.model.LikeCommentResponse
 import com.app.easyday.app.sources.remote.model.TaskMediaItem
+import com.app.easyday.screens.activities.main.home.HomeViewModel.Companion.userModel
 import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class CommentsAdapter(
     private val context: Context,
@@ -36,11 +40,16 @@ class CommentsAdapter(
 
     var mediaPlayer: MediaPlayer? = null
     var mTimer: CountDownTimer? = null
+    var timeFormatter: SimpleDateFormat? = null
+    var mLikeTaskID: Int? = null
+    var likeModel: LikeCommentResponse? = null
     override fun getItemCount(): Int = commentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = inflater.inflate(R.layout.item_comment, parent, false)
 
+        timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
+        timeFormatter?.timeZone = TimeZone.getTimeZone("UTC")
         return ViewHolder(view)
     }
 
@@ -81,19 +90,8 @@ class CommentsAdapter(
                 if (item.taskCommentMedia?.isNotEmpty() == true) {
                     if (item.taskCommentMedia[0]?.duration != null) {
                         val duration = item.taskCommentMedia[0]?.duration
-                        vidDuration1.text = String.format(
-                            "%d:%d",
-                            duration?.toLong()?.let { TimeUnit.MILLISECONDS.toMinutes(it) },
-                            duration?.toLong()?.let { TimeUnit.MILLISECONDS.toSeconds(it) }
-                                ?.minus(
-                                    TimeUnit.MINUTES.toSeconds(
-                                        TimeUnit.MILLISECONDS.toMinutes(
-                                            duration.toLong()
-                                        )
-                                    )
-                                ) ?: 0
-                        )
-
+                        vidDuration1.text = duration?.toLong()
+                            ?.let { Date(it) }?.let { timeFormatter?.format(it) }
 
                         vidPlayerButton1.setOnClickListener {
 
@@ -107,12 +105,42 @@ class CommentsAdapter(
                 }
             }
 
+
+
+            if (item.likeCount?.equals(0) == false) {
+                likeTV.text = "+${item.likeCount}"
+                val likeList = item.taskCommentLikes
+                Log.e("likeList", likeList.toString())
+                likeList?.indices?.forEach { i ->
+                    if (likeList[i]?.userId == userModel?.id) {
+                        TextViewCompat.setCompoundDrawableTintList(
+                            likeTV, ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.green)
+                            )
+                        )
+                        return@forEach
+                    } else {
+                        TextViewCompat.setCompoundDrawableTintList(
+                            likeTV, ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.hint_color)
+                            )
+                        )
+                    }
+                }
+            } else {
+                likeTV.text = ""
+            }
+
+
             reply.setOnClickListener {
                 item.id?.let { it1 -> anInterface.onReplyClick(it1) }
             }
 
             likeTV.setOnClickListener {
-                item.id?.let { it1 -> anInterface.onLikeClick(it1) }
+                item.id?.let { it1 ->
+                    mLikeTaskID = item.id
+                    anInterface.onLikeClick(it1)
+                }
             }
         }
 
@@ -167,12 +195,11 @@ class CommentsAdapter(
         private fun timerStart(timeLengthMilli: Long, totalDuration: Int) {
 
             milliSecLeft = timeLengthMilli
-            val timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
-            timeFormatter.timeZone = TimeZone.getTimeZone("UTC")
+
             mTimer = object : CountDownTimer(timeLengthMilli, 1000) {
                 override fun onTick(milliTillFinish: Long) {
                     milliSecLeft = milliTillFinish
-                    vidDuration1.text = timeFormatter.format(Date(milliSecLeft))
+                    vidDuration1.text = timeFormatter?.format(Date(milliSecLeft))
                     vidProgress1.progress = totalDuration - milliSecLeft.toInt()
                 }
 
@@ -180,7 +207,7 @@ class CommentsAdapter(
                     mTimer?.cancel()
                     milliSecLeft = totalDuration.toLong()
                     vidProgress1.progress = 0
-                    vidDuration1.text = timeFormatter.format(Date(totalDuration.toLong()))
+                    vidDuration1.text = timeFormatter?.format(Date(totalDuration.toLong()))
                 }
             }.start()
 
@@ -192,6 +219,10 @@ class CommentsAdapter(
         this.commentList.clear()
         this.commentList.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun setLikeButton(model: LikeCommentResponse) {
+        this.likeModel = model
     }
 
 
