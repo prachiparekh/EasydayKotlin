@@ -9,4 +9,8 @@ data class LikeCommentResponse(
 
     @field:SerializedName("is_like")
     val isLike: Boolean? = null
-)
+) {
+    override fun toString(): String {
+        return "LikeCommentResponse(likeCounts=$likeCounts, isLike=$isLike)"
+    }
+}

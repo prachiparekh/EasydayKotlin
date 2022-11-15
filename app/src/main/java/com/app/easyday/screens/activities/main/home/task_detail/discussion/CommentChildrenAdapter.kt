@@ -7,6 +7,7 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,30 +24,29 @@ import com.app.easyday.app.sources.local.interfaces.DiscussionInterface
 import com.app.easyday.app.sources.remote.model.CommentResponseItem
 import com.app.easyday.app.sources.remote.model.LikeCommentResponse
 import com.app.easyday.app.sources.remote.model.TaskMediaItem
-import com.app.easyday.screens.activities.main.home.HomeViewModel.Companion.userModel
+import com.app.easyday.screens.activities.main.home.HomeViewModel
 import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class CommentsAdapter(
+class CommentChildrenAdapter(
     private val context: Context,
     private var commentList: ArrayList<CommentResponseItem>,
     val anInterface: DiscussionInterface
-) : RecyclerView.Adapter<CommentsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<CommentChildrenAdapter.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     var mediaPlayer: MediaPlayer? = null
     var mTimer: CountDownTimer? = null
     var timeFormatter: SimpleDateFormat? = null
+    var mLikeTaskPosition: Int? = null
     var likeModel: LikeCommentResponse? = null
-    var likeChildModel: LikeCommentResponse? = null
-    var mLikeTaskId: Int? = null
     override fun getItemCount(): Int = commentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.item_comment, parent, false)
+        val view = inflater.inflate(R.layout.item_comment_children, parent, false)
 
         timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
         timeFormatter?.timeZone = TimeZone.getTimeZone("UTC")
@@ -68,7 +68,6 @@ class CommentsAdapter(
         val vidPlayerButton1 = itemView.findViewById<ImageView>(R.id.vidPlayerButton1)
         val vidProgress1 = itemView.findViewById<ProgressBar>(R.id.vidProgress1)
         val vidDuration1 = itemView.findViewById<TextView>(R.id.vidDuration1)
-        val childrenRV = itemView.findViewById<RecyclerView>(R.id.childrenRV)
 
         @SuppressLint("NewApi")
         fun bind(position: Int) {
@@ -111,7 +110,7 @@ class CommentsAdapter(
                 val likeList = item.taskCommentLikes
 
                 likeList?.indices?.forEach { i ->
-                    if (likeList[i]?.userId == userModel?.id) {
+                    if (likeList[i]?.userId == HomeViewModel.userModel?.id) {
                         TextViewCompat.setCompoundDrawableTintList(
                             likeTV, ColorStateList.valueOf(
                                 ContextCompat.getColor(context, R.color.green)
@@ -130,48 +129,27 @@ class CommentsAdapter(
                 likeTV.text = ""
             }
 
-
-            var childList: ArrayList<CommentResponseItem>? = null
-            childList = item.children as ArrayList<CommentResponseItem>?
-            childList?.sortByDescending { it.createdAt }
-            val commentChildAdapter =
-                CommentChildrenAdapter(
-                    context,
-                    childList as ArrayList<CommentResponseItem>, anInterface
-                )
-
-            childrenRV.adapter = commentChildAdapter
-
-            if (mLikeTaskId == item.id) {
-                when {
-                    likeModel != null -> {
-                        if (likeModel?.equals(0) == false) {
-                            likeTV.text = "+${likeModel?.likeCounts}"
-                        } else {
-                            likeTV.text = ""
-                        }
-
-                        if (likeModel?.isLike == true) {
-                            TextViewCompat.setCompoundDrawableTintList(
-                                likeTV, ColorStateList.valueOf(
-                                    ContextCompat.getColor(context, R.color.green)
-                                )
-                            )
-                        } else {
-                            TextViewCompat.setCompoundDrawableTintList(
-                                likeTV, ColorStateList.valueOf(
-                                    ContextCompat.getColor(context, R.color.hint_color)
-                                )
-                            )
-                        }
-                    }
-                    likeChildModel != null -> {
-                        likeChildModel?.let { commentChildAdapter.setLikeButton(it) }
-                    }
+            if (mLikeTaskPosition == position && likeModel != null) {
+                if (likeModel?.equals(0) == false) {
+                    likeTV.text = "+${likeModel?.likeCounts}"
+                } else {
+                    likeTV.text = ""
                 }
 
+                if (likeModel?.isLike == true) {
+                    TextViewCompat.setCompoundDrawableTintList(
+                        likeTV, ColorStateList.valueOf(
+                            ContextCompat.getColor(context, R.color.green)
+                        )
+                    )
+                } else {
+                    TextViewCompat.setCompoundDrawableTintList(
+                        likeTV, ColorStateList.valueOf(
+                            ContextCompat.getColor(context, R.color.hint_color)
+                        )
+                    )
+                }
             }
-
 
             reply.setOnClickListener {
                 item.let { it1 -> anInterface.onReplyClick(it1) }
@@ -179,11 +157,10 @@ class CommentsAdapter(
 
             likeTV.setOnClickListener {
                 item.id?.let { it1 ->
-                    mLikeTaskId = it1
-                    anInterface.onLikeClick(it1, null)
+                    mLikeTaskPosition = position
+                    anInterface.onLikeClick(it1, item.parentId)
                 }
             }
-
         }
 
         private fun initializeMediaPlayer(
@@ -228,6 +205,7 @@ class CommentsAdapter(
                 mediaPlayer?.prepareAsync()
 
             } catch (e: Exception) {
+                Log.e("eee::", e.message.toString())
                 e.printStackTrace()
             }
         }
@@ -256,28 +234,12 @@ class CommentsAdapter(
 
     }
 
-    fun setItemList(list: ArrayList<CommentResponseItem>) {
-        this.commentList.clear()
-        this.commentList.addAll(list)
-        notifyDataSetChanged()
-    }
 
-    fun setLikeButton(model: LikeCommentResponse, commentID: Int, parentCommentID: Int?) {
-
-        if (parentCommentID == null) {
-            this.mLikeTaskId = commentID
-            this.likeModel = model
-        } else {
-            this.mLikeTaskId = parentCommentID
-            this.likeChildModel = model
-        }
-        for (i in commentList.indices) {
-            if (commentList[i].id == mLikeTaskId) {
-                notifyItemChanged(i)
-                break
-            }
-        }
-
+    fun setLikeButton(model: LikeCommentResponse) {
+        Log.e("model", model.toString())
+        Log.e("mLikeTaskPosition", mLikeTaskPosition.toString())
+        this.likeModel = model
+        mLikeTaskPosition?.let { notifyItemChanged(it) }
     }
 
 
