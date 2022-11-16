@@ -45,10 +45,19 @@ class FeedbackFragment : BaseFragment<FeedbackViewModel>(), FeedBackTagInterface
         })
         val feedText = inputET.text
 
+        val mrating = rating.rating.toString()
+//        if (rating.rating != 0.0F) {
+//            submit_btnRL.isEnabled = true
+//            submit_btnRL.alpha = 1F
+//        } else {
+//            submit_btnRL.isEnabled = false
+//            submit_btnRL.alpha = 0.5F
+//        }
+
         submit_btnRL.setOnClickListener {
-            val rating = rating.rating.toString()
+
             viewModel.submitFeedback(
-                rating,
+                mrating,
                 taglist.toString(),
                 feedText.toString()
             )
@@ -71,17 +80,18 @@ class FeedbackFragment : BaseFragment<FeedbackViewModel>(), FeedBackTagInterface
 
     }
 
+
     override fun setObservers() {
         viewModel.userFeedbackData.observe(viewLifecycleOwner) { response ->
+            val str_rating = rating.rating.toString()
 
-
-        if (response != null) {
+            if (response != null) {
 
                 val dialog = BackTosettingDialog()
-                if (!dialog.isAdded) {
+                if (rating.rating != 0.0F && !dialog.isAdded) {
                     dialog.show(childFragmentManager, "back")
-                }
 
+                }
             }
         }
     }

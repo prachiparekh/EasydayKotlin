@@ -6,14 +6,18 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.observe
 import com.app.easyday.R
+import com.app.easyday.app.sources.aws.AWSKeys
+import com.app.easyday.app.sources.aws.S3Uploader
+import com.app.easyday.app.sources.aws.S3Utils
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.screens.activities.main.MainActivity
 import com.app.easyday.screens.base.BaseActivity
@@ -48,11 +52,20 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
     override fun getContentView() = R.layout.fragment_profile
     var isNewUser: Boolean? = null
+//    var mImageFile: String? = null
+
+    private var s3uploaderObj: S3Uploader? = null
     var mImageFile: File? = null
+    private var urlFromS3: String? = null
+    var uUserName = ""
+    var uUserProfession = ""
+    var uUserImage = ""
 
     override fun getStatusBarColor() = ContextCompat.getColor(requireContext(), R.color.bg_white)
 
     override fun initUi() {
+
+        s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_PROFILE_IMAGES)
 
         val mPhoneNumber = arguments?.getString("phoneNumber")
         val mCountryCode = arguments?.getString("countryCode")
@@ -60,9 +73,9 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
         if (isNewUser == false) {
             viewModel.getProfile()
         }
-
+        profileLogoListener = this
         camera.setOnClickListener {
-            profileLogoListener = this
+
 
             if (cameraPermission(requireActivity()) && readPermission(requireActivity()) && writePermission(
                     requireActivity()
@@ -93,25 +106,24 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     return@setOnClickListener
                 }
 
-                if (mPhoneNumber != null) {
-                    if (mCountryCode != null) {
-                        val deviceID: String = Settings.Secure.getString(
-                            requireContext().contentResolver,
-                            Settings.Secure.ANDROID_ID
-                        )
-
-                        viewModel.createUser(
-                            fullName.text.toString(),
-                            profession.text.toString(),
-                            mPhoneNumber,
-                            mCountryCode,
-                            mImageFile, deviceID, android.os.Build.MODEL
+                if (mImageFile != null) {
+                    mImageFile?.let { it1 ->
+                        uploadAudioTos3(
+                            it1
                         )
                     }
+                } else {
+                    viewModel.createUser(
+                        fullName.text.toString(),
+                        profession.text.toString(), null
+                    )
                 }
+
+
             } else {
 
                 //update API
+//                viewModel.updateUser(mImageFile, fullName.text.toString(), "")
                 val intent = Intent(requireActivity(), MainActivity::class.java)
                 requireActivity().startActivity(intent)
                 requireActivity().finish()
@@ -178,6 +190,52 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
         }
     }
 
+    private fun uploadAudioTos3(
+        imageFile: File
+    ) {
+        val path = imageFile.absolutePath
+
+        s3uploaderObj?.initUpload(path)
+        s3uploaderObj?.setOns3UploadDone(object : S3Uploader.S3UploadInterface {
+            override fun onUploadSuccess(response: String?) {
+                if (response.equals("Success", ignoreCase = true)) {
+
+                    urlFromS3 = S3Utils.generates3ShareUrl(
+                        requireContext(),
+                        path,
+                        AWSKeys.FOLDER_NAME_PROFILE_IMAGES
+                    )
+                    if (!TextUtils.isEmpty(urlFromS3)) {
+
+
+                        urlFromS3?.let {
+                            viewModel.createUser(
+                                fullName.text.toString(),
+                                profession.text.toString(),
+                                it
+                            )
+                        }
+
+//                                urlFromS3?.let {
+//                                viewModel.updateUser(
+//                                    fullName.text.toString(),
+//                                    profession.text.toString(),
+//                                    it
+//                                )}
+
+
+                    }
+                }
+            }
+
+            override fun onUploadError(response: String?) {
+
+                Log.e("TAG", "Error Uploading: $response")
+            }
+        })
+    }
+
+
     private fun setTextViewDrawableColor(editText: TextInputEditText, color: Int) {
         for (drawable in editText.compoundDrawables) {
             if (drawable != null) {
@@ -240,6 +298,10 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
             fullName.setText(userData?.fullname)
             profession.setText(userData?.profession)
 
+            uUserName = userData?.fullname.toString()
+            uUserProfession = userData?.profession.toString()
+            uUserImage = userData?.profileImage.toString()
+
             if (userData?.profileImage != null) {
                 val options = RequestOptions()
                 avatar.clipToOutline = true
@@ -256,6 +318,8 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
             if (isNewUser == true)
                 AppPreferencesDelegates.get().token = userData?.token.toString()
+
+
         }
 
         viewModel.actionStream.observe(viewLifecycleOwner) {
@@ -275,11 +339,13 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                 }
             }
         }
+
+
     }
 
     override fun onCropLogo(uri: Uri) {
         try {
-
+            Log.e("uri", uri.toString())
             val mOptions = CropImageOptions()
             mOptions.allowFlipping = false
             mOptions.allowRotation = false

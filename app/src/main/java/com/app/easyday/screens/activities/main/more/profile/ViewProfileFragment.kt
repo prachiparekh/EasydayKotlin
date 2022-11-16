@@ -63,11 +63,16 @@ class ViewProfileFragment : BaseFragment<ViewProfileViewModel>(),
         fullName.setText(userModel?.fullname)
         profession.setText(userModel?.profession)
         checkData()
+
+        val separated: List<String>? = userModel?.profileImage?.split("?")
+        val imageUrl = separated?.get(0).toString()
+
         if (userModel?.profileImage != null) {
             val options = RequestOptions()
             avatar.clipToOutline = true
             Glide.with(requireContext())
-                .load(userModel?.profileImage)
+                .load(imageUrl)
+                .error(requireContext().resources.getDrawable(R.drawable.ic_user))
                 .apply(
                     options.centerCrop()
                         .skipMemoryCache(true)

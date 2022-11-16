@@ -4,6 +4,7 @@ package com.app.easyday.screens.activities.main.home
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -18,6 +19,7 @@ import com.app.easyday.app.sources.local.interfaces.ProjectInterface
 import com.app.easyday.app.sources.local.interfaces.TaskFilterApplyInterface
 import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
+import com.app.easyday.app.sources.remote.model.DeletelogoutResponse
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
@@ -41,6 +43,7 @@ import me.toptas.fancyshowcase.listener.OnViewInflateListener
 class HomeFragment : BaseFragment<HomeViewModel>(),
     ProjectInterface, TaskFilterApplyInterface, TaskInterfaceClick {
 
+    var dltlgtResp: DeletelogoutResponse? = null
     companion object {
         const val TAG = "HomeFragment"
         var selectedProjectID: Int? = null
@@ -133,22 +136,26 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
         viewModel.userProfileData.observe(viewLifecycleOwner) { userData ->
 
+            val separated: List<String>? = userData?.profileImage?.split("?")
+            val imageUrl = separated?.get(0).toString()
+
             if (userData?.profileImage != null) {
                 val options = RequestOptions()
                 profile.clipToOutline = true
                 Glide.with(requireContext())
-                    .load(userData.profileImage)
+                    .load(imageUrl)
                     .error(requireContext().resources.getDrawable(R.drawable.ic_profile_circle))
                     .apply(
-                        options.centerCrop()
+                        options.fitCenter()
                             .skipMemoryCache(true)
                             .priority(Priority.HIGH)
                             .format(DecodeFormat.PREFER_ARGB_8888)
                     )
                     .into(profile)
 
-            }
 
+            }
+            Log.e("image", imageUrl)
         }
 
         viewModel.projectList.observe(viewLifecycleOwner) { projectList ->
@@ -164,14 +171,23 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                             Color.parseColor(projectList[0].assignColor)
                         )
                     )
+//                    if (dltlgtResp?.success == true && selectedProjectID == null){
+//                        selectedProjectID = projectList[0].id
+//                        selectedColor = projectList[0].assignColor
+//                    }
 
-                    if (AppPreferencesDelegates.get().activeProject == 0 && selectedProjectID == null) {
+                    if (AppPreferencesDelegates.get().activeProject == 0) {
                         selectedProjectID = projectList[0].id
                         selectedColor = projectList[0].assignColor
                     } else {
                         selectedProjectID = AppPreferencesDelegates.get().activeProject
                     }
 
+                    if (selectedProjectID == null) {
+                        selectedProjectID = projectList[0].id
+                        selectedColor = projectList[0].assignColor
+
+                    }
                     val mProject = projectList.find { it.id == selectedProjectID }
                     selectedColor = mProject?.assignColor
                     activeProject.text = mProject?.projectName
