@@ -32,12 +32,7 @@ interface EasyDayApi {
     fun createUser(
         @Part("fullname") fullname: RequestBody,
         @Part("profession") profession: RequestBody,
-        @Part("phone_number") phone_number: RequestBody,
-        @Part("country_code") country_code: RequestBody,
-        @Part profile_image: MultipartBody.Part?,
-        @Part("device_token") device_token: String,
-        @Part("device_id") device_id: String,
-        @Part("device_name") device_name: String
+        @Part("profile_image") profile_image:String?
     ): Observable<ApiResponse<UserModel>>
 
     @GET("user/get-profile")
@@ -158,5 +153,13 @@ interface EasyDayApi {
 
     @DELETE("user/delete-user")
     fun deleteUser(): Observable<ApiResponse<DeletelogoutResponse>>
+
+//    @FormUrlEncoded
+//    @PATCH("user/update-user")
+//    fun updateUser(
+//        @Field("profile_image") profile_image: String,
+//        @Field("fullname") fullname: String,
+//        @Field("profile") profile: String
+//    ): Observable<ApiResponse<UserModel>>
 }
 

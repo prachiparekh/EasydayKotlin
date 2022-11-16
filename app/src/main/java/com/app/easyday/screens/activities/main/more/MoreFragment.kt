@@ -7,11 +7,13 @@ import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.DeleteLogoutProfileInterface
+import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.app.sources.remote.model.UserActivityResponse
 import com.app.easyday.databinding.FragmentMoreBinding
 import com.app.easyday.screens.activities.auth.AuthActivity
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragment.Companion.selectedTabID
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
+import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.activities.main.home.HomeViewModel.Companion.userModel
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.screens.dialogs.DeleteUserDialog
@@ -45,12 +47,16 @@ class MoreFragment : BaseFragment<MoreViewModel>(), OnClickListener, DeleteLogou
         versionName?.text =
             requireContext().resources.getString(R.string.version, info.versionName)
 
+        val separated: List<String>? = userModel?.profileImage?.split("?")
+        val imageUrl = separated?.get(0).toString()
+
         if (userModel?.profileImage != null) {
             val options = RequestOptions()
             avatar?.clipToOutline = true
             avatar?.let {
                 Glide.with(requireContext())
-                    .load(userModel?.profileImage)
+                    .load(imageUrl)
+                    .error(requireContext().resources.getDrawable(R.drawable.ic_user))
                     .apply(
                         options.centerCrop()
                             .skipMemoryCache(true)
@@ -73,12 +79,11 @@ class MoreFragment : BaseFragment<MoreViewModel>(), OnClickListener, DeleteLogou
 
     override fun setObservers() {
         viewModel.userData.observe(viewLifecycleOwner) { userModel ->
-
-
-            userModel?.success == true
-//             AppPreferencesDelegates.get().token = null.toString()
-//             requireContext().startActivity(Intent(requireContext(), AuthActivity::class.java))
-
+            selectedTabID = R.id.home
+            AppPreferencesDelegates.get().token = null.toString()
+            AppPreferencesDelegates.get().activeProject = 0
+            HomeFragment.selectedProjectID = null
+            requireContext().startActivity(Intent(requireContext(), AuthActivity::class.java))
         }
     }
 
@@ -181,18 +186,7 @@ class MoreFragment : BaseFragment<MoreViewModel>(), OnClickListener, DeleteLogou
 
     override fun OnLogoutClick() {
         viewModel.logoutUser()
-        requireContext().startActivity(Intent(requireContext(), AuthActivity::class.java))
-        selectedTabID = R.id.home
 
-//        if (viewModel.userData.value?.success == true){
-//            requireContext().startActivity(Intent(requireContext(), AuthActivity::class.java))
-//            HomeFragment.selectedProjectID = 0
-//            selectedTabID = R.id.home
-//            AppPreferencesDelegates.get().token = null.toString()
-//            AppPreferencesDelegates.get().activeProject = 0
-//
-//            Log.e("suc", viewModel.userData.value?.success.toString())
-//        }
     }
 
 

@@ -7,8 +7,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.DeleteLogoutProfileInterface
+import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.screens.activities.auth.AuthActivity
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragment.Companion.selectedTabID
+import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.screens.dialogs.DeleteUserDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,17 +78,18 @@ class PrivacySecurityFragment : BaseFragment<PrivacySecurityViewModel>(),
     override fun setObservers() {
         viewModel.userData.observe(viewLifecycleOwner) { deletelogoutResponse ->
 
-            deletelogoutResponse?.success == true
-//            AppPreferencesDelegates.get().token = null.toString()
-//            requireContext().startActivity(Intent(requireContext(), AuthActivity::class.java))
+            selectedTabID = R.id.home
+            AppPreferencesDelegates.get().token = null.toString()
+            AppPreferencesDelegates.get().activeProject = 0
+            HomeFragment.selectedProjectID = null
+            requireContext().startActivity(Intent(requireContext(), AuthActivity::class.java))
+
         }
     }
 
     override fun OnDeleteClick() {
         viewModel.deleteProfile()
-        selectedTabID = R.id.home
-        requireContext().startActivity(Intent(requireContext(), AuthActivity::class.java))
-//        AppPreferencesDelegates.get().activeProject = HomeFragment.selectedProjectID!!
+
     }
 
     override fun OnLogoutClick() {

@@ -59,7 +59,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -353,18 +353,21 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/playstoreRL"
                     android:layout_marginTop="@dimen/_10sdp"
-
                     android:background="@color/white"
                     android:layout_alignParentBottom="true">
 
                     <RelativeLayout
-                        android:id="@+id/submit_btnRL"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_centerInParent="true"
                         android:layout_marginHorizontal="@dimen/_25sdp"
-                        android:background="@drawable/green_curve_bg">
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:alpha="0.5"
+                        android:enabled="false"
+                        android:background="@drawable/green_curve_bg"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -378,6 +381,22 @@
                             android:textStyle="bold" />
 
                     </RelativeLayout>
+                    <TextView
+                        android:id="@+id/submit_btnRL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_25sdp"
+                        android:background="@drawable/green_curve_bg"
+                        android:fontFamily="@font/dm_sans_700"
+                        android:gravity="center_horizontal"
+                        android:paddingVertical="@dimen/_10sdp"
+                        android:layout_centerVertical="true"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp"
+                        android:alpha="1"
+                        android:enabled="false" />
 
                 </RelativeLayout>
 
