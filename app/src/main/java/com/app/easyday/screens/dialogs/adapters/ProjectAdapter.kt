@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
-import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 
 
@@ -69,7 +68,6 @@ class ProjectAdapter(
                 notifyItemChanged(lastPosition)
                 notifyItemChanged(selectedProjectPosition)
 
-                AppPreferencesDelegates.get().activeProject = projectList[position].id ?: 0
             }
 
         }

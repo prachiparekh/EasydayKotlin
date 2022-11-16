@@ -63,7 +63,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     override fun initUi() {
 
         DeviceUtils.initProgress(requireContext())
-        DeviceUtils.showProgress()
+//        DeviceUtils.showProgress()
 
         if (!AppPreferencesDelegates.get().showcaseSeen) {
 
@@ -171,10 +171,6 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                             Color.parseColor(projectList[0].assignColor)
                         )
                     )
-//                    if (dltlgtResp?.success == true && selectedProjectID == null){
-//                        selectedProjectID = projectList[0].id
-//                        selectedColor = projectList[0].assignColor
-//                    }
 
                     if (AppPreferencesDelegates.get().activeProject == 0) {
                         selectedProjectID = projectList[0].id
@@ -290,7 +286,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
             activeProject.text = projectList[projectPosition].projectName
             selectedColor = projectList[projectPosition].assignColor
             selectedProjectID?.let { viewModel.getAllTask(it) }
-
+            AppPreferencesDelegates.get().activeProject = projectList[projectPosition].id ?: 0
         }
 
 

@@ -8,7 +8,6 @@ import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.DeleteLogoutProfileInterface
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
-import com.app.easyday.app.sources.remote.model.UserActivityResponse
 import com.app.easyday.databinding.FragmentMoreBinding
 import com.app.easyday.screens.activities.auth.AuthActivity
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragment.Companion.selectedTabID
@@ -32,7 +31,6 @@ class MoreFragment : BaseFragment<MoreViewModel>(), OnClickListener, DeleteLogou
         const val TAG = "MoreFragment"
     }
 
-    val userActivityModel: UserActivityResponse? = null
     var binding: FragmentMoreBinding? = null
 
     override fun getContentView() = R.layout.fragment_more
@@ -86,51 +84,6 @@ class MoreFragment : BaseFragment<MoreViewModel>(), OnClickListener, DeleteLogou
             requireContext().startActivity(Intent(requireContext(), AuthActivity::class.java))
         }
     }
-
-    /* override fun onCreateView(
-         inflater: LayoutInflater, container: ViewGroup?,
-         savedInstanceState: Bundle?
-     ): View? {
-
-
-         // Inflate the layout for this fragment
-         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_more, container, false)
-
-         binding?.userName?.text = userModel?.fullname
-         binding?.profession?.text = userModel?.profession
-
-         val info = requireContext().packageManager.getPackageInfo(
-             requireContext().packageName, 0
-         )
-         binding?.versionName?.text =
-             requireContext().resources.getString(R.string.version, info.versionName)
-
-         if (userModel?.profileImage != null) {
-             val options = RequestOptions()
-             binding?.avatar?.clipToOutline = true
-             binding?.avatar?.let {
-                 Glide.with(requireContext())
-                     .load(userModel?.profileImage)
-                     .apply(
-                         options.centerCrop()
-                             .skipMemoryCache(true)
-                             .priority(Priority.HIGH)
-                             .format(DecodeFormat.PREFER_ARGB_8888)
-                     )
-                     .into(it)
-             }
-         }
-
-         binding?.profileLL?.setOnClickListener(this)
-         binding?.privacyLL?.setOnClickListener(this)
-         binding?.logoutLL?.setOnClickListener(this)
-         binding?.deviceLL?.setOnClickListener(this)
-         binding?.activityLogLL?.setOnClickListener(this)
-         binding?.notepadLL?.setOnClickListener(this)
-         binding?.feedbackLL?.setOnClickListener(this)
-         binding?.notificationLL?.setOnClickListener(this)
-         return binding?.root
-     }*/
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
