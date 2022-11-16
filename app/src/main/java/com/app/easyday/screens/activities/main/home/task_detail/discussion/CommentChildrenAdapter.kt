@@ -41,8 +41,8 @@ class CommentChildrenAdapter(
     var mediaPlayer: MediaPlayer? = null
     var mTimer: CountDownTimer? = null
     var timeFormatter: SimpleDateFormat? = null
-    var mLikeTaskPosition: Int? = null
     var likeModel: LikeCommentResponse? = null
+    var mLikeCommentId: Int? = null
     override fun getItemCount(): Int = commentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -129,7 +129,7 @@ class CommentChildrenAdapter(
                 likeTV.text = ""
             }
 
-            if (mLikeTaskPosition == position && likeModel != null) {
+            if (mLikeCommentId == item.id && likeModel != null) {
                 if (likeModel?.equals(0) == false) {
                     likeTV.text = "+${likeModel?.likeCounts}"
                 } else {
@@ -157,8 +157,9 @@ class CommentChildrenAdapter(
 
             likeTV.setOnClickListener {
                 item.id?.let { it1 ->
-                    mLikeTaskPosition = position
-                    anInterface.onLikeClick(it1, item.parentId)
+                    Log.e("commentID_click", item.id.toString())
+                    Log.e("commentID_parent_click", item.parentId.toString())
+                    anInterface.onLikeClick(it1)
                 }
             }
         }
@@ -205,7 +206,7 @@ class CommentChildrenAdapter(
                 mediaPlayer?.prepareAsync()
 
             } catch (e: Exception) {
-                Log.e("eee::", e.message.toString())
+
                 e.printStackTrace()
             }
         }
@@ -235,12 +236,21 @@ class CommentChildrenAdapter(
     }
 
 
-    fun setLikeButton(model: LikeCommentResponse) {
-        Log.e("model", model.toString())
-        Log.e("mLikeTaskPosition", mLikeTaskPosition.toString())
+    fun setLikeButton(model: LikeCommentResponse, commentID: Int) {
+
         this.likeModel = model
-        mLikeTaskPosition?.let { notifyItemChanged(it) }
+        this.mLikeCommentId = commentID
+        for (i in commentList.indices) {
+            if (commentList[i].id == mLikeCommentId) {
+                notifyItemChanged(i)
+                break
+            }
+        }
+
+
     }
+
+
 
 
 }

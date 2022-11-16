@@ -86,6 +86,10 @@ data class CommentResponseItem(
         return 0
     }
 
+    override fun toString(): String {
+        return "CommentResponseItem(parentId=$parentId, comment=$comment, id=$id)"
+    }
+
     companion object CREATOR : Parcelable.Creator<CommentResponseItem> {
         override fun createFromParcel(parcel: Parcel): CommentResponseItem {
             return CommentResponseItem(parcel)

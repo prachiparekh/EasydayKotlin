@@ -221,24 +221,18 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
         viewModel.likeResponse.observe(viewLifecycleOwner) {
 
             if (it != null) {
-                commentIDForLike?.let { it1 ->
+
                     commentAdapter?.setLikeButton(
-                        it,
-                        it1, parentCommentIDForLike
+                        it
                     )
-                }
-                parentCommentIDForLike = null
+
                 DeviceUtils.dismissProgress()
             }
         }
     }
 
-    var parentCommentIDForLike: Int? = null
-    var commentIDForLike: Int? = null
-    override fun onLikeClick(commentID: Int, parentCommentID: Int?) {
+    override fun onLikeClick(commentID: Int) {
         DeviceUtils.showProgress()
-        parentCommentIDForLike = parentCommentID
-        commentIDForLike = commentID
         viewModel.likeComment(commentID)
     }
 

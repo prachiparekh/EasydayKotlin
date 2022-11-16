@@ -78,7 +78,7 @@ class DiscussionViewModel @Inject constructor(
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({ resp ->
                 likeResponse.value = resp.data
-                Log.e("resp", resp.toString())
+
             }, {
                 Log.e("error", it.message.toString())
             })

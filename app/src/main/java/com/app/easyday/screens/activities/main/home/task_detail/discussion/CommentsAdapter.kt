@@ -41,8 +41,7 @@ class CommentsAdapter(
     var mTimer: CountDownTimer? = null
     var timeFormatter: SimpleDateFormat? = null
     var likeModel: LikeCommentResponse? = null
-    var likeChildModel: LikeCommentResponse? = null
-    var mLikeTaskId: Int? = null
+    var mLikeCommentId: Int? = null
     override fun getItemCount(): Int = commentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -142,7 +141,7 @@ class CommentsAdapter(
 
             childrenRV.adapter = commentChildAdapter
 
-            if (mLikeTaskId == item.id) {
+            if (mLikeCommentId == item.id) {
                 when {
                     likeModel != null -> {
                         if (likeModel?.equals(0) == false) {
@@ -165,11 +164,18 @@ class CommentsAdapter(
                             )
                         }
                     }
-                    likeChildModel != null -> {
-                        likeChildModel?.let { commentChildAdapter.setLikeButton(it) }
-                    }
+
                 }
 
+            } else {
+                likeModel?.let {
+                    mLikeCommentId?.let { it1 ->
+                        commentChildAdapter.setLikeButton(
+                            it,
+                            it1
+                        )
+                    }
+                }
             }
 
 
@@ -179,8 +185,8 @@ class CommentsAdapter(
 
             likeTV.setOnClickListener {
                 item.id?.let { it1 ->
-                    mLikeTaskId = it1
-                    anInterface.onLikeClick(it1, null)
+                    mLikeCommentId = it1
+                    anInterface.onLikeClick(it1)
                 }
             }
 
@@ -262,23 +268,34 @@ class CommentsAdapter(
         notifyDataSetChanged()
     }
 
-    fun setLikeButton(model: LikeCommentResponse, commentID: Int, parentCommentID: Int?) {
-
-        if (parentCommentID == null) {
-            this.mLikeTaskId = commentID
-            this.likeModel = model
-        } else {
-            this.mLikeTaskId = parentCommentID
-            this.likeChildModel = model
-        }
+    fun setLikeButton(model: LikeCommentResponse) {
+        this.mLikeCommentId = model.comment_id
+        this.likeModel = model
         for (i in commentList.indices) {
-            if (commentList[i].id == mLikeTaskId) {
+            if (commentList[i].id == mLikeCommentId) {
                 notifyItemChanged(i)
                 break
+            } else {
+                val childList = commentList[i].children
+                if (!childList.isNullOrEmpty()) {
+                    fetchChildList(childList as ArrayList<CommentResponseItem>, i)
+                }
             }
         }
-
     }
 
+    private fun fetchChildList(childList: List<CommentResponseItem>, i: Int) {
+
+        for (j in childList.indices) {
+            if (childList[j].id == mLikeCommentId) {
+                notifyItemChanged(i)
+                break
+            } else {
+                val innerChildList = childList[j].children
+                if (!innerChildList.isNullOrEmpty())
+                    fetchChildList(innerChildList as List<CommentResponseItem>, i)
+            }
+        }
+    }
 
 }
