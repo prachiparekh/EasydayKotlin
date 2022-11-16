@@ -7,7 +7,6 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,8 +40,7 @@ class CommentChildrenAdapter(
     var mediaPlayer: MediaPlayer? = null
     var mTimer: CountDownTimer? = null
     var timeFormatter: SimpleDateFormat? = null
-    var likeModel: LikeCommentResponse? = null
-    var mLikeCommentId: Int? = null
+
     override fun getItemCount(): Int = commentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -105,7 +103,7 @@ class CommentChildrenAdapter(
                 }
             }
 
-            if (item.likeCount?.equals(0) == false) {
+            if (item.likeCount != 0) {
                 likeTV.text = "+${item.likeCount}"
                 val likeList = item.taskCommentLikes
 
@@ -129,27 +127,6 @@ class CommentChildrenAdapter(
                 likeTV.text = ""
             }
 
-            if (mLikeCommentId == item.id && likeModel != null) {
-                if (likeModel?.equals(0) == false) {
-                    likeTV.text = "+${likeModel?.likeCounts}"
-                } else {
-                    likeTV.text = ""
-                }
-
-                if (likeModel?.isLike == true) {
-                    TextViewCompat.setCompoundDrawableTintList(
-                        likeTV, ColorStateList.valueOf(
-                            ContextCompat.getColor(context, R.color.green)
-                        )
-                    )
-                } else {
-                    TextViewCompat.setCompoundDrawableTintList(
-                        likeTV, ColorStateList.valueOf(
-                            ContextCompat.getColor(context, R.color.hint_color)
-                        )
-                    )
-                }
-            }
 
             reply.setOnClickListener {
                 item.let { it1 -> anInterface.onReplyClick(it1) }
@@ -157,8 +134,6 @@ class CommentChildrenAdapter(
 
             likeTV.setOnClickListener {
                 item.id?.let { it1 ->
-                    Log.e("commentID_click", item.id.toString())
-                    Log.e("commentID_parent_click", item.parentId.toString())
                     anInterface.onLikeClick(it1)
                 }
             }
@@ -237,20 +212,12 @@ class CommentChildrenAdapter(
 
 
     fun setLikeButton(model: LikeCommentResponse, commentID: Int) {
-
-        this.likeModel = model
-        this.mLikeCommentId = commentID
         for (i in commentList.indices) {
-            if (commentList[i].id == mLikeCommentId) {
+            if (commentList[i].id == commentID) {
+                commentList[i].likeCount = model.likeCounts
                 notifyItemChanged(i)
                 break
             }
         }
-
-
     }
-
-
-
-
 }

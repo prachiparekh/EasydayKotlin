@@ -43,7 +43,7 @@ data class CommentResponseItem(
     val updatedAt: String? = null,
 
     @field:SerializedName("like_count")
-    val likeCount: Int? = null,
+    var likeCount: Int? = null,
 
     @field:SerializedName("is_liked")
     val isLiked: Int? = null,

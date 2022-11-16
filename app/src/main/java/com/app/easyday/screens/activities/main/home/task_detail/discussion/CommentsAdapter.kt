@@ -105,7 +105,7 @@ class CommentsAdapter(
                 }
             }
 
-            if (item.likeCount?.equals(0) == false) {
+            if (item.likeCount != 0) {
                 likeTV.text = "+${item.likeCount}"
                 val likeList = item.taskCommentLikes
 
@@ -144,7 +144,7 @@ class CommentsAdapter(
             if (mLikeCommentId == item.id) {
                 when {
                     likeModel != null -> {
-                        if (likeModel?.equals(0) == false) {
+                        if (likeModel?.likeCounts != 0) {
                             likeTV.text = "+${likeModel?.likeCounts}"
                         } else {
                             likeTV.text = ""
