@@ -61,7 +61,6 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
 
             }
 
-//            Log.e("userActivityList", userActivityList.toString())
 
         }
     }

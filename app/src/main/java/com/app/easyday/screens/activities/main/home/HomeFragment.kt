@@ -4,7 +4,6 @@ package com.app.easyday.screens.activities.main.home
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -19,7 +18,6 @@ import com.app.easyday.app.sources.local.interfaces.ProjectInterface
 import com.app.easyday.app.sources.local.interfaces.TaskFilterApplyInterface
 import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
-import com.app.easyday.app.sources.remote.model.DeletelogoutResponse
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
@@ -43,7 +41,6 @@ import me.toptas.fancyshowcase.listener.OnViewInflateListener
 class HomeFragment : BaseFragment<HomeViewModel>(),
     ProjectInterface, TaskFilterApplyInterface, TaskInterfaceClick {
 
-    var dltlgtResp: DeletelogoutResponse? = null
     companion object {
         const val TAG = "HomeFragment"
         var selectedProjectID: Int? = null
@@ -63,7 +60,6 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     override fun initUi() {
 
         DeviceUtils.initProgress(requireContext())
-//        DeviceUtils.showProgress()
 
         if (!AppPreferencesDelegates.get().showcaseSeen) {
 
@@ -155,7 +151,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
 
             }
-            Log.e("image", imageUrl)
+
         }
 
         viewModel.projectList.observe(viewLifecycleOwner) { projectList ->

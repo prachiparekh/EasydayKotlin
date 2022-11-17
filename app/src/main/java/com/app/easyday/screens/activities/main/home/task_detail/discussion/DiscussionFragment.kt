@@ -14,7 +14,6 @@ import android.os.Environment
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.core.view.isVisible
@@ -357,7 +356,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
             mediaPlayer?.setOnPreparedListener { mp ->
 
                 val duration = mediaPlayer?.duration
-                Log.e("duration:", duration.toString())
+
                 val timeFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
                 timeFormatter.timeZone = TimeZone.getTimeZone("UTC")
                 vidDuration.text = duration?.toLong()?.let { Date(it) }
@@ -400,7 +399,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
 
 
         } catch (e: Exception) {
-            Log.e("eee::", e.message.toString())
+
             e.printStackTrace()
         }
 

@@ -1,6 +1,5 @@
 package com.app.easyday.screens.activities.main.home.task_detail.discussion
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.app.easyday.app.sources.remote.apis.EasyDayApi
 import com.app.easyday.app.sources.remote.model.CommentMediaRequest
@@ -80,7 +79,7 @@ class DiscussionViewModel @Inject constructor(
                 likeResponse.value = resp.data
 
             }, {
-                Log.e("error", it.message.toString())
+
             })
     }
 

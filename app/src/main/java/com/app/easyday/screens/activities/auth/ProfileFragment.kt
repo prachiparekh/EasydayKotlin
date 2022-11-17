@@ -18,7 +18,6 @@ import com.app.easyday.R
 import com.app.easyday.app.sources.aws.AWSKeys
 import com.app.easyday.app.sources.aws.S3Uploader
 import com.app.easyday.app.sources.aws.S3Utils
-import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.screens.activities.main.MainActivity
 import com.app.easyday.screens.base.BaseActivity
 import com.app.easyday.screens.base.BaseActivity.Companion.profileLogoListener
@@ -230,7 +229,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
             override fun onUploadError(response: String?) {
 
-                Log.e("TAG", "Error Uploading: $response")
             }
         })
     }
@@ -298,6 +296,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
             fullName.setText(userData?.fullname)
             profession.setText(userData?.profession)
 
+            Log.e("userData_profile", userData.toString())
             uUserName = userData?.fullname.toString()
             uUserProfession = userData?.profession.toString()
             uUserImage = userData?.profileImage.toString()
@@ -315,10 +314,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     )
                     .into(avatar)
             }
-
-            if (isNewUser == true)
-                AppPreferencesDelegates.get().token = userData?.token.toString()
-
 
         }
 
@@ -345,7 +340,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
     override fun onCropLogo(uri: Uri) {
         try {
-            Log.e("uri", uri.toString())
+
             val mOptions = CropImageOptions()
             mOptions.allowFlipping = false
             mOptions.allowRotation = false
