@@ -90,15 +90,15 @@
         tools:ignore="RtlSymmetry">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fullName"
+            android:id="@+id/fullNameTIE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/ic_profile_circle"
             android:fontFamily="@font/dm_sans_400"
             android:inputType="text"
             android:singleLine="true"
-            android:textColor="@color/dark_blue"
-            android:textSize="@dimen/_12sdp" />
+            android:textColor="@color/p_text"
+            android:textSize="@dimen/_14sdp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +125,7 @@
         tools:ignore="RtlSymmetry">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/profession"
+            android:id="@+id/professionTIE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/ic_briefcase"
@@ -133,8 +133,8 @@
             android:fontFamily="@font/dm_sans_400"
             android:inputType="text"
             android:singleLine="true"
-            android:textColor="@color/dark_blue"
-            android:textSize="@dimen/_12sdp" />
+            android:textColor="@color/p_text"
+            android:textSize="@dimen/_14sdp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

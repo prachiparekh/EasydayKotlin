@@ -16,8 +16,6 @@ class FilterChildAdapter(
     val filterTypeInterface: FilterTypeInterface
 ) : RecyclerView.Adapter<FilterChildAdapter.ViewHolder>() {
 
-    var isSelected: Boolean = false
-
 
     var priorityItemPosition = -1
     var priority: Boolean = false
@@ -43,6 +41,7 @@ class FilterChildAdapter(
         fun bind(position: Int, priority: Boolean) {
 
             childLabel.text = priorityList[position]
+            childLabel.setTextColor(context.resources.getColor(R.color.white))
 
             childLabel.setOnClickListener {
                 priorityItemPosition = position
@@ -56,14 +55,14 @@ class FilterChildAdapter(
                 notifyDataSetChanged()
             }
 
-            if (priorityItemPosition != -1) {
-                when (priorityItemPosition) {
-                    0, 1, 2, 3 -> {
-                        itemChange(position)
-                    }
-
-                }
-            }
+//            if (priorityItemPosition != -1) {
+//                when (priorityItemPosition) {
+//                    0, 1, 2, 3 -> {
+//                        itemChange(position)
+//                    }
+//
+//                }
+//            }
 
         }
 

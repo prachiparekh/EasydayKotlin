@@ -25,7 +25,7 @@
     <string name="create_profile">Create Profile</string>
     <string name="enter_details">Enter your details to complete your profile</string>
     <string name="full_name_c">Full Name <font color='#FB4079'>*</font></string>
-    <string name="ur_profession_c">Your profession <font color='#FB4079'>*</font></string>
+    <string name="ur_profession_c">Your profession</string>
     <string name="crop_fail">Cropping failed:</string>
 
     <string name="name_constarin">Full name is required !</string>

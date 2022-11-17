@@ -142,7 +142,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                     .load(imageUrl)
                     .error(requireContext().resources.getDrawable(R.drawable.ic_profile_circle))
                     .apply(
-                        options.fitCenter()
+                        options.centerCrop()
                             .skipMemoryCache(true)
                             .priority(Priority.HIGH)
                             .format(DecodeFormat.PREFER_ARGB_8888)

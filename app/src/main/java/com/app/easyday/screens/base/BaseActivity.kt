@@ -18,7 +18,6 @@ import com.app.easyday.utils.IntentUtil.Companion.PICK_IMAGE_CHOOSER_REQUEST_COD
 import com.app.easyday.utils.IntentUtil.Companion.getImagePath
 import com.passiondroid.imageeditorlib.ImageEditor
 import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.fragment_create_task.*
 import java.io.File
 import java.lang.reflect.ParameterizedType
 
@@ -95,6 +94,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
+                Log.e("res", result.toString())
                 if (result != null) {
                     profileLogoListener?.onChangeLogo(result.uri)
                 }
@@ -104,6 +104,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
                     baseContext.getString(R.string.crop_fail) + result.error,
                     Toast.LENGTH_LONG
                 ).show()
+                Log.e("err", result.error.toString())
             }
         }
 

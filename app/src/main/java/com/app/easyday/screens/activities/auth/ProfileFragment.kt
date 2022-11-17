@@ -51,31 +51,22 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
     override fun getContentView() = R.layout.fragment_profile
     var isNewUser: Boolean? = null
-//    var mImageFile: String? = null
 
     private var s3uploaderObj: S3Uploader? = null
     var mImageFile: File? = null
     private var urlFromS3: String? = null
-    var uUserName = ""
-    var uUserProfession = ""
-    var uUserImage = ""
 
     override fun getStatusBarColor() = ContextCompat.getColor(requireContext(), R.color.bg_white)
 
     override fun initUi() {
 
         s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_PROFILE_IMAGES)
-
-        val mPhoneNumber = arguments?.getString("phoneNumber")
-        val mCountryCode = arguments?.getString("countryCode")
         isNewUser = arguments?.getBoolean("isNewUser", true)
         if (isNewUser == false) {
             viewModel.getProfile()
         }
         profileLogoListener = this
         camera.setOnClickListener {
-
-
             if (cameraPermission(requireActivity()) && readPermission(requireActivity()) && writePermission(
                     requireActivity()
                 )
@@ -87,7 +78,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
         cta.setOnClickListener {
             if (isNewUser == true) {
-                if (fullName.text.isNullOrEmpty()) {
+                if (fullNameTIE.text.isNullOrEmpty()) {
                     Toast.makeText(
                         requireContext(),
                         requireContext().resources.getString(R.string.name_constarin),
@@ -96,7 +87,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     return@setOnClickListener
                 }
 
-                if (profession.text.isNullOrEmpty()) {
+                if (professionTIE.text.isNullOrEmpty()) {
                     Toast.makeText(
                         requireContext(),
                         requireContext().resources.getString(R.string.profession_constarin),
@@ -107,35 +98,73 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
                 if (mImageFile != null) {
                     mImageFile?.let { it1 ->
-                        uploadAudioTos3(
+                        uploadImageTos3(
                             it1
                         )
                     }
                 } else {
                     viewModel.createUser(
-                        fullName.text.toString(),
-                        profession.text.toString(), null
+                        fullNameTIE.text.toString(),
+                        professionTIE.text.toString(), null
                     )
                 }
 
 
             } else {
 
-                //update API
+                if (viewModel.userData.value?.fullname != fullNameTIE.text.toString() ||
+                    viewModel.userData.value?.profession != professionTIE.text.toString()
+                ) {
+
+                    if (fullNameTIE.text.isNullOrEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            requireContext().resources.getString(R.string.name_constarin),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    }
+
+                    if (professionTIE.text.isNullOrEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            requireContext().resources.getString(R.string.profession_constarin),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    }
+
+                    if (mImageFile != null) {
+                        mImageFile?.let { it1 ->
+                            uploadUpdatedImageTos3(
+                                it1
+                            )
+
+                        }
+                    } else {
+                        viewModel.updateUser(
+                            fullNameTIE.text.toString(),
+                            professionTIE.text.toString(), null
+                        )
+                    }
+                } else {
+                    //update API
 //                viewModel.updateUser(mImageFile, fullName.text.toString(), "")
-                val intent = Intent(requireActivity(), MainActivity::class.java)
-                requireActivity().startActivity(intent)
-                requireActivity().finish()
+                    val intent = Intent(requireActivity(), MainActivity::class.java)
+                    requireActivity().startActivity(intent)
+                    requireActivity().finish()
+                }
+
             }
         }
 
-        fullName.addTextChangedListener(object : TextWatcher {
+        fullNameTIE.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
                 if (s.isNotEmpty()) {
-                    setTextViewDrawableColor(fullName, R.color.green)
+                    setTextViewDrawableColor(fullNameTIE, R.color.green)
                 } else {
-                    setTextViewDrawableColor(fullName, R.color.gray)
+                    setTextViewDrawableColor(fullNameTIE, R.color.gray)
                 }
                 checkData()
             }
@@ -154,13 +183,13 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
             }
         })
 
-        profession.addTextChangedListener(object : TextWatcher {
+        professionTIE.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
                 if (s.isNotEmpty()) {
-                    setTextViewDrawableColor(profession, R.color.green)
+                    setTextViewDrawableColor(professionTIE, R.color.green)
                 } else {
-                    setTextViewDrawableColor(profession, R.color.gray)
+                    setTextViewDrawableColor(professionTIE, R.color.gray)
                 }
                 checkData()
             }
@@ -189,7 +218,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
         }
     }
 
-    private fun uploadAudioTos3(
+    private fun uploadImageTos3(
         imageFile: File
     ) {
         val path = imageFile.absolutePath
@@ -206,22 +235,49 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     )
                     if (!TextUtils.isEmpty(urlFromS3)) {
 
-
                         urlFromS3?.let {
                             viewModel.createUser(
-                                fullName.text.toString(),
-                                profession.text.toString(),
+                                fullNameTIE.text.toString(),
+                                professionTIE.text.toString(),
                                 it
                             )
                         }
 
-//                                urlFromS3?.let {
-//                                viewModel.updateUser(
-//                                    fullName.text.toString(),
-//                                    profession.text.toString(),
-//                                    it
-//                                )}
+                    }
+                }
+            }
 
+            override fun onUploadError(response: String?) {
+
+                Log.e("TAG", "Error Uploading: $response")
+            }
+        })
+    }
+
+    private fun uploadUpdatedImageTos3(
+        imageFile: File
+    ) {
+        val path = imageFile.absolutePath
+
+        s3uploaderObj?.initUpload(path)
+        s3uploaderObj?.setOns3UploadDone(object : S3Uploader.S3UploadInterface {
+            override fun onUploadSuccess(response: String?) {
+                if (response.equals("Success", ignoreCase = true)) {
+
+                    urlFromS3 = S3Utils.generates3ShareUrl(
+                        requireContext(),
+                        path,
+                        AWSKeys.FOLDER_NAME_PROFILE_IMAGES
+                    )
+                    if (!TextUtils.isEmpty(urlFromS3)) {
+
+                        urlFromS3?.let {
+                            viewModel.updateUser(
+                                fullNameTIE.text.toString(),
+                                professionTIE.text.toString(),
+                                it
+                            )
+                        }
 
                     }
                 }
@@ -247,7 +303,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
     }
 
     fun checkData() {
-        if (!fullName.text.isNullOrEmpty() && !profession.text.isNullOrEmpty()) {
+        if (!fullNameTIE.text.isNullOrEmpty() && !professionTIE.text.isNullOrEmpty()) {
             cta.isEnabled = true
             cta.alpha = 1F
         } else {
@@ -293,19 +349,18 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
     override fun setObservers() {
         viewModel.userData.observe(viewLifecycleOwner) { userData ->
-            fullName.setText(userData?.fullname)
-            profession.setText(userData?.profession)
+            fullNameTIE.setText(userData?.fullname)
+            professionTIE.setText(userData?.profession)
 
-            Log.e("userData_profile", userData.toString())
-            uUserName = userData?.fullname.toString()
-            uUserProfession = userData?.profession.toString()
-            uUserImage = userData?.profileImage.toString()
+            val separated: List<String>? = userData?.profileImage?.split("?")
+            val imageUrl = separated?.get(0).toString()
 
             if (userData?.profileImage != null) {
                 val options = RequestOptions()
                 avatar.clipToOutline = true
                 Glide.with(requireContext())
-                    .load(userData.profileImage)
+                    .load(imageUrl)
+                    .error(requireContext().resources.getDrawable(R.drawable.ic_user))
                     .apply(
                         options.centerCrop()
                             .skipMemoryCache(true)
@@ -340,7 +395,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
     override fun onCropLogo(uri: Uri) {
         try {
-
+            Log.e("uri", uri.toString())
             val mOptions = CropImageOptions()
             mOptions.allowFlipping = false
             mOptions.allowRotation = false

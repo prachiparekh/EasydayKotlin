@@ -30,8 +30,8 @@ interface EasyDayApi {
     @Multipart
     @POST("user/create-user")
     fun createUser(
-        @Part("fullname") fullname: RequestBody,
-        @Part("profession") profession: RequestBody,
+        @Part("fullname") fullname: String,
+        @Part("profession") profession: String,
         @Part("profile_image") profile_image: String?
     ): Observable<ApiResponse<UserModel>>
 
@@ -43,10 +43,6 @@ interface EasyDayApi {
 
     @GET("project/get-project")
     fun getProject(@Query("project_id") project_id: Int): Observable<ApiResponse<ProjectRespModel>?>
-
-//    @DELETE("user/delete-user")
-//    fun deleteUser(): Observable<ApiResponse<UserModel>>
-
 
     @POST("project/create-project")
     fun createProject(
@@ -154,12 +150,13 @@ interface EasyDayApi {
     @DELETE("user/delete-user")
     fun deleteUser(): Observable<ApiResponse<DeletelogoutResponse>>
 
-//    @FormUrlEncoded
-//    @PATCH("user/update-user")
-//    fun updateUser(
-//        @Field("profile_image") profile_image: String,
-//        @Field("fullname") fullname: String,
-//        @Field("profile") profile: String
-//    ): Observable<ApiResponse<UserModel>>
+    @FormUrlEncoded
+    @PATCH("user/update-user")
+    fun updateUser(
+        @Field("fullname") fullname: String,
+        @Field("profession") profession: String,
+        @Field("profile_image") profile_image: String?
+    ): Observable<ApiResponse<UserModel>>
+
 }
 

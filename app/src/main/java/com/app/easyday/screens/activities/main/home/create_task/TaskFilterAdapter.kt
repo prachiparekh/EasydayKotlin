@@ -190,4 +190,11 @@ class TaskFilterAdapter(
         notifyItemChanged(5)
     }
 
+    fun priorityChanged() {
+//        childRV.adapter = null
+        selectedPosition = -1
+        notifyItemChanged(0)
+
+    }
+
 }
