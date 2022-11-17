@@ -40,6 +40,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -431,6 +432,19 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     ) {
         selectedPriority = childPosition
 
+        filterTypeList[0]=priorityList[childPosition]
+
+        taskAdapter?.priorityChanged()
+
+        if (priorityList[0] == childList[childPosition]){
+            drawableList[0] = requireContext().resources.getDrawable(R.drawable.ic_priority_none)
+        }else if (priorityList[1] == childList[childPosition]){
+            drawableList[0] = requireContext().resources.getDrawable(R.drawable.ic_priority_low)
+        }else if (priorityList[2] == childList[childPosition]){
+            drawableList[0] = requireContext().resources.getDrawable(R.drawable.ic_priority)
+        }else{
+            drawableList[0] = requireContext().resources.getDrawable(R.drawable.ic_priority_high)
+        }
     }
 
 

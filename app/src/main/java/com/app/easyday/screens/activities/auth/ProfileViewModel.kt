@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.app.easyday.app.sources.remote.apis.EasyDayApi
 import com.app.easyday.app.sources.remote.model.UserModel
 import com.app.easyday.navigation.SingleLiveEvent
+import com.app.easyday.screens.activities.main.home.HomeViewModel.Companion.userModel
 import com.app.easyday.screens.base.BaseViewModel
 import com.app.easyday.utils.ErrorUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +40,7 @@ class ProfileViewModel @Inject constructor(
         val professionBody: RequestBody =
             profession.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        api.createUser(fullNameBody, professionBody, profile_image)
+        api.createUser(fullName, profession, profile_image)
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({ resp ->
                 actionStream.value = ACTION.onAddUpdateUser(resp.data)
@@ -58,14 +59,15 @@ class ProfileViewModel @Inject constructor(
             })
     }
 
-//    fun updateUser(name: String, profession: String, mImageFile: String) {
-//        api.updateUser(name, profession, mImageFile)
-//            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({ resp ->
-//                userData.value = resp.data
-//            }, {
-//
-//            })
-//    }
+    fun updateUser(name: String, profession: String, mImageFile: String?) {
+        api.updateUser(name, profession, mImageFile)
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ resp ->
+                userData.value = resp.data
+                userModel = resp.data
+            }, {
+
+            })
+    }
 
 }

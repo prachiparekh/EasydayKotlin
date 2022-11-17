@@ -16,7 +16,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.screens.activities.auth.LoginFragmentDirections
-import com.app.easyday.screens.activities.main.more.profile.ViewProfileViewModel
 import com.app.easyday.screens.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_activity_log.*
 import kotlinx.android.synthetic.main.fragment_devices.*

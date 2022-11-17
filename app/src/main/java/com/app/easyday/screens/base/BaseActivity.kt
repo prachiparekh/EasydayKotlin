@@ -95,6 +95,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
+                Log.e("res", result.toString())
                 if (result != null) {
                     profileLogoListener?.onChangeLogo(result.uri)
                 }
@@ -104,6 +105,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
                     baseContext.getString(R.string.crop_fail) + result.error,
                     Toast.LENGTH_LONG
                 ).show()
+                Log.e("err", result.error.toString())
             }
         }
 

@@ -4,20 +4,34 @@ import android.Manifest
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
+import android.view.View
+import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import com.app.easyday.R
+import com.app.easyday.app.sources.aws.AWSKeys
+import com.app.easyday.app.sources.aws.S3Uploader
+import com.app.easyday.app.sources.aws.S3Utils
+import com.app.easyday.app.sources.remote.model.UserModel
+import com.app.easyday.screens.activities.auth.ProfileViewModel
 import com.app.easyday.screens.activities.main.home.HomeViewModel.Companion.userModel
 import com.app.easyday.screens.base.BaseActivity
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.utils.FileUtil
 import com.app.easyday.utils.IntentUtil
+import com.app.easyday.utils.KeyboardUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DecodeFormat
@@ -33,23 +47,79 @@ import com.theartofdev.edmodo.cropper.CropImageActivity
 import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_view_profile.*
+import kotlinx.android.synthetic.main.fragment_view_profile.avatar
+import kotlinx.android.synthetic.main.fragment_view_profile.camera
+import kotlinx.android.synthetic.main.fragment_view_profile.title1
 import java.io.File
 
+
 @AndroidEntryPoint
-class ViewProfileFragment : BaseFragment<ViewProfileViewModel>(),
+class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
     BaseActivity.OnProfileLogoChangeListener {
 
     var isEditMode = false
     var mImageFile: File? = null
+    private var s3uploaderObj: S3Uploader? = null
+    private var urlFromS3: String? = null
+
+
     override fun getContentView() = R.layout.fragment_view_profile
 
     override fun initUi() {
+
+        userModel?.let { setUserData(it) }
+
+        s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_PROFILE_IMAGES)
+
         requireActivity().window?.statusBarColor = resources.getColor(R.color.navy_blue)
         option.setOnClickListener {
             editProfile.isVisible = true
             blankRL.isVisible = true
         }
+
+        ctaTV.setOnClickListener {
+            if (fullName.text.isNullOrEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().resources.getString(R.string.name_constarin),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            if (profession.text.isNullOrEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().resources.getString(R.string.profession_constarin),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            if (mImageFile != null) {
+                mImageFile?.let { it1 ->
+                    uploadUpdatedImageTos3(
+                        it1
+                    )
+                }
+
+            } else {
+                viewModel.updateUser(
+                    fullName.text.toString(),
+                    profession.text.toString(), null
+                )
+
+
+            }
+            ctaTV.isVisible = false
+            isEditMode = false
+            fullName.isEnabled = false
+            profession.isEnabled = false
+        }
+
+
 
         blankRL.setOnClickListener {
             blankRL.isVisible = false
@@ -60,27 +130,7 @@ class ViewProfileFragment : BaseFragment<ViewProfileViewModel>(),
             changeToEditMode()
         }
 
-        fullName.setText(userModel?.fullname)
-        profession.setText(userModel?.profession)
         checkData()
-
-        val separated: List<String>? = userModel?.profileImage?.split("?")
-        val imageUrl = separated?.get(0).toString()
-
-        if (userModel?.profileImage != null) {
-            val options = RequestOptions()
-            avatar.clipToOutline = true
-            Glide.with(requireContext())
-                .load(imageUrl)
-                .error(requireContext().resources.getDrawable(R.drawable.ic_user))
-                .apply(
-                    options.centerCrop()
-                        .skipMemoryCache(true)
-                        .priority(Priority.HIGH)
-                        .format(DecodeFormat.PREFER_ARGB_8888)
-                )
-                .into(avatar)
-        }
 
         requireView().isFocusableInTouchMode = true
         requireView().requestFocus()
@@ -90,7 +140,7 @@ class ViewProfileFragment : BaseFragment<ViewProfileViewModel>(),
                     isEditMode = false
                     fullName.isEnabled = false
                     profession.isEnabled = false
-                    cta.isVisible = false
+                    ctaTV.isVisible = false
                     option.isVisible = true
                     title1.text = requireContext().resources.getString(R.string.my_profile)
                     true
@@ -150,10 +200,12 @@ class ViewProfileFragment : BaseFragment<ViewProfileViewModel>(),
 
             }
         })
+        BaseActivity.profileLogoListener = this
+
 
         camera.setOnClickListener {
             if (isEditMode) {
-                BaseActivity.profileLogoListener = this
+
 
                 if (IntentUtil.cameraPermission(requireActivity()) && IntentUtil.readPermission(
                         requireActivity()
@@ -171,6 +223,42 @@ class ViewProfileFragment : BaseFragment<ViewProfileViewModel>(),
             Navigation.findNavController(requireView()).popBackStack()
         }
 
+
+    }
+
+    private fun uploadUpdatedImageTos3(
+        imageFile: File
+    ) {
+        val path = imageFile.absolutePath
+
+        s3uploaderObj?.initUpload(path)
+        s3uploaderObj?.setOns3UploadDone(object : S3Uploader.S3UploadInterface {
+            override fun onUploadSuccess(response: String?) {
+                if (response.equals("Success", ignoreCase = true)) {
+
+                    urlFromS3 = S3Utils.generates3ShareUrl(
+                        requireContext(),
+                        path,
+                        AWSKeys.FOLDER_NAME_PROFILE_IMAGES
+                    )
+                    if (!TextUtils.isEmpty(urlFromS3)) {
+
+                        urlFromS3?.let {
+                            viewModel.updateUser(
+                                fullName.text.toString(),
+                                profession.text.toString(),
+                                it
+                            )}
+
+                    }
+                }
+            }
+
+            override fun onUploadError(response: String?) {
+
+                Log.e("TAG", "Error Uploading: $response")
+            }
+        })
     }
 
     private fun changeToEditMode() {
@@ -179,23 +267,80 @@ class ViewProfileFragment : BaseFragment<ViewProfileViewModel>(),
         editProfile.isVisible = false
         fullName.isEnabled = true
         profession.isEnabled = true
-        cta.isVisible = true
+        ctaTV.isVisible = true
         option.isVisible = false
         title1.text = requireContext().resources.getString(R.string.edit_profile)
+
+        /*KeyboardUtils.addKeyboardToggleListener(
+            requireActivity(),
+            object : KeyboardUtils.SoftKeyboardToggleListener {
+                override fun onToggleSoftKeyboard(isVisible: Boolean) {
+                    if (isVisible){
+                        ctaTV.isVisible = false
+                    }else{
+                        Handler().postDelayed({
+                            ctaTV.isVisible = true
+                        }, 50)
+                    }
+                }
+            })*/
+//        parent_constraint.getViewTreeObserver()
+//            .addOnGlobalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener {
+//                val r = Rect()
+//                parent_constraint.getWindowVisibleDisplayFrame(r)
+//                val screenHeight: Int = parent_constraint.getRootView().getHeight()
+//                val keypadHeight: Int = screenHeight - r.bottom
+//                if (keypadHeight > screenHeight * 0.15) {
+//
+//                    ctaTV.visibility = View.GONE
+//                } else {
+//                    Handler().postDelayed({
+//                        ctaTV.visibility = View.VISIBLE
+//                    }, 50)
+//
+//
+//                }
+//            })
+
+
     }
 
     fun checkData() {
         if (!fullName.text.isNullOrEmpty() && !profession.text.isNullOrEmpty()) {
-            cta.isEnabled = true
-            cta.alpha = 1F
+            ctaTV.isEnabled = true
+            ctaTV.alpha = 1F
         } else {
-            cta.isEnabled = false
-            cta.alpha = 0.5F
+            ctaTV.isEnabled = false
+            ctaTV.alpha = 0.5F
         }
     }
 
     override fun setObservers() {
+        viewModel.userData.observe(viewLifecycleOwner) { userData ->
 
+            userData?.let { setUserData(it) }
+        }
+    }
+    private fun setUserData(userModel: UserModel){
+        fullName.setText(userModel.fullname)
+        profession.setText(userModel.profession)
+        val separated: List<String>? = userModel.profileImage?.split("?")
+        val imageUrl = separated?.get(0).toString()
+
+        if (userModel.profileImage != null) {
+            val options = RequestOptions()
+            avatar.clipToOutline = true
+            Glide.with(requireContext())
+                .load(imageUrl)
+                .error(requireContext().resources.getDrawable(R.drawable.ic_user))
+                .apply(
+                    options.centerCrop()
+                        .skipMemoryCache(true)
+                        .priority(Priority.HIGH)
+                        .format(DecodeFormat.PREFER_ARGB_8888)
+                )
+                .into(avatar)
+        }
     }
 
     private fun setTextViewDrawableColor(editText: TextInputEditText, color: Int) {
@@ -268,6 +413,7 @@ class ViewProfileFragment : BaseFragment<ViewProfileViewModel>(),
         val selectedFile = uri.let {
             FileUtil.getPath(it, requireContext())
         }
+        Log.e("uri", uri.toString())
         if (selectedFile != null) {
             val options = RequestOptions()
             avatar.clipToOutline = true
@@ -281,6 +427,13 @@ class ViewProfileFragment : BaseFragment<ViewProfileViewModel>(),
                 )
                 .into(avatar)
             mImageFile = File(selectedFile)
+        }
+
+        if (!isEditMode){
+            cta.isVisible = true
+            isEditMode = true
+            fullName.isEnabled = true
+            profession.isEnabled = true
         }
     }
 

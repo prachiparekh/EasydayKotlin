@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_priority.xml" value="0.2805" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_priority_high.xml" value="0.2805" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_priority_low.xml" value="0.2805" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_priority_none.xml" value="0.2805" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_create_task.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_view_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_task_child_filter.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_task_filter.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Cubezytech/.gradle/caches/transforms-3/63bb56e7012c7f32603c02570978fef4/transformed/jetified-android-rteditor-1.7.8/res/drawable/selector_ic_toolbar_align_center_light.xml" value="0.2245" />
         <entry key="..\:/Users/Cubezytech/.gradle/caches/transforms-3/63bb56e7012c7f32603c02570978fef4/transformed/jetified-android-rteditor-1.7.8/res/drawable/selector_ic_toolbar_align_left_light.xml" value="0.2245" />
         <entry key="..\:/Users/Cubezytech/.gradle/caches/transforms-3/63bb56e7012c7f32603c02570978fef4/transformed/jetified-android-rteditor-1.7.8/res/drawable/selector_ic_toolbar_bold_light.xml" value="0.2245" />
