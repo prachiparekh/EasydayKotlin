@@ -72,9 +72,9 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_profile_circle"
                 android:background="@drawable/bg_circle_white"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_profile_circle" />
 
         </LinearLayout>
 

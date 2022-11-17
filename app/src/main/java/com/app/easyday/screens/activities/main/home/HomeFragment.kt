@@ -55,7 +55,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     private var projectList = arrayListOf<ProjectRespModel>()
     var selectedProjectPosition: Int? = null
 
-    override fun getContentView() = R.layout.fragment_home
+   override fun getContentView() = R.layout.fragment_home
 
     override fun initUi() {
 
@@ -213,7 +213,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
         viewModel.taskList.observe(viewLifecycleOwner) {
 
-//            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+            //            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
             if (it.isNullOrEmpty()) {
                 noTaskCL.isVisible = true
                 taskRV.isVisible = false
@@ -222,7 +222,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                 taskRV.isVisible = true
                 taskRV.adapter = TaskAdapter(requireContext(), it, this)
             }
-//            }
+            //            }
             DeviceUtils.dismissProgress()
         }
     }
@@ -262,14 +262,14 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
     override fun onClickProject(projectPosition: Int) {
         if (projectPosition == -1) {
-//            Create New Project
+            //            Create New Project
             val action = DashboardFragmentDirections.dashboardToAddProject()
             val nav: NavController = Navigation.findNavController(requireView())
             if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
                 nav.navigate(action)
             }
         } else {
-//            Switch with ProjectID
+            //            Switch with ProjectID
 
             selectedProjectPosition = projectPosition
             TextViewCompat.setCompoundDrawableTintList(
@@ -315,5 +315,6 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     override fun onSearchResult(count: Int) {
 
     }
+
 
 }
