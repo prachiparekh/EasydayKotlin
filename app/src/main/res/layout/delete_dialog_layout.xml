@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/green_curve_bg"
         android:backgroundTint="@color/navy_blue"
-        android:layout_marginHorizontal="@dimen/_15sdp">
+        android:layout_marginHorizontal="@dimen/_20sdp">
 
         <TextView
             android:id="@+id/sure_Tv"
@@ -19,7 +19,7 @@
             android:fontFamily="@font/dm_sans_400"
             android:text="@string/delete_image"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/sure_Tv"
             android:layout_marginVertical="@dimen/_20sdp"
-            android:paddingHorizontal="@dimen/_10sdp">
+            android:paddingHorizontal="@dimen/_15sdp">
 
             <TextView
                 android:id="@+id/cancel_dismis_Tv"
@@ -39,7 +39,8 @@
                 android:text="@string/cancel"
                 android:textColor="@color/gray_x"
                 android:textSize="@dimen/_13sdp"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:layout_marginStart="@dimen/_20sdp"/>
 
             <TextView
                 android:id="@+id/sure_delete_Tv"

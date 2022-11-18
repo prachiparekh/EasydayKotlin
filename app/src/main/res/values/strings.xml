@@ -257,6 +257,9 @@
     <bool name="is_right_to_left">false</bool>
     <string name="task_count">%s Tasks</string>
     <string name="tag_name">• %s</string>
+    <string name="note_date">%s</string>
     <string name="convert">Convert to task</string>
     <string name="delete">Delete</string>
+    <string name="list_note">Employee State</string>
+    <string name="delete_note">Delete this note?</string>
 </resources>

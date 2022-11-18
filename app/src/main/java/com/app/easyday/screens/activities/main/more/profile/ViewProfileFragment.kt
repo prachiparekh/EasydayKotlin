@@ -427,7 +427,7 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
         }
 
         if (!isEditMode) {
-            cta.isVisible = true
+            ctaTV.isVisible = true
             isEditMode = true
             fullName.isEnabled = true
             profession.isEnabled = true

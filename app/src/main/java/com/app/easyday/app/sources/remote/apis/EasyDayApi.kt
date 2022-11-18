@@ -141,7 +141,7 @@ interface EasyDayApi {
 
     @GET("project/get-report")
     fun getReport(
-        @Query("project_id") project_id: Int,
+        @Query("project_id") project_id: Int
     ): Observable<ApiResponse<ReportResponse>>
 
     @POST("user/logout")
@@ -157,6 +157,14 @@ interface EasyDayApi {
         @Field("profession") profession: String,
         @Field("profile_image") profile_image: String?
     ): Observable<ApiResponse<UserModel>>
+
+    @GET("user/get-notes")
+    fun getNote(
+        @Query("project_id") project_id: Int
+    ): Observable<ApiResponse<ArrayList<NoteResponse>>>
+
+    @DELETE("user/delete-note")
+    fun deleteNote(): Observable<ApiResponse<DeletelogoutResponse>>
 
 }
 
