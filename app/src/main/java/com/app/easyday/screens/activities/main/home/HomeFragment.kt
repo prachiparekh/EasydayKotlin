@@ -4,7 +4,6 @@ package com.app.easyday.screens.activities.main.home
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -19,7 +18,6 @@ import com.app.easyday.app.sources.local.interfaces.ProjectInterface
 import com.app.easyday.app.sources.local.interfaces.TaskFilterApplyInterface
 import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
-import com.app.easyday.app.sources.remote.model.DeletelogoutResponse
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
@@ -43,7 +41,6 @@ import me.toptas.fancyshowcase.listener.OnViewInflateListener
 class HomeFragment : BaseFragment<HomeViewModel>(),
     ProjectInterface, TaskFilterApplyInterface, TaskInterfaceClick {
 
-    var dltlgtResp: DeletelogoutResponse? = null
     companion object {
         const val TAG = "HomeFragment"
         var selectedProjectID: Int? = null
@@ -58,12 +55,11 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     private var projectList = arrayListOf<ProjectRespModel>()
     var selectedProjectPosition: Int? = null
 
-    override fun getContentView() = R.layout.fragment_home
+   override fun getContentView() = R.layout.fragment_home
 
     override fun initUi() {
 
         DeviceUtils.initProgress(requireContext())
-        DeviceUtils.showProgress()
 
         if (!AppPreferencesDelegates.get().showcaseSeen) {
 
@@ -155,7 +151,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
 
             }
-            Log.e("image", imageUrl)
+
         }
 
         viewModel.projectList.observe(viewLifecycleOwner) { projectList ->
@@ -171,10 +167,6 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                             Color.parseColor(projectList[0].assignColor)
                         )
                     )
-//                    if (dltlgtResp?.success == true && selectedProjectID == null){
-//                        selectedProjectID = projectList[0].id
-//                        selectedColor = projectList[0].assignColor
-//                    }
 
                     if (AppPreferencesDelegates.get().activeProject == 0) {
                         selectedProjectID = projectList[0].id
@@ -221,7 +213,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
         viewModel.taskList.observe(viewLifecycleOwner) {
 
-//            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+            //            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
             if (it.isNullOrEmpty()) {
                 noTaskCL.isVisible = true
                 taskRV.isVisible = false
@@ -230,7 +222,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                 taskRV.isVisible = true
                 taskRV.adapter = TaskAdapter(requireContext(), it, this)
             }
-//            }
+            //            }
             DeviceUtils.dismissProgress()
         }
     }
@@ -270,14 +262,14 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
     override fun onClickProject(projectPosition: Int) {
         if (projectPosition == -1) {
-//            Create New Project
+            //            Create New Project
             val action = DashboardFragmentDirections.dashboardToAddProject()
             val nav: NavController = Navigation.findNavController(requireView())
             if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
                 nav.navigate(action)
             }
         } else {
-//            Switch with ProjectID
+            //            Switch with ProjectID
 
             selectedProjectPosition = projectPosition
             TextViewCompat.setCompoundDrawableTintList(
@@ -290,7 +282,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
             activeProject.text = projectList[projectPosition].projectName
             selectedColor = projectList[projectPosition].assignColor
             selectedProjectID?.let { viewModel.getAllTask(it) }
-
+            AppPreferencesDelegates.get().activeProject = projectList[projectPosition].id ?: 0
         }
 
 
@@ -323,5 +315,6 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     override fun onSearchResult(count: Int) {
 
     }
+
 
 }

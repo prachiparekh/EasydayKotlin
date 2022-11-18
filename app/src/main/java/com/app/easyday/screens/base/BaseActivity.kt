@@ -18,7 +18,6 @@ import com.app.easyday.utils.IntentUtil.Companion.PICK_IMAGE_CHOOSER_REQUEST_COD
 import com.app.easyday.utils.IntentUtil.Companion.getImagePath
 import com.passiondroid.imageeditorlib.ImageEditor
 import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.fragment_create_task.*
 import java.io.File
 import java.lang.reflect.ParameterizedType
 

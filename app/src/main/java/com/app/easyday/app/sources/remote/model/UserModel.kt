@@ -18,9 +18,6 @@ data class UserModel(
 	@field:SerializedName("is_invisible")
 	val isInvisible: Boolean? = null,
 
-	@field:SerializedName("device_token")
-	val deviceToken: String? = null,
-
 	@field:SerializedName("phone_number")
 	val phoneNumber: Long? = null,
 
@@ -33,9 +30,6 @@ data class UserModel(
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null,
 
-	@field:SerializedName("token")
-	val token: String? = null,
-
 	@field:SerializedName("country_code")
 	val countryCode: String? = null
 ):Parcelable {
@@ -44,7 +38,6 @@ data class UserModel(
 		parcel.readString(),
 		parcel.readString(),
 		parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-		parcel.readString(),
 		parcel.readValue(Long::class.java.classLoader) as? Long,
 		parcel.readValue(Int::class.java.classLoader) as? Int,
 		parcel.readString(),
@@ -57,16 +50,19 @@ data class UserModel(
 		parcel.writeString(createdAt)
 		parcel.writeString(profileImage)
 		parcel.writeValue(isInvisible)
-		parcel.writeString(deviceToken)
 		parcel.writeValue(phoneNumber)
 		parcel.writeValue(id)
 		parcel.writeString(fullname)
 		parcel.writeString(updatedAt)
-		parcel.writeString(token)
+		parcel.writeString(countryCode)
 	}
 
 	override fun describeContents(): Int {
 		return 0
+	}
+
+	override fun toString(): String {
+		return "UserModel(profession=$profession, phoneNumber=$phoneNumber, fullname=$fullname)"
 	}
 
 	companion object CREATOR : Parcelable.Creator<UserModel> {

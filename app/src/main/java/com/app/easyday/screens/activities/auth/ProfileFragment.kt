@@ -18,7 +18,6 @@ import com.app.easyday.R
 import com.app.easyday.app.sources.aws.AWSKeys
 import com.app.easyday.app.sources.aws.S3Uploader
 import com.app.easyday.app.sources.aws.S3Utils
-import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.screens.activities.main.MainActivity
 import com.app.easyday.screens.base.BaseActivity
 import com.app.easyday.screens.base.BaseActivity.Companion.profileLogoListener
@@ -52,23 +51,16 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
     override fun getContentView() = R.layout.fragment_profile
     var isNewUser: Boolean? = null
-//    var mImageFile: String? = null
 
     private var s3uploaderObj: S3Uploader? = null
     var mImageFile: File? = null
     private var urlFromS3: String? = null
-    var uUserName = ""
-    var uUserProfession = ""
-    var uUserImage = ""
 
     override fun getStatusBarColor() = ContextCompat.getColor(requireContext(), R.color.bg_white)
 
     override fun initUi() {
 
         s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_PROFILE_IMAGES)
-
-        val mPhoneNumber = arguments?.getString("phoneNumber")
-        val mCountryCode = arguments?.getString("countryCode")
         isNewUser = arguments?.getBoolean("isNewUser", true)
         if (isNewUser == false) {
             viewModel.getProfile()
@@ -120,8 +112,9 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
             } else {
 
-                if ( viewModel.userData.value?.fullname != fullNameTIE.text.toString() ||
-                    viewModel.userData.value?.profession != professionTIE.text.toString()){
+                if (viewModel.userData.value?.fullname != fullNameTIE.text.toString() ||
+                    viewModel.userData.value?.profession != professionTIE.text.toString()
+                ) {
 
                     if (fullNameTIE.text.isNullOrEmpty()) {
                         Toast.makeText(
@@ -154,7 +147,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                             professionTIE.text.toString(), null
                         )
                     }
-                }else{
+                } else {
                     //update API
 //                viewModel.updateUser(mImageFile, fullName.text.toString(), "")
                     val intent = Intent(requireActivity(), MainActivity::class.java)
@@ -242,13 +235,13 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     )
                     if (!TextUtils.isEmpty(urlFromS3)) {
 
-                            urlFromS3?.let {
-                                viewModel.createUser(
-                                    fullNameTIE.text.toString(),
-                                    professionTIE.text.toString(),
-                                    it
-                                )
-                            }
+                        urlFromS3?.let {
+                            viewModel.createUser(
+                                fullNameTIE.text.toString(),
+                                professionTIE.text.toString(),
+                                it
+                            )
+                        }
 
                     }
                 }
@@ -260,6 +253,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
             }
         })
     }
+
     private fun uploadUpdatedImageTos3(
         imageFile: File
     ) {
@@ -277,12 +271,13 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     )
                     if (!TextUtils.isEmpty(urlFromS3)) {
 
-                            urlFromS3?.let {
-                                viewModel.updateUser(
-                                    fullNameTIE.text.toString(),
-                                    professionTIE.text.toString(),
-                                    it
-                                )}
+                        urlFromS3?.let {
+                            viewModel.updateUser(
+                                fullNameTIE.text.toString(),
+                                professionTIE.text.toString(),
+                                it
+                            )
+                        }
 
                     }
                 }
@@ -290,7 +285,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
             override fun onUploadError(response: String?) {
 
-                Log.e("TAG", "Error Uploading: $response")
             }
         })
     }
@@ -375,10 +369,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     )
                     .into(avatar)
             }
-
-            if (isNewUser == true)
-                AppPreferencesDelegates.get().token = userData?.token.toString()
-
 
         }
 

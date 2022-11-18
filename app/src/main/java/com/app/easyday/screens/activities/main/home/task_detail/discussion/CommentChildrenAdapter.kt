@@ -40,6 +40,8 @@ class CommentChildrenAdapter(
     var mediaPlayer: MediaPlayer? = null
     var mTimer: CountDownTimer? = null
     var timeFormatter: SimpleDateFormat? = null
+    var likeModel: LikeCommentResponse? = null
+
 
     override fun getItemCount(): Int = commentList.size
 
@@ -127,6 +129,23 @@ class CommentChildrenAdapter(
                 likeTV.text = ""
             }
 
+            if (likeModel != null) {
+                if (likeModel?.comment_id == item.id) {
+                    if (likeModel?.isLike == true) {
+                        TextViewCompat.setCompoundDrawableTintList(
+                            likeTV, ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.green)
+                            )
+                        )
+                    } else {
+                        TextViewCompat.setCompoundDrawableTintList(
+                            likeTV, ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.hint_color)
+                            )
+                        )
+                    }
+                }
+            }
 
             reply.setOnClickListener {
                 item.let { it1 -> anInterface.onReplyClick(it1) }
@@ -205,16 +224,15 @@ class CommentChildrenAdapter(
                     vidDuration1.text = timeFormatter?.format(Date(totalDuration.toLong()))
                 }
             }.start()
-
         }
-
     }
-
 
     fun setLikeButton(model: LikeCommentResponse, commentID: Int) {
         for (i in commentList.indices) {
             if (commentList[i].id == commentID) {
                 commentList[i].likeCount = model.likeCounts
+                likeModel = model
+
                 notifyItemChanged(i)
                 break
             }

@@ -4,17 +4,13 @@ import android.Manifest
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
-import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -31,7 +27,6 @@ import com.app.easyday.screens.base.BaseActivity
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.utils.FileUtil
 import com.app.easyday.utils.IntentUtil
-import com.app.easyday.utils.KeyboardUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DecodeFormat
@@ -248,7 +243,8 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
                                 fullName.text.toString(),
                                 profession.text.toString(),
                                 it
-                            )}
+                            )
+                        }
 
                     }
                 }
@@ -321,7 +317,8 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
             userData?.let { setUserData(it) }
         }
     }
-    private fun setUserData(userModel: UserModel){
+
+    private fun setUserData(userModel: UserModel) {
         fullName.setText(userModel.fullname)
         profession.setText(userModel.profession)
         val separated: List<String>? = userModel.profileImage?.split("?")
@@ -429,8 +426,8 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
             mImageFile = File(selectedFile)
         }
 
-        if (!isEditMode){
-            cta.isVisible = true
+        if (!isEditMode) {
+            ctaTV.isVisible = true
             isEditMode = true
             fullName.isEnabled = true
             profession.isEnabled = true

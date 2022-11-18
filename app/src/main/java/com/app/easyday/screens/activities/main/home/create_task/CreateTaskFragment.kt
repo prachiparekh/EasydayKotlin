@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
@@ -40,7 +41,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
-import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -247,6 +247,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog.setCancelable(false)
                 dialog.setContentView(R.layout.delete_dialog_layout)
+                dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 dialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
 
                 dialog.show()
@@ -432,17 +433,17 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     ) {
         selectedPriority = childPosition
 
-        filterTypeList[0]=priorityList[childPosition]
+        filterTypeList[0] = priorityList[childPosition]
 
         taskAdapter?.priorityChanged()
 
-        if (priorityList[0] == childList[childPosition]){
+        if (priorityList[0] == childList[childPosition]) {
             drawableList[0] = requireContext().resources.getDrawable(R.drawable.ic_priority_none)
-        }else if (priorityList[1] == childList[childPosition]){
+        } else if (priorityList[1] == childList[childPosition]) {
             drawableList[0] = requireContext().resources.getDrawable(R.drawable.ic_priority_low)
-        }else if (priorityList[2] == childList[childPosition]){
+        } else if (priorityList[2] == childList[childPosition]) {
             drawableList[0] = requireContext().resources.getDrawable(R.drawable.ic_priority)
-        }else{
+        } else {
             drawableList[0] = requireContext().resources.getDrawable(R.drawable.ic_priority_high)
         }
     }

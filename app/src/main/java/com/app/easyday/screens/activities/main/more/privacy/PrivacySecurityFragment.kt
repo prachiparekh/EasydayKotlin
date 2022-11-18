@@ -13,6 +13,7 @@ import com.app.easyday.screens.activities.main.dashboard.DashboardFragment.Compa
 import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.screens.dialogs.DeleteUserDialog
+import com.app.easyday.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_privacy_security.*
 
@@ -24,6 +25,7 @@ class PrivacySecurityFragment : BaseFragment<PrivacySecurityViewModel>(),
 
     override fun initUi() {
 
+        DeviceUtils.initProgress(requireContext())
         option.setOnClickListener {
             deleteProfile.isVisible = true
             blankRL.isVisible = true
@@ -87,7 +89,8 @@ class PrivacySecurityFragment : BaseFragment<PrivacySecurityViewModel>(),
         }
     }
 
-    override fun OnDeleteClick() {
+    override fun OnDeleteClick(item: Int) {
+        DeviceUtils.showProgress()
         viewModel.deleteProfile()
 
     }

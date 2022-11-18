@@ -2,13 +2,10 @@ package com.app.easyday.utils
 
 import android.R
 import android.app.Activity
-import android.content.Context
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.inputmethod.InputMethodManager
 
 class KeyboardUtils private constructor(
     act: Activity,
@@ -26,7 +23,7 @@ class KeyboardUtils private constructor(
     override fun onGlobalLayout() {
         val r = Rect()
         mRootView.getWindowVisibleDisplayFrame(r)
-        val heightDiff: Int = mRootView.getRootView().getHeight() - (r.bottom - r.top)
+        val heightDiff: Int = mRootView.rootView.height - (r.bottom - r.top)
         val dp = heightDiff / mScreenDensity
         val isVisible = dp > MAGIC_NUMBER
         if (mCallback != null && (prevValue == null || isVisible != prevValue)) {
@@ -37,7 +34,7 @@ class KeyboardUtils private constructor(
 
     private fun removeListener() {
         mCallback = null
-        mRootView.getViewTreeObserver().removeOnGlobalLayoutListener(this)
+        mRootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
     }
 
     companion object {
@@ -60,7 +57,7 @@ class KeyboardUtils private constructor(
 
     init {
         mRootView = (act.findViewById<View>(R.id.content) as ViewGroup).getChildAt(0)
-        mRootView.getViewTreeObserver().addOnGlobalLayoutListener(this)
+        mRootView.viewTreeObserver.addOnGlobalLayoutListener(this)
         mScreenDensity = act.resources.displayMetrics.density
     }
 }

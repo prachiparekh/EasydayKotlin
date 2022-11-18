@@ -124,7 +124,7 @@
                 android:layout_marginEnd="@dimen/_2sdp"
                 android:layout_weight="1.8"
                 android:background="@android:color/transparent"
-                android:hint="@string/full_name"
+                android:hint="@string/full_name_c"
                 android:textColor="@color/dark_blue"
                 android:theme="@style/TextInputLayoutAppearance"
                 app:boxBackgroundColor="@color/bg_white"
@@ -149,7 +149,7 @@
                     android:inputType="text"
                     android:singleLine="true"
                     android:textColor="@color/dark_blue"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_14sdp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -186,7 +186,7 @@
                     android:inputType="text"
                     android:singleLine="true"
                     android:textColor="@color/dark_blue"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_14sdp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -205,7 +205,7 @@
                 android:text="@string/save_changes"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
