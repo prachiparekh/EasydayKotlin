@@ -3,7 +3,6 @@ package com.app.easyday.screens.activities.boarding
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.observe
 import androidx.navigation.ActivityNavigator
 import com.app.easyday.R
@@ -26,8 +25,8 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
 
     override fun setupObservers() {
         viewModel.userProfileData.observe(this) { userData ->
-            Log.e("userData", userData.toString())
-            if (userData?.profession != null) {
+
+        if (userData?.profession != null) {
 //                AppPreferencesDelegates.get().token=userData.token.toString()
                 startActivity(
                     Intent(

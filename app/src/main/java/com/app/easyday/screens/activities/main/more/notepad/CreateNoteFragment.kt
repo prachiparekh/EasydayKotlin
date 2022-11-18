@@ -6,21 +6,22 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.app.easyday.R
-import com.app.easyday.databinding.FragmentCreateNoteBinding
+import com.app.easyday.screens.base.BaseFragment
 import com.onegravity.rteditor.RTManager
 import com.onegravity.rteditor.api.RTApi
 import com.onegravity.rteditor.api.RTMediaFactoryImpl
 import com.onegravity.rteditor.api.RTProxyImpl
 import com.onegravity.rteditor.effects.Effects
 import com.onegravity.rteditor.utils.Helper
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_create_note.*
 import java.util.*
 
 
-class CreateNoteFragment : Fragment() {
+@AndroidEntryPoint
+class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
 
     override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
         val inflater = super.onGetLayoutInflater(savedInstanceState)
@@ -30,26 +31,17 @@ class CreateNoteFragment : Fragment() {
         return inflater.cloneInContext(contextThemeWrapper)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().window?.statusBarColor = resources.getColor(R.color.navy_blue)
-    }
 
     private var mRTManager: RTManager? = null
-    var binding: FragmentCreateNoteBinding? = null
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mRTManager?.onSaveInstanceState(outState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_note, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val rtApi = RTApi(
             requireContext(),
@@ -59,41 +51,52 @@ class CreateNoteFragment : Fragment() {
         mRTManager = RTManager(rtApi, savedInstanceState)
 
         mRTManager?.registerToolbar(
-            binding?.rteToolbarContainer as ViewGroup,
-            binding?.rteToolbarCharacter
+            rte_toolbar_container as ViewGroup,
+            rte_toolbar_character
         )
 
-        mRTManager?.registerEditor(binding?.rtEditText, true)
-        binding?.rtEditText?.setRichTextEditing(
+        mRTManager?.registerEditor(rtEditText, true)
+        rtEditText?.setRichTextEditing(
             true, ""
         )
 
         val month = Calendar.getInstance().get(Calendar.MONTH)
         val date = Calendar.getInstance().get(Calendar.DATE)
         val year = Calendar.getInstance().get(Calendar.YEAR)
-        binding?.subject?.setText(
+        subject?.setText(
             requireContext().resources.getString(
                 R.string.untitled_date,
                 "$date/${month + 1}/$year"
             )
         )
 
-        binding?.toolbarFontsizeH1?.setOnClickListener {
+        subject?.hint = requireContext().resources.getString(
+            R.string.untitled_date,
+            "$date/${month + 1}/$year"
+        )
+
+        toolbar_fontsizeH1?.setOnClickListener {
             val size = Helper.convertPxToSp(30)
-            binding?.rtEditText?.applyEffect(Effects.FONTSIZE, size)
+            rtEditText?.applyEffect(Effects.FONTSIZE, size)
+
         }
 
-        binding?.back?.setOnClickListener {
+        toolbar_fontsizeH2?.setOnClickListener {
+            val size = Helper.convertPxToSp(26)
+            rtEditText?.applyEffect(Effects.FONTSIZE, size)
+        }
+
+
+        back?.setOnClickListener {
             Navigation.findNavController(requireView()).popBackStack()
         }
 
-        binding?.option?.setOnClickListener {
+        option?.setOnClickListener {
             showDialog()
         }
 
-
-        return binding?.root
     }
+
 
     private fun showDialog() {
         val popupView: View =
@@ -104,7 +107,7 @@ class CreateNoteFragment : Fragment() {
         val focusable = true
 
         val popupWindow = PopupWindow(popupView, width, height, focusable)
-        popupWindow.showAsDropDown(binding?.option, 0, 0, Gravity.END)
+        popupWindow.showAsDropDown(option, 0, 0, Gravity.END)
         val convert = popupView.findViewById<TextView>(R.id.convertTV)
         val share = popupView.findViewById<TextView>(R.id.shareTV)
         val delete = popupView.findViewById<TextView>(R.id.deleteTV)
@@ -124,6 +127,16 @@ class CreateNoteFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         mRTManager?.onDestroy(true)
+    }
+
+    override fun getContentView() = R.layout.fragment_create_note
+
+    override fun initUi() {
+        requireActivity().window?.statusBarColor = resources.getColor(R.color.navy_blue)
+    }
+
+    override fun setObservers() {
+
     }
 
 }
