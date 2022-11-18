@@ -89,11 +89,12 @@ class PrivacySecurityFragment : BaseFragment<PrivacySecurityViewModel>(),
         }
     }
 
-    override fun OnDeleteClick(item: Int) {
+    override fun OnDeleteClick() {
         DeviceUtils.showProgress()
         viewModel.deleteProfile()
 
     }
+
 
     override fun OnLogoutClick() {
 

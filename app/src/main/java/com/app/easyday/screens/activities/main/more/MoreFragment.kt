@@ -134,12 +134,11 @@ class MoreFragment : BaseFragment<MoreViewModel>(), OnClickListener, DeleteLogou
         requireActivity().window?.statusBarColor = resources.getColor(R.color.green)
     }
 
-    override fun OnDeleteClick(item: Int) {
+    override fun OnDeleteClick() {
     }
 
     override fun OnLogoutClick() {
         viewModel.logoutUser()
-
     }
 
 
