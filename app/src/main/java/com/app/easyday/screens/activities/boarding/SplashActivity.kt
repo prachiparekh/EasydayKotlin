@@ -12,6 +12,7 @@ import com.app.easyday.screens.activities.main.MainActivity
 import com.app.easyday.screens.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class SplashActivity : BaseActivity<SplashViewModel>() {
 
@@ -70,6 +71,8 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
 
     override fun setupUi() {
         window?.statusBarColor = resources.getColor(R.color.green)
+
+
     }
 
 }

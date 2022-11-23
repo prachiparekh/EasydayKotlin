@@ -5,7 +5,7 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import androidx.multidex.MultiDexApplication
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferNetworkLossHandler
-import com.onegravity.rteditor.fonts.FontManager
+
 import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.HiltAndroidApp
 
@@ -20,7 +20,7 @@ class EasyDayApplication : MultiDexApplication() {
             .setPrefsName(packageName)
             .setUseDefaultSharedPreference(true)
             .build()
-        FontManager.preLoadFonts(this)
+
         registerReceiver(
             TransferNetworkLossHandler.getInstance(applicationContext), IntentFilter(
                 ConnectivityManager.CONNECTIVITY_ACTION

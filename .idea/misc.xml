@@ -191,6 +191,8 @@
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_discussion.xml" value="0.25" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_feedback.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_home.xml" value="0.3009833262077811" />
+        <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_notepad_list.xml" value="0.3009833262077811" />
+        <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_o_t_p.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_reports.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_search.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_task_details.xml" value="0.3009833262077811" />
@@ -201,6 +203,7 @@
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/item_task.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/project_list_bdialog.xml" value="0.29717180244829045" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/record_view.xml" value="0.3009833262077811" />
+        <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/xml/file_paths.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/xml/network_security_config.xml" value="0.3009833262077811" />
       </map>
     </option>

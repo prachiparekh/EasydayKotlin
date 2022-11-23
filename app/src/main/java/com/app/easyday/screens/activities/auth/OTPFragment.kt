@@ -40,11 +40,15 @@ class OTPFragment : BaseFragment<OTPViewModel>() {
 
             val minutes = millisUntilFinished / 1000 / 60
             val seconds = millisUntilFinished / 1000 % 60
-            resendCode.text = requireContext().resources.getString(
-                R.string.resend_code_in,
-                "$minutes:$seconds"
-            )
-            resendCode.isEnabled = false
+            try {
+                resendCode.text = requireContext().resources.getString(
+                    R.string.resend_code_in,
+                    "$minutes:$seconds"
+                )
+                resendCode.isEnabled = false
+            } catch (e: Exception) {
+
+            }
         }
 
         override fun onFinish() {

@@ -37,26 +37,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <ImageView
                 android:id="@+id/back"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:padding="@dimen/_5sdp"
                 android:src="@drawable/ic_back_arrow"
-                android:tint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <ImageView
                 android:id="@+id/option"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:padding="@dimen/_5sdp"
                 android:src="@drawable/ic_option_btn"
-                android:tint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -78,158 +78,125 @@
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/topCL" />
 
-        <com.onegravity.rteditor.RTEditText
+        <jp.wasabeef.richeditor.RichEditor
             android:id="@+id/rtEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_margin="@dimen/_10sdp"
-            android:background="@null"
+            android:background="@color/bg_white"
             android:cursorVisible="true"
             android:fontFamily="@font/inter_medium_500"
-            android:hint="@string/type_here"
             android:imeOptions="actionDone|flagNoEnterAction"
             android:inputType="textMultiLine|textAutoCorrect|textCapSentences"
             android:paddingVertical="@dimen/_2sdp"
             android:textColor="@color/navy_blue"
             android:textCursorDrawable="@drawable/edit_text_colored_cursor"
+            app:layout_constraintBottom_toTopOf="@id/scrollView"
             app:layout_constraintTop_toBottomOf="@id/subject" />
 
-
-        <LinearLayout
-            android:id="@+id/rte_toolbar_container"
+        <HorizontalScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent">
 
-
-            <HorizontalScrollView
+            <LinearLayout
+                android:id="@+id/rte_toolbar_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="?android:attr/actionBarItemBackground"
-                android:scrollbarStyle="outsideOverlay"
-                android:scrollbars="none">
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/_5sdp">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <ImageButton
+                    android:id="@+id/toolbar_inc_indent"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_note_paragraph"
+                    app:tint="@color/toolbar_imagebutton_tint" />
 
-                    <com.onegravity.rteditor.toolbar.HorizontalRTToolbar
-                        android:id="@+id/rte_toolbar_character"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:background="?android:attr/actionBarItemBackground"
-                        android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/toolbar_fontsizeH1"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+                    android:src="@drawable/ic_note_h1"
+                    app:tint="@color/toolbar_imagebutton_tint" />
 
-                        <com.onegravity.rteditor.toolbar.RTToolbarImageButton
-                            android:id="@+id/toolbar_inc_indent"
-                            style="?attr/rte_ToolbarButton"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:background="@null"
-                            android:padding="@dimen/_5sdp"
-                            android:tint="@color/toolbar_imagebutton_tint"
-                            android:src="@drawable/ic_note_paragraph" />
+                <ImageButton
+                    android:id="@+id/toolbar_fontsizeH2"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+                    android:src="@drawable/ic_note_h2"
+                    app:tint="@color/toolbar_imagebutton_tint" />
 
-                        <androidx.appcompat.widget.AppCompatImageButton
-                            android:id="@+id/toolbar_fontsizeH1"
-                            style="?attr/rte_ToolbarButton"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:background="@null"
-                            android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_note_h1" />
+                <ImageView
+                    android:id="@+id/toolbar_check"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+                    android:src="@drawable/ic_checkbox"
+                    android:visibility="gone" />
 
-                        <androidx.appcompat.widget.AppCompatImageButton
-                            android:id="@+id/toolbar_fontsizeH2"
-                            style="?attr/rte_ToolbarButton"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:background="@null"
-                            android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_note_h2" />
+                <ImageButton
+                    android:id="@+id/toolbar_bullet"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_note_bullet_list"
+                    app:tint="@color/toolbar_imagebutton_tint" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/toolbar_check"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:background="@null"
-                            android:src="@drawable/ic_checkbox"
-                            android:visibility="gone" />
+                <ImageButton
+                    android:id="@+id/toolbar_number"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_note_number_list"
+                    app:tint="@color/toolbar_imagebutton_tint" />
 
-                        <com.onegravity.rteditor.toolbar.RTToolbarImageButton
-                            android:id="@+id/toolbar_bullet"
-                            style="?attr/rte_ToolbarButton"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:background="@null"
-                            android:padding="@dimen/_5sdp"
-                            android:src="@drawable/ic_note_bullet_list" />
+                <ImageButton
+                    android:id="@+id/toolbar_underline"
 
-                        <com.onegravity.rteditor.toolbar.RTToolbarImageButton
-                            android:id="@+id/toolbar_number"
-                            style="?attr/rte_ToolbarButton"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:background="@null"
-                            android:padding="@dimen/_5sdp"
-                            android:src="@drawable/ic_note_number_list" />
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_note_underline"
+                    app:tint="@color/toolbar_imagebutton_tint" />
 
-                        <com.onegravity.rteditor.toolbar.RTToolbarImageButton
-                            android:id="@+id/toolbar_underline"
-                            style="?attr/rte_ToolbarButton"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:background="@null"
-                            android:padding="@dimen/_5sdp"
-                            android:src="@drawable/ic_note_underline" />
+                <ImageButton
+                    android:id="@+id/toolbar_undo"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_note_undo" />
 
-                        <com.onegravity.rteditor.toolbar.RTToolbarImageButton
-                            android:id="@+id/toolbar_undo"
-                            style="?attr/rte_ToolbarButton"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:background="@null"
-                            android:padding="@dimen/_5sdp"
-                            android:src="@drawable/ic_note_undo" />
+                <ImageButton
+                    android:id="@+id/toolbar_redo"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_note_redo" />
 
-                        <com.onegravity.rteditor.toolbar.RTToolbarImageButton
-                            android:id="@+id/toolbar_redo"
-                            style="?attr/rte_ToolbarButton"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            android:background="@null"
-                            android:padding="@dimen/_5sdp"
-                            android:src="@drawable/ic_note_redo" />
-
-                        <include
-                            layout="@layout/rte_toolbar_divider"
-                            android:visibility="gone" />
-
-                    </com.onegravity.rteditor.toolbar.HorizontalRTToolbar>
-                </RelativeLayout>
-
-
-            </HorizontalScrollView>
-
-            <include
-                layout="@layout/rte_toolbar_paragraph"
-                android:visibility="gone" />
-
-        </LinearLayout>
-
+            </LinearLayout>
+        </HorizontalScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
