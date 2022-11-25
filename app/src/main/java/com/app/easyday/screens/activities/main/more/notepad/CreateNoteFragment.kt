@@ -1,11 +1,17 @@
 package com.app.easyday.screens.activities.main.more.notepad
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.Spannable
+import android.text.TextWatcher
+import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.core.text.toHtml
 import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.screens.base.BaseFragment
@@ -23,6 +29,7 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
     companion object {
         var selectedFilter: String? = null
         var numberIndex = 0
+        var underlineIndex = 0
     }
 
     var mEditText: CustomEditText? = null
@@ -54,7 +61,7 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
             showDialog()
         }
 
-        mEditText = CustomEditText(requireContext(), null)
+        mEditText = rtEditText
 
         toolbar_undo.setOnClickListener {
 
@@ -115,11 +122,14 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
         }
 
         toolbar_number.setOnClickListener {
+            if (selectedFilter == "UNDERLINE") {
+
+                Log.e("toolbar_number", mEditText?.text.toString())
+            }
             toolbar_number.isSelected = !toolbar_number.isSelected
             if (toolbar_number.isSelected) {
                 selectedFilter = "NUMBER"
                 numberIndex = 0
-
                 toolbar_fontsizeH1.isSelected = false
                 toolbar_fontsizeH2.isSelected = false
                 toolbar_inc_indent.isSelected = false
@@ -132,6 +142,9 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
             toolbar_underline.isSelected = !toolbar_underline.isSelected
             if (toolbar_underline.isSelected) {
                 selectedFilter = "UNDERLINE"
+
+                Log.e("toolbar_underline", mEditText?.text?.toHtml().toString())
+                underlineIndex = mEditText?.length() ?: 0
                 toolbar_fontsizeH1.isSelected = false
                 toolbar_fontsizeH2.isSelected = false
                 toolbar_inc_indent.isSelected = false
@@ -139,8 +152,25 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
                 toolbar_number.isSelected = false
             }
         }
-    }
 
+        mEditText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (selectedFilter == "UNDERLINE")
+                    p0?.setSpan(
+                        UnderlineSpan(), underlineIndex, p0.length - 1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+            }
+        })
+    }
 
     private fun showDialog() {
         val popupView: View =
@@ -167,12 +197,6 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
         }
     }
 
-
-    /*override fun onDestroy() {
-        super.onDestroy()
-        mRTManager?.onDestroy(true)
-    }
-*/
     override fun getContentView() = R.layout.fragment_create_note
 
     override fun initUi() {

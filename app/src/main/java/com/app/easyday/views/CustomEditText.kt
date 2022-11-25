@@ -1,7 +1,9 @@
 package com.app.easyday.views
 
 import android.content.Context
+import android.text.Html
 import android.util.AttributeSet
+import android.util.Log
 import com.app.easyday.screens.activities.main.more.notepad.CreateNoteFragment.Companion.numberIndex
 import com.app.easyday.screens.activities.main.more.notepad.CreateNoteFragment.Companion.selectedFilter
 
@@ -42,6 +44,7 @@ class CustomEditText(context: Context, attrs: AttributeSet?) :
                         getText()?.length?.let { setSelection(it) }
                     }
                 }
+
             }
             "NUMBER" -> {
                 if (lengthAfter > lengthBefore) {
@@ -66,9 +69,13 @@ class CustomEditText(context: Context, attrs: AttributeSet?) :
             }
             "UNDERLINE" -> {
 
+
+                Log.e("resultText", "${Html.fromHtml(resultText.toString())}")
+                Log.e("lengthbefore: $lengthBefore", "lengthAfter: $lengthAfter")
             }
         }
 
         super.onTextChanged(resultText, start, lengthBefore, lengthAfter)
+
     }
 }
