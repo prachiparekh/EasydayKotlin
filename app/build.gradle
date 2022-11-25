@@ -161,9 +161,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':imageeditorlib')
 
-//      RTEditor
-    implementation 'jp.wasabeef:richeditor-android:2.0.0'
-
 //    Firebase
     implementation 'com.google.firebase:firebase-messaging:23.1.0'
 

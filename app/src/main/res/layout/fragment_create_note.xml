@@ -78,16 +78,19 @@
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/topCL" />
 
-        <jp.wasabeef.richeditor.RichEditor
+        <com.app.easyday.views.CustomEditText
             android:id="@+id/rtEditText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_10sdp"
-            android:background="@color/bg_white"
+            android:background="@null"
             android:cursorVisible="true"
             android:fontFamily="@font/inter_medium_500"
+            android:gravity="top|left"
+            android:hint="@string/type_here"
             android:imeOptions="actionDone|flagNoEnterAction"
             android:inputType="textMultiLine|textAutoCorrect|textCapSentences"
+            android:padding="@dimen/_10sdp"
             android:paddingVertical="@dimen/_2sdp"
             android:textColor="@color/navy_blue"
             android:textCursorDrawable="@drawable/edit_text_colored_cursor"
