@@ -1,12 +1,9 @@
 package com.app.easyday.screens.activities.main.more.notepad
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.app.easyday.app.sources.remote.apis.EasyDayApi
 import com.app.easyday.app.sources.remote.model.DeletelogoutResponse
-import com.app.easyday.app.sources.remote.model.FeedbackResponse
 import com.app.easyday.app.sources.remote.model.NoteResponse
-import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.base.BaseViewModel
 import com.app.easyday.utils.DeviceUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,9 +35,9 @@ class NoteViewModel @Inject constructor(val api: EasyDayApi): BaseViewModel() {
     }
 
 
-    fun deleteNote() {
+    fun deleteNote(note_id: Int) {
 
-        api.deleteNote()
+        api.deleteNote(note_id)
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({ resp ->
                 if (resp.success) {

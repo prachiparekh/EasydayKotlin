@@ -78,10 +78,11 @@
         app:layout_constraintTop_toTopOf="@id/close" />
 
     <ScrollView
+        android:id="@+id/listSV"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@id/bottomSV"
+        app:layout_constraintBottom_toTopOf="@id/noPhotoLL"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/close">
 
@@ -95,6 +96,39 @@
             tools:listitem="@layout/item_task_filter" />
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/noPhotoLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/bottomSV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/listSV">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.4"
+            android:fontFamily="@font/inter_medium_500"
+            android:gravity="center_horizontal"
+            android:text="@string/no_photo"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:alpha="0.4"
+            android:fontFamily="@font/inter_medium_500"
+            android:gravity="center_horizontal"
+            android:text="@string/add_photo"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8sdp" />
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/bottomSV"

@@ -99,7 +99,7 @@
                     android:layout_below="@id/discussion_countRL"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:orientation="vertical"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_comment" />
 

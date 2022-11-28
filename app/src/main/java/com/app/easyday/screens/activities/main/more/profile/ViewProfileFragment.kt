@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
@@ -20,6 +21,7 @@ import com.app.easyday.R
 import com.app.easyday.app.sources.aws.AWSKeys
 import com.app.easyday.app.sources.aws.S3Uploader
 import com.app.easyday.app.sources.aws.S3Utils
+import com.app.easyday.app.sources.remote.model.CreateUserModelToPass
 import com.app.easyday.app.sources.remote.model.UserModel
 import com.app.easyday.screens.activities.auth.ProfileViewModel
 import com.app.easyday.screens.activities.main.home.HomeViewModel.Companion.userModel
@@ -42,11 +44,7 @@ import com.theartofdev.edmodo.cropper.CropImageActivity
 import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_view_profile.*
-import kotlinx.android.synthetic.main.fragment_view_profile.avatar
-import kotlinx.android.synthetic.main.fragment_view_profile.camera
-import kotlinx.android.synthetic.main.fragment_view_profile.title1
 import java.io.File
 
 
@@ -73,6 +71,13 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
             editProfile.isVisible = true
             blankRL.isVisible = true
         }
+
+        val displayMetrics = DisplayMetrics()
+        requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
+        var width = displayMetrics.widthPixels
+        var height = displayMetrics.heightPixels
+
+        rel.layoutParams.height = height - 220
 
         ctaTV.setOnClickListener {
             if (fullName.text.isNullOrEmpty()) {
@@ -101,14 +106,21 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
                 }
 
             } else {
+//                viewModel.updateUser(
+//                    fullName.text.toString(),
+//                    profession.text.toString(), null
+//                )
                 viewModel.updateUser(
-                    fullName.text.toString(),
-                    profession.text.toString(), null
+                    CreateUserModelToPass(
+                        fullName.text.toString(),
+                        profession.text.toString(), null
+                    )
                 )
 
 
             }
             ctaTV.isVisible = false
+            saveRL.isVisible = false
             isEditMode = false
             fullName.isEnabled = false
             profession.isEnabled = false
@@ -136,6 +148,7 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
                     fullName.isEnabled = false
                     profession.isEnabled = false
                     ctaTV.isVisible = false
+                    saveRL.isVisible = false
                     option.isVisible = true
                     title1.text = requireContext().resources.getString(R.string.my_profile)
                     true
@@ -216,6 +229,7 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
 
         back.setOnClickListener {
             Navigation.findNavController(requireView()).popBackStack()
+//            DeviceUtils.hideKeyboard(requireContext())
         }
 
 
@@ -239,10 +253,16 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
                     if (!TextUtils.isEmpty(urlFromS3)) {
 
                         urlFromS3?.let {
+//                            viewModel.updateUser(
+//                                fullName.text.toString(),
+//                                profession.text.toString(),
+//                                it
+//                            )
                             viewModel.updateUser(
-                                fullName.text.toString(),
-                                profession.text.toString(),
-                                it
+                                CreateUserModelToPass(
+                                    fullName.text.toString(),
+                                    profession.text.toString(), it
+                                )
                             )
                         }
 
@@ -264,6 +284,7 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
         fullName.isEnabled = true
         profession.isEnabled = true
         ctaTV.isVisible = true
+        saveRL.isVisible = true
         option.isVisible = false
         title1.text = requireContext().resources.getString(R.string.edit_profile)
 
@@ -304,9 +325,11 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
     fun checkData() {
         if (!fullName.text.isNullOrEmpty() && !profession.text.isNullOrEmpty()) {
             ctaTV.isEnabled = true
+            saveRL.isEnabled = true
             ctaTV.alpha = 1F
         } else {
             ctaTV.isEnabled = false
+            saveRL.isEnabled = false
             ctaTV.alpha = 0.5F
         }
     }
@@ -428,6 +451,7 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
 
         if (!isEditMode) {
             ctaTV.isVisible = true
+            saveRL.isVisible = true
             isEditMode = true
             fullName.isEnabled = true
             profession.isEnabled = true

@@ -43,6 +43,7 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
         layoutManager = LinearLayoutManager(context)
         activityRV.layoutManager = layoutManager
 
+
     }
 
     override fun setObservers() {

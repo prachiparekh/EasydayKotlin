@@ -1,6 +1,5 @@
 package com.app.easyday.screens.activities.main.dashboard
 
-import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -20,9 +19,9 @@ class DashboardFragment : BaseFragment<DashboardViewModel>() {
 
     override fun getContentView() = R.layout.fragment_dashboard
 
-    companion object {
+//    companion object {
         var selectedTabID = R.id.home
-    }
+//    }
 
     override fun initUi() {
 

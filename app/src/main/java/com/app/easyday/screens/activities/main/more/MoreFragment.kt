@@ -10,7 +10,6 @@ import com.app.easyday.app.sources.local.interfaces.DeleteLogoutProfileInterface
 import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.databinding.FragmentMoreBinding
 import com.app.easyday.screens.activities.auth.AuthActivity
-import com.app.easyday.screens.activities.main.dashboard.DashboardFragment.Companion.selectedTabID
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
 import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.activities.main.home.HomeViewModel.Companion.userModel
@@ -77,7 +76,7 @@ class MoreFragment : BaseFragment<MoreViewModel>(), OnClickListener, DeleteLogou
 
     override fun setObservers() {
         viewModel.userData.observe(viewLifecycleOwner) { userModel ->
-            selectedTabID = R.id.home
+//            selectedTabID = R.id.home
             AppPreferencesDelegates.get().token = null.toString()
             AppPreferencesDelegates.get().activeProject = 0
             HomeFragment.selectedProjectID = null
