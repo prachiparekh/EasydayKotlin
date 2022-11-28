@@ -1,3 +1,3 @@
-package com.app.easyday.screens.activities.main.more.activityLog
+package com.app.easyday.app.sources.local.model
 
 open class ListItem(var sectionName: String?, var isItemVisible: Boolean?)

@@ -1,4 +1,4 @@
-package com.app.easyday.screens.activities.main.more.activityLog
+package com.app.easyday.app.sources.local.model
 
 data class ListSection(
     val title: String,

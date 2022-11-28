@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -57,8 +58,6 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     private var imgAdapter: BottomImageAdapter? = null
     var selectedUriList = ArrayList<Media>()
     var mediaAdapter: MediaAdapter? = null
-    var isSelected: Boolean = false
-
 
     var tagBSFDialog: AddTagBottomSheetDialog? = null
     var spaceZoneBSFDialog: AddSpaceZoneBottomSheetDialog? = null
@@ -72,7 +71,6 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     private var selectedSpace: Int? = null
     private var selectedPriority: Int? = null
     var redFlag = 0 // False
-    var priorityClick = 0 // False
     var selectedDate: String? = null
 
 //    *****************
@@ -160,7 +158,6 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                 requireContext(),
                 filterTypeList,
                 priorityList,
-                isSelected,
                 drawableList,
                 this
             )
@@ -247,7 +244,10 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog.setCancelable(false)
                 dialog.setContentView(R.layout.delete_dialog_layout)
-                dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                dialog.window?.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
                 dialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
 
                 dialog.show()
@@ -450,10 +450,15 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
 
 
     override fun onFilterFlagClick(redFlag: Boolean) {
-        if (redFlag)
+        if (redFlag) {
             this.redFlag = 1
-        else
+            drawableList[2] = requireContext().resources.getDrawable(R.drawable.ic_flaged)
+        } else {
             this.redFlag = 0
+            drawableList[2] = requireContext().resources.getDrawable(R.drawable.ic_flag)
+        }
+        Log.e("flag_click", drawableList.toString())
+        taskAdapter?.flagChanged()
 
     }
 
@@ -483,16 +488,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
         when (type) {
             0 -> {
                 this.selectedTagList = selectedAttrList
-
             }
-//            1 -> {
-//                this.selectedZoneList = selectedAttrList
-//
-//            }
-//            2 -> {
-//                this.selectedSpace = selectedAttrList
-//
-//            }
         }
     }
 

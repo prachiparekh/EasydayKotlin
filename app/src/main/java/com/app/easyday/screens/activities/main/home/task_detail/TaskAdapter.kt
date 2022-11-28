@@ -66,12 +66,13 @@ class TaskAdapter(
 
             val item = taskList[position]
             taskTitle.text = item.title
+            mDescription.text = item.title
 
             val odt = OffsetDateTime.parse(item.createdAt)
             val dtf = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
 
             mDate.text = dtf.format(odt)
-            mDescription.text = item.description
+//            mDescription.text = item.description
 
             if (item.redFlag == true) {
                 flag.setImageDrawable(context.resources.getDrawable(R.drawable.ic_flaged))

@@ -21,7 +21,6 @@ class TaskFilterAdapter(
     private val context: Context,
     private var filterList: ArrayList<String>,
     private var priorityList: ArrayList<String>,
-    isSelected: Boolean,
     private var drawableList: ArrayList<Drawable>,
     val filterTypeInterface: FilterTypeInterface
 ) : RecyclerView.Adapter<TaskFilterAdapter.ViewHolder>() {
@@ -70,6 +69,15 @@ class TaskFilterAdapter(
                     2 -> {
 //                        RedFlag
 //                        No code place here bcz notify sends another onFilterFlagClick listener below
+
+                        if (!flag) {
+                            flag = true
+                            filterName.setTextColor(context.resources.getColor(R.color.white))
+                        } else {
+                            flag = false
+                            filterName.setTextColor(context.resources.getColor(R.color.light_white))
+                        }
+                        filterTypeInterface.onFilterFlagClick(flag)
                     }
                     else -> {
                         filterTypeInterface.onFilterTypeClick(position)
@@ -83,27 +91,25 @@ class TaskFilterAdapter(
                     0 -> {
                         priorityChanges(position)
                     }
-                    1, 3, 4, 5 -> {
+                    1, 2, 3, 4, 5 -> {
                         elseChanges(position)
-                    }
-                    2 -> {
-                        flagChanges(position)
                     }
                 }
                 textChanges(position)
             } else {
-                onClose()
+                onClose(position)
             }
 
             close.setOnClickListener {
-                onClose()
+                onClose(position)
             }
         }
 
-        private fun onClose() {
+        private fun onClose(currentPosition: Int) {
             close.isVisible = false
             filterName.setTextColor(context.resources.getColor(R.color.light_white))
-            setTextViewDrawableColor(filterName, R.color.light_white)
+            if (filterList[currentPosition] != context.resources.getString(R.string.f_red_flag))
+                setTextViewDrawableColor(filterName, R.color.light_white)
             if (position == 0)
                 childRV.adapter = null
         }
@@ -129,19 +135,6 @@ class TaskFilterAdapter(
             }
         }
 
-        private fun flagChanges(currentPosition: Int) {
-            if (currentPosition == selectedPosition) {
-
-                childRV.adapter = null
-                close.isVisible = false
-            } else {
-                childRV.adapter = null
-                close.isVisible = false
-                filterName.setTextColor(context.resources.getColor(R.color.light_white))
-                setTextViewDrawableColor(filterName, R.color.light_white)
-            }
-        }
-
         private fun textChanges(currentPosition: Int) {
             if (filterList[currentPosition] != context.resources.getString(R.string.f_red_flag)) {
                 if (currentPosition == selectedPosition) {
@@ -150,18 +143,6 @@ class TaskFilterAdapter(
                 } else {
                     filterName.setTextColor(context.resources.getColor(R.color.light_white))
                     setTextViewDrawableColor(filterName, R.color.light_white)
-                }
-            } else {
-                if (!flag && filterList[selectedPosition] == context.resources.getString(R.string.f_red_flag)) {
-                    flag = true
-                    filterName.setTextColor(context.resources.getColor(R.color.white))
-                    setTextViewDrawableColor(filterName, R.color.red)
-                    filterTypeInterface.onFilterFlagClick(flag)
-                } else {
-                    flag = false
-                    filterName.setTextColor(context.resources.getColor(R.color.light_white))
-                    setTextViewDrawableColor(filterName, R.color.light_white)
-                    filterTypeInterface.onFilterFlagClick(flag)
                 }
             }
         }
@@ -191,10 +172,14 @@ class TaskFilterAdapter(
     }
 
     fun priorityChanged() {
-//        childRV.adapter = null
+
         selectedPosition = -1
         notifyItemChanged(0)
+    }
 
+    fun flagChanged() {
+//        drawableList[2] = context.resources.getDrawable(mDrawable)
+        notifyItemChanged(2)
     }
 
 }

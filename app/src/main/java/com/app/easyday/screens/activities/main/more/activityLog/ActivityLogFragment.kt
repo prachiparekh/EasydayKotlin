@@ -1,15 +1,23 @@
 package com.app.easyday.screens.activities.main.more.activityLog
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.app.easyday.R
+import com.app.easyday.app.sources.local.model.ListItem
+import com.app.easyday.app.sources.local.model.ListSection
 import com.app.easyday.app.sources.remote.model.UserActivityResponse
 import com.app.easyday.screens.activities.main.home.HomeFragment.Companion.selectedProjectID
 import com.app.easyday.screens.base.BaseFragment
+import com.app.easyday.utils.DateTimeUtils
+import com.app.easyday.utils.DateTimeUtils.getNowSeconds
+import com.app.easyday.utils.DateTimeUtils.getTitleDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_activity_log.*
-import java.util.*
+import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
@@ -18,8 +26,8 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
     var layoutManager: LinearLayoutManager? = null
     private var adapter: ActivityLogAdapter? = null
 
-    private val listItems = java.util.ArrayList<ListItem>()
-    private val invisibleListItems = java.util.ArrayList<ListItem>()
+    private val listItems = ArrayList<ListItem>()
+    private val invisibleListItems = ArrayList<ListItem>()
     private val dateItems = ArrayList<String>()
 
     override fun getContentView() = R.layout.fragment_activity_log
@@ -33,7 +41,7 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
         selectedProjectID?.let { viewModel.getUserActivityDetails(it) }
 
         layoutManager = LinearLayoutManager(context)
-        Act_log_Recy.layoutManager = layoutManager
+        activityRV.layoutManager = layoutManager
 
     }
 
@@ -45,58 +53,46 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
                 userActivityList = userActivityResp
             }
             if (userActivityResp.isNullOrEmpty()) {
-                Act_log_Recy.visibility = View.GONE
+                activityRV.visibility = View.GONE
             } else {
-                Act_log_Recy.visibility = View.VISIBLE
+                activityRV.visibility = View.VISIBLE
 
 
                 adapter = ActivityLogAdapter(
-                    requireContext(), userActivityList
+                    requireContext(), arrayListOf()
                 )
-                Act_log_Recy.adapter = adapter
-
-                Collections.reverse(userActivityList)
-
-//                sortList(userActivityList)
-
+                activityRV.adapter = adapter
+                sortList(userActivityList)
             }
-
-
         }
     }
 
 
-    /*@SuppressLint("SimpleDateFormat", "NewApi")
-    private fun sortList(userActivityList: ArrayList<UserActivityResponse>) {
-
-        val listDate : UserActivityResponse? = null
-        val odt = OffsetDateTime.parse(listDate?.createdAt)
-        val dtf = DateTimeFormatter.ofPattern("MMM dd,yyyy", Locale.ENGLISH)
-        val dtf1 = DateTimeFormatter.ofPattern("HH:MMa", Locale.ENGLISH)
-
-        val date: Date? = dtf.format(odt)
-
-        userActivityList.sortWith { o1, o2 ->
-            if (date != null && date != null) {
-                val date1 = DateTimeUtils.addStringTimeToDate(date)
-                val date2 = DateTimeUtils.addStringTimeToDate(date)
-                date1.compareTo(date2)
+    @SuppressLint("SimpleDateFormat")
+    private fun sortList(reminderList: ArrayList<UserActivityResponse>) {
+        reminderList.sortWith { o1, o2 ->
+            val date1 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(o1.createdAt)
+            val date2 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(o2.createdAt)
+            if (o1.createdAt != null && o2.createdAt != null) {
+                val dateStr1 = DateTimeUtils.addStringTimeToDate(date1)
+                val dateStr2 = DateTimeUtils.addStringTimeToDate(date2)
+                dateStr1.compareTo(dateStr2)
             } else {
-                date!!.compareTo(date)
+                date1.compareTo(date2)
             }
 
         }
         if (adapter != null) {
-//            adapter?.clearAll()
+            adapter?.clearAll()
             listItems.clear()
             invisibleListItems.clear()
             var prevCode = ""
             val now = getNowSeconds()
             val today = getTitleDate(now, requireContext(), true)
             var reachedCurrentMonth = false
-            userActivityList.forEach {
+            reminderList.forEach {
                 if (it.createdAt != null) {
-                    val date = it.createdAt
+                    val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(it.createdAt)
                     val code = getTitleDate(date.time, requireContext(), false)
                     if (code != prevCode) {
                         val titleItem = getTitleDate(date.time, requireContext(), false)
@@ -120,23 +116,22 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
                     }
                 }
             }
-//            adapter?.setItems(listItems, allFilterList, invisibleListItems)
-//            snapToCurrentReminder()
+            adapter?.setItems(listItems, invisibleListItems)
+            snapToCurrentActivity()
         }
-    }*/
-    /*private fun snapToCurrentReminder() {
+    }
+
+    private fun snapToCurrentActivity() {
         val smoothScroller: RecyclerView.SmoothScroller = object : LinearSmoothScroller(context) {
             override fun getVerticalSnapPreference(): Int {
                 return SNAP_TO_START
             }
         }
         smoothScroller.targetPosition = getPositionOfTheClosestTimePeriod()
-        Act_log_Recy.layoutManager?.startSmoothScroll(smoothScroller)
+        activityRV.layoutManager?.startSmoothScroll(smoothScroller)
     }
 
-
     private fun getPositionOfTheClosestTimePeriod(): Int {
-
         var position = 0
         listItems.forEachIndexed { index, listItem ->
             if (listItem is ListSection && listItem.title == "This Month") {
@@ -145,6 +140,6 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
             }
         }
         return position
-    }*/
+    }
 
 }
