@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.core.text.toHtml
 import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.screens.base.BaseFragment
@@ -24,19 +23,21 @@ import java.util.*
 @AndroidEntryPoint
 class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
 
-    val mHashmap: HashMap<String, String>? = null
 
     companion object {
         var selectedFilter: String? = null
         var numberIndex = 0
-        var underlineIndex = 0
+        var underlineStartIndex = 0
+
+        //        var mHashmap: HashMap<String, String> = HashMap<String, String>()
+        var mUnderlineHashMap: HashMap<Int, Int> =
+            HashMap<Int, Int>()       //underlineStartIndex -> underlineEndIndex
     }
 
     var mEditText: CustomEditText? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val month = Calendar.getInstance().get(Calendar.MONTH)
         val date = Calendar.getInstance().get(Calendar.DATE)
@@ -113,6 +114,7 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
             toolbar_bullet.isSelected = !toolbar_bullet.isSelected
             if (toolbar_bullet.isSelected) {
                 selectedFilter = "BULLET"
+//                selectedFilter?.let { mHashmap.put(it, "") }
                 toolbar_fontsizeH1.isSelected = false
                 toolbar_fontsizeH2.isSelected = false
                 toolbar_inc_indent.isSelected = false
@@ -124,12 +126,14 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
         toolbar_number.setOnClickListener {
             if (selectedFilter == "UNDERLINE") {
 
-                Log.e("toolbar_number", mEditText?.text.toString())
+                mEditText?.length()?.let { it1 -> mUnderlineHashMap[underlineStartIndex] = it1 }
+                Log.e("mUnderlineHashMap", mUnderlineHashMap.toString())
             }
             toolbar_number.isSelected = !toolbar_number.isSelected
             if (toolbar_number.isSelected) {
                 selectedFilter = "NUMBER"
                 numberIndex = 0
+//                selectedFilter?.let { mHashmap.put(it, "") }
                 toolbar_fontsizeH1.isSelected = false
                 toolbar_fontsizeH2.isSelected = false
                 toolbar_inc_indent.isSelected = false
@@ -142,9 +146,9 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
             toolbar_underline.isSelected = !toolbar_underline.isSelected
             if (toolbar_underline.isSelected) {
                 selectedFilter = "UNDERLINE"
-
-                Log.e("toolbar_underline", mEditText?.text?.toHtml().toString())
-                underlineIndex = mEditText?.length() ?: 0
+                underlineStartIndex = mEditText?.length() ?: 0
+                mUnderlineHashMap[underlineStartIndex] = underlineStartIndex
+                Log.e("mUnderlineHashMap", mUnderlineHashMap.toString())
                 toolbar_fontsizeH1.isSelected = false
                 toolbar_fontsizeH2.isSelected = false
                 toolbar_inc_indent.isSelected = false
@@ -163,11 +167,14 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if (selectedFilter == "UNDERLINE")
-                    p0?.setSpan(
-                        UnderlineSpan(), underlineIndex, p0.length - 1,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
+                for (key in mUnderlineHashMap.keys) {
+                    mUnderlineHashMap[key]?.let {
+                        p0?.setSpan(
+                            UnderlineSpan(), key, it,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+                }
             }
         })
     }

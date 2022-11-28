@@ -1,9 +1,7 @@
 package com.app.easyday.views
 
 import android.content.Context
-import android.text.Html
 import android.util.AttributeSet
-import android.util.Log
 import com.app.easyday.screens.activities.main.more.notepad.CreateNoteFragment.Companion.numberIndex
 import com.app.easyday.screens.activities.main.more.notepad.CreateNoteFragment.Companion.selectedFilter
 
@@ -44,13 +42,14 @@ class CustomEditText(context: Context, attrs: AttributeSet?) :
                         getText()?.length?.let { setSelection(it) }
                     }
                 }
-
+//                mHashmap["BULLET"] = resultText.toString()
+//                Log.e("mHashmap", mHashmap.toString())
             }
             "NUMBER" -> {
                 if (lengthAfter > lengthBefore) {
                     if (resultText.toString().length == 1) {
                         numberIndex++
-                        resultText = "$numberIndex $resultText"
+                        resultText = "$numberIndex) $resultText"
                         setText(resultText)
                         getText()?.length?.let { setSelection(it) }
                     }
@@ -59,19 +58,20 @@ class CustomEditText(context: Context, attrs: AttributeSet?) :
                     ) {
                         numberIndex++
                         resultText = resultText.toString()
-                            .replaceAfterLast("\n", "$numberIndex ")
+                            .replaceAfterLast("\n", "$numberIndex) ")
                         resultText = resultText.toString()
                             .replace("$numberIndex ${numberIndex - 1}", "$numberIndex ")
                         setText(resultText)
                         getText()?.length?.let { setSelection(it) }
                     }
+
+//                    mHashmap["NUMBER"] = resultText.toString()
+//                    Log.e("mHashmap", mHashmap.toString())
                 }
+
             }
             "UNDERLINE" -> {
 
-
-                Log.e("resultText", "${Html.fromHtml(resultText.toString())}")
-                Log.e("lengthbefore: $lengthBefore", "lengthAfter: $lengthAfter")
             }
         }
 
