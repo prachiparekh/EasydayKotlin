@@ -38,9 +38,9 @@ class NoteViewModel @Inject constructor(val api: EasyDayApi): BaseViewModel() {
     }
 
 
-    fun deleteNote() {
+    fun deleteNote(note_id : Int) {
 
-        api.deleteNote()
+        api.deleteNote(note_id)
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({ resp ->
                 if (resp.success) {

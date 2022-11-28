@@ -27,14 +27,6 @@ interface EasyDayApi {
         @Field("device_name") device_name: String
     ): Observable<ApiResponse<VerifyOTPRespModel>>
 
-    @Multipart
-    @POST("user/create-user")
-    fun createUser(
-        @Part("fullname") fullname: String,
-        @Part("profession") profession: String,
-        @Part("profile_image") profile_image: String?
-    ): Observable<ApiResponse<UserModel>>
-
     @GET("user/get-profile")
     fun getProfile(): Observable<ApiResponse<UserModel>>
 
@@ -150,12 +142,21 @@ interface EasyDayApi {
     @DELETE("user/delete-user")
     fun deleteUser(): Observable<ApiResponse<DeletelogoutResponse>>
 
-    @FormUrlEncoded
+    @POST("user/create-user")
+    fun createUser(
+//        @Field("fullname") fullname: String,
+//        @Field("profession") profession: String,
+//        @Field("profile_image") profile_image: String?
+        @Body createUserRequestModel: CreateUserModelToPass
+    ): Observable<ApiResponse<UserModel>>
+
+
     @PATCH("user/update-user")
     fun updateUser(
-        @Field("fullname") fullname: String,
-        @Field("profession") profession: String,
-        @Field("profile_image") profile_image: String?
+//        @Field("fullname") fullname: String,
+//        @Field("profession") profession: String,
+//        @Field("profile_image") profile_image: String?
+        @Body createUserRequestModel: CreateUserModelToPass
     ): Observable<ApiResponse<UserModel>>
 
     @GET("user/get-notes")
@@ -164,7 +165,14 @@ interface EasyDayApi {
     ): Observable<ApiResponse<ArrayList<NoteResponse>>>
 
     @DELETE("user/delete-note")
-    fun deleteNote(): Observable<ApiResponse<DeletelogoutResponse>>
+    fun deleteNote(
+        @Query("note_id") note_id: Int
+    ): Observable<ApiResponse<DeletelogoutResponse>>
+
+    @GET("user/get-user-notification")
+    fun getUserNotification(
+        @Query("project_id") project_id: Int
+    ): Observable<ApiResponse<ArrayList<UserNotificationResponse>>>
 
 }
 

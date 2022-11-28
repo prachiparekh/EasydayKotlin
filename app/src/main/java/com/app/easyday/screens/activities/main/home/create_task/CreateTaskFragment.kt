@@ -83,9 +83,11 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
         if (selectedUriList.isEmpty()) {
             textT.isVisible = false
             edit.isVisible = false
+            noPhotoLL.isVisible = true
         } else {
             textT.isVisible = true
             edit.isVisible = true
+            noPhotoLL.isVisible = false
         }
         delete.isVisible = selectedUriList.isNotEmpty()
     }

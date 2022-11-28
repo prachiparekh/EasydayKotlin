@@ -20,9 +20,9 @@ class DashboardFragment : BaseFragment<DashboardViewModel>() {
 
     override fun getContentView() = R.layout.fragment_dashboard
 
-    companion object {
+//    companion object {
         var selectedTabID = R.id.home
-    }
+//    }
 
     override fun initUi() {
 

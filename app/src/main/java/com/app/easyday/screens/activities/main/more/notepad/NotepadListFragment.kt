@@ -9,8 +9,8 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import com.app.easyday.R
-import com.app.easyday.app.sources.local.interfaces.DeleteLogoutProfileInterface
-import com.app.easyday.databinding.FragmentNotepadListBinding
+import com.app.easyday.app.sources.local.interfaces.NoteInterface
+import com.app.easyday.app.sources.remote.model.NoteResponse
 import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.utils.DeviceUtils
@@ -18,9 +18,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_notepad_list.*
 
 @AndroidEntryPoint
-class NotepadListFragment : BaseFragment<NoteViewModel>(), DeleteLogoutProfileInterface{
+class NotepadListFragment : BaseFragment<NoteViewModel>(), NoteInterface {
     val adapter: NotepadListAdapter? = null
-var binding: FragmentNotepadListBinding?=null
+    var noteList: ArrayList<NoteResponse>? = null
 
     override fun getContentView() = R.layout.fragment_notepad_list
 
@@ -39,34 +39,38 @@ var binding: FragmentNotepadListBinding?=null
     override fun setObservers() {
         viewModel.notepadData.observe(viewLifecycleOwner) { response ->
 
-
-                if (response.isNullOrEmpty()) {
-                    emptyState.isVisible = true
-                    notelist.isVisible = false
-                } else {
-                    emptyState.isVisible = false
-                    notelist.isVisible = true
-                    notesRV.adapter = NotepadListAdapter(requireContext(), response, this)
-                }
-                DeviceUtils.dismissProgress()
+            if (response.isNullOrEmpty()) {
+                emptyState.isVisible = true
+                notelist.isVisible = false
+            } else {
+                noteList = response
+                emptyState.isVisible = false
+                notelist.isVisible = true
+                notesRV.adapter = NotepadListAdapter(requireContext(), response, this)
+            }
+            DeviceUtils.dismissProgress()
 
         }
 
-        viewModel.noteData.observe(viewLifecycleOwner){ it ->
+        viewModel.noteData.observe(viewLifecycleOwner) {
 
-            if(it?.success == true){
-                adapter?.deleteNoteItem()
-            }
         }
     }
 
-    override fun OnDeleteClick() {
 
+    override fun OnConvertClick() {
+
+    }
+
+    override fun OnDeleteNoteClick(position: Int) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.delete_dialog_layout)
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.window?.setGravity(Gravity.CENTER)
 
@@ -74,10 +78,11 @@ var binding: FragmentNotepadListBinding?=null
         val cancel = dialog.findViewById<TextView>(R.id.cancel_dismis_Tv)
         val confirmation = dialog.findViewById<TextView>(R.id.sure_Tv)
 
-        confirmation.text =  requireContext().resources.getString(R.string.delete_note)
+        confirmation.text = requireContext().resources.getString(R.string.delete_note)
 
         delete.setOnClickListener {
-            viewModel.deleteNote()
+
+            noteList?.get(position)?.let { it1 -> it1.id?.let { it2 -> viewModel.deleteNote(it2) } }
             dialog.dismiss()
         }
         cancel.setOnClickListener {
@@ -85,12 +90,10 @@ var binding: FragmentNotepadListBinding?=null
         }
 
         dialog.show()
-
     }
 
+    override fun OnShareClick() {
 
-    override fun OnLogoutClick() {
-        
     }
 
 }

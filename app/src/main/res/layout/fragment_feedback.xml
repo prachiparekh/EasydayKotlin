@@ -46,21 +46,21 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topfeedbackCL"
         app:layout_constraintBottom_toBottomOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:paddingVertical="@dimen/_10sdp">
+            android:id="@+id/parent_const"
+            android:layout_width="match_parent"
+            android:isScrollContainer="true"
+            android:layout_height="0dp">
 
             <RelativeLayout
+                android:id="@+id/parent_rel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -102,8 +102,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_6sdp"
                             android:background="@color/white"
-                            android:theme="@style/RatingBar"
                             android:paddingVertical="@dimen/_2sdp"
+                            android:theme="@style/RatingBar"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </LinearLayout>
@@ -154,127 +154,6 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 tools:listitem="@layout/feedback_tag_items" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
-
-                                <RelativeLayout
-                                    android:id="@+id/cs_Tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/_3sdp"
-                                    android:background="@drawable/selectable_bg"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="@dimen/_4sdp"
-                                        android:fontFamily="@font/mulish_700"
-                                        android:paddingHorizontal="@dimen/_8sdp"
-                                        android:paddingVertical="@dimen/_5sdp"
-                                        android:text="@string/customer_support"
-                                        android:textColor="@color/black"
-                                        android:textSize="14sp" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/tr_Tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/_3sdp"
-                                    android:background="@drawable/selectable_bg"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="@dimen/_4sdp"
-                                        android:fontFamily="@font/mulish_700"
-                                        android:paddingHorizontal="@dimen/_8sdp"
-                                        android:paddingVertical="@dimen/_5sdp"
-                                        android:text="@string/transparency"
-                                        android:textColor="@color/black"
-                                        android:textSize="14sp" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/tslo_Tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/_3sdp"
-                                    android:background="@drawable/selectable_bg"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/mulish_700"
-                                        android:paddingHorizontal="@dimen/_8sdp"
-                                        android:paddingVertical="@dimen/_5sdp"
-                                        android:text="@string/slow"
-                                        android:textColor="@color/black"
-                                        android:textSize="14sp" />
-                                </RelativeLayout>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
-
-                                <RelativeLayout
-                                    android:id="@+id/se_Tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/_3sdp"
-                                    android:background="@drawable/selectable_bg"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="@dimen/_4sdp"
-                                        android:fontFamily="@font/mulish_700"
-                                        android:paddingHorizontal="@dimen/_8sdp"
-                                        android:paddingVertical="@dimen/_5sdp"
-                                        android:text="@string/speed"
-                                        android:textColor="@color/black"
-                                        android:textSize="14sp" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/ibg_Tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/_3sdp"
-                                    android:background="@drawable/selectable_bg"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="@dimen/_4sdp"
-                                        android:fontFamily="@font/mulish_700"
-                                        android:paddingHorizontal="@dimen/_8sdp"
-                                        android:paddingVertical="@dimen/_5sdp"
-                                        android:text="@string/bug_improve"
-                                        android:textColor="@color/black"
-                                        android:textSize="14sp" />
-                                </RelativeLayout>
-
-                            </LinearLayout>
-
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -300,7 +179,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_marginTop="@dimen/_10sdp"
                                     android:fontFamily="@font/dm_sans_400"
-                                    android:text="400/500"
+                                    android:text="0/500"
                                     android:textSize="@dimen/_10sdp" />
                             </RelativeLayout>
 
@@ -312,10 +191,10 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/l_gray"
                         android:layout_below="@+id/sug_Rl"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_20sdp"/>
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:background="@color/l_gray" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -348,58 +227,38 @@
                         android:textStyle="normal" />
                 </RelativeLayout>
 
-                <RelativeLayout
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/parent_rel"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/parent_rel"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+                <TextView
+                    android:id="@+id/submit_btnRL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/playstoreRL"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@color/white"
-                    android:layout_alignParentBottom="true">
-
-                    <RelativeLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginHorizontal="@dimen/_25sdp"
-                        android:layout_marginTop="@dimen/_25sdp"
-                        android:alpha="0.5"
-                        android:background="@drawable/green_curve_bg"
-                        android:enabled="false"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginVertical="@dimen/_7sdp"
-                            android:fontFamily="@font/dm_sans_700"
-                            android:text="Submit"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_14sdp"
-                            android:textStyle="bold" />
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/submit_btnRL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginHorizontal="@dimen/_20sdp"
-                        android:layout_marginBottom="@dimen/_25sdp"
-                        android:alpha="1"
-                        android:background="@drawable/green_curve_bg"
-                        android:enabled="false"
-                        android:fontFamily="@font/dm_sans_700"
-                        android:gravity="center_horizontal"
-                        android:paddingVertical="@dimen/_10sdp"
-                        android:text="Submit"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_14sdp" />
-
-                </RelativeLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:alpha="1"
+                    android:background="@drawable/green_curve_bg"
+                    android:enabled="true"
+                    android:fontFamily="@font/dm_sans_700"
+                    android:gravity="center_horizontal"
+                    android:paddingVertical="@dimen/_8sdp"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp" />
 
             </RelativeLayout>
 

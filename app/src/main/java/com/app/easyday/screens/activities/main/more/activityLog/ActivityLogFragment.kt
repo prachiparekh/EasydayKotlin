@@ -35,6 +35,7 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
         layoutManager = LinearLayoutManager(context)
         Act_log_Recy.layoutManager = layoutManager
 
+
     }
 
     override fun setObservers() {
@@ -60,8 +61,6 @@ class ActivityLogFragment : BaseFragment<ActivityLogViewModel>() {
 //                sortList(userActivityList)
 
             }
-
-
         }
     }
 

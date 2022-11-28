@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.app.easyday.R
 import kotlinx.android.synthetic.main.activity_conversation.*
@@ -40,6 +41,15 @@ class ConversationActivity : AppCompatActivity() {
             }
 
         })
+
+        startIV.setOnClickListener {
+            no_message_container.visibility = View.GONE
+            conversation_container.visibility = View.VISIBLE
+        }
+
+        mic.setOnClickListener {
+            Toast.makeText(this, "mic", Toast.LENGTH_SHORT).show()
+        }
 
     }
 

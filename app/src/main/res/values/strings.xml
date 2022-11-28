@@ -262,4 +262,6 @@
     <string name="delete">Delete</string>
     <string name="list_note">Employee State</string>
     <string name="delete_note">Delete this note?</string>
+    <string name="no_photo">No photo</string>
+    <string name="add_photo">You can add by using below plus icon</string>
 </resources>

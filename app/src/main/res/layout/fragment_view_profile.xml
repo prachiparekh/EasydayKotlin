@@ -72,16 +72,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topCL" />
 
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/topCL">-->
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp">-->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:saveEnabled="false"
+        app:layout_constraintTop_toBottomOf="@+id/topCL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <RelativeLayout
+            android:id="@+id/rel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
 
             <RelativeLayout
                 android:id="@+id/profileRL"
@@ -90,7 +94,7 @@
                 android:paddingVertical="@dimen/_30sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/topCL">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/avatar"
@@ -127,7 +131,7 @@
                 android:hint="@string/full_name_c"
                 android:textColor="@color/dark_blue"
                 android:theme="@style/TextInputLayoutAppearance"
-                app:boxBackgroundColor="@color/bg_white"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="0dp"
                 app:boxCornerRadiusBottomStart="0dp"
                 app:boxCornerRadiusTopEnd="0dp"
@@ -135,7 +139,7 @@
                 app:boxStrokeWidth="0dp"
                 app:hintTextAppearance="@style/TextLabel"
                 app:hintTextColor="@color/gray"
-                app:layout_constraintTop_toBottomOf="@id/profileRL"
+                android:layout_below="@id/profileRL"
                 tools:ignore="RtlSymmetry">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -164,7 +168,7 @@
                 android:hint="@string/ur_profession"
                 android:textColor="@color/dark_blue"
                 android:theme="@style/TextInputLayoutAppearance"
-                app:boxBackgroundColor="@color/bg_white"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="0dp"
                 app:boxCornerRadiusBottomStart="0dp"
                 app:boxCornerRadiusTopEnd="0dp"
@@ -172,7 +176,7 @@
                 app:boxStrokeWidth="0dp"
                 app:hintTextAppearance="@style/TextLabel"
                 app:hintTextColor="@color/gray"
-                app:layout_constraintTop_toBottomOf="@id/nameLabel"
+                android:layout_below="@id/nameLabel"
                 tools:ignore="RtlSymmetry">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -190,25 +194,36 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/ctaTV"
+
+            <RelativeLayout
+                android:id="@+id/saveRL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_25sdp"
-                android:alpha="0.5"
-                android:background="@drawable/green_curve_bg"
-                android:enabled="false"
-                android:fontFamily="@font/dm_sans_700"
-                android:gravity="center_horizontal"
-                android:paddingVertical="@dimen/_10sdp"
-                android:text="@string/save_changes"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:background="@color/white"
+                android:layout_below="@+id/profLabel"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/ctaTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_25sdp"
+                    android:alpha="0.5"
+                    android:background="@drawable/green_curve_bg"
+                    android:enabled="false"
+                    android:fontFamily="@font/dm_sans_700"
+                    android:gravity="center_horizontal"
+                    android:layout_centerVertical="true"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:text="@string/save_changes"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="visible"
+                    />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/blankRL"
@@ -217,9 +232,11 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
-<!--    </ScrollView>-->
+
+
 
 
 

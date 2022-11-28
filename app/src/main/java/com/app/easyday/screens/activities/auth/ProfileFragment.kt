@@ -18,10 +18,14 @@ import com.app.easyday.R
 import com.app.easyday.app.sources.aws.AWSKeys
 import com.app.easyday.app.sources.aws.S3Uploader
 import com.app.easyday.app.sources.aws.S3Utils
+import com.app.easyday.app.sources.remote.model.AddProjectRequestModel
+import com.app.easyday.app.sources.remote.model.AddProjectRequestModelToPass
+import com.app.easyday.app.sources.remote.model.CreateUserModelToPass
 import com.app.easyday.screens.activities.main.MainActivity
 import com.app.easyday.screens.base.BaseActivity
 import com.app.easyday.screens.base.BaseActivity.Companion.profileLogoListener
 import com.app.easyday.screens.base.BaseFragment
+import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.FileUtil
 import com.app.easyday.utils.IntentUtil
 import com.app.easyday.utils.IntentUtil.Companion.cameraPermission
@@ -55,6 +59,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
     private var s3uploaderObj: S3Uploader? = null
     var mImageFile: File? = null
     private var urlFromS3: String? = null
+    var createuserModel: CreateUserModelToPass? = null
 
     override fun getStatusBarColor() = ContextCompat.getColor(requireContext(), R.color.bg_white)
 
@@ -77,6 +82,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
         }
 
         cta.setOnClickListener {
+
             if (isNewUser == true) {
                 if (fullNameTIE.text.isNullOrEmpty()) {
                     Toast.makeText(
@@ -103,10 +109,17 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                         )
                     }
                 } else {
-                    viewModel.createUser(
-                        fullNameTIE.text.toString(),
-                        professionTIE.text.toString(), null
-                    )
+
+//                    val modelToPass= CreateUserModelToPass(createuserModel?.fullname,
+//                        createuserModel?.profession,createuserModel?.profile_image)
+
+//                    viewModel.createUser(
+//                        fullNameTIE.text.toString(),
+//                        professionTIE.text.toString(), null
+//                    )
+//                    viewModel.createUser(modelToPass)
+                    viewModel.createUser(CreateUserModelToPass(fullNameTIE.text.toString(),
+                        professionTIE.text.toString(),null))
                 }
 
 
@@ -142,10 +155,12 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 
                         }
                     } else {
-                        viewModel.updateUser(
-                            fullNameTIE.text.toString(),
-                            professionTIE.text.toString(), null
-                        )
+//                        viewModel.updateUser(
+//                            fullNameTIE.text.toString(),
+//                            professionTIE.text.toString(), null)
+
+                        viewModel.updateUser(CreateUserModelToPass(fullNameTIE.text.toString(),
+                            professionTIE.text.toString(),null))
                     }
                 } else {
                     //update API
@@ -236,11 +251,13 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     if (!TextUtils.isEmpty(urlFromS3)) {
 
                         urlFromS3?.let {
-                            viewModel.createUser(
-                                fullNameTIE.text.toString(),
-                                professionTIE.text.toString(),
-                                it
-                            )
+//                            viewModel.createUser(
+//                                fullNameTIE.text.toString(),
+//                                professionTIE.text.toString(),
+//                                it
+//                            )
+                            viewModel.createUser(CreateUserModelToPass(fullNameTIE.text.toString(),
+                                professionTIE.text.toString(),it))
                         }
 
                     }
@@ -272,11 +289,13 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     if (!TextUtils.isEmpty(urlFromS3)) {
 
                         urlFromS3?.let {
-                            viewModel.updateUser(
-                                fullNameTIE.text.toString(),
-                                professionTIE.text.toString(),
-                                it
-                            )
+//                            viewModel.updateUser(
+//                                fullNameTIE.text.toString(),
+//                                professionTIE.text.toString(),
+//                                it)
+
+                            viewModel.updateUser(CreateUserModelToPass(fullNameTIE.text.toString(),
+                                professionTIE.text.toString(),it))
                         }
 
                     }

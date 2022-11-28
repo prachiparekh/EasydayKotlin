@@ -156,9 +156,6 @@ class ActivityLogAdapter(private var context: Context,
         fun bind(pos: Int) {
             val item = listItems[pos]
 
-//            title.setTypeface(null, Typeface.ITALIC)
-//            title.setTextColor(Color.GRAY)
-
             vLine.visibility = View.VISIBLE
             hLine.visibility = View.VISIBLE
             title.text = item.activityText + " " + item.project?.projectName
