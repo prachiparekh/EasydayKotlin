@@ -2,7 +2,6 @@ package com.app.easyday.screens.activities.main.more.activityLog
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +16,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ActivityLogAdapter(
@@ -27,7 +26,6 @@ class ActivityLogAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val DATAVIEW = 2
     private val MONTHHEADER = 1
-    private var invisibleItems: ArrayList<ListItem> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == DATAVIEW) {
@@ -44,7 +42,7 @@ class ActivityLogAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        Log.e("viewHolder.itemViewType:", viewHolder.itemViewType.toString())
+
         if (viewHolder.itemViewType == DATAVIEW) {
             val holder = viewHolder as ViewHolder
             holder.bind(position)
@@ -74,15 +72,21 @@ class ActivityLogAdapter(
             if (item.type == 1 || item.type == 5)
                 title.text = item.activityText + " " + item.task?.title
 
-            val odt = OffsetDateTime.parse(item.createdAt)
-            val dtf = DateTimeFormatter.ofPattern("MMM dd,yyyy", Locale.ENGLISH)
-            val dtf1 = DateTimeFormatter.ofPattern("HH:MMa", Locale.ENGLISH)
+            val oldFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            oldFormatter.timeZone = TimeZone.getTimeZone("UTC")
+            var value: Date? = null
+            var dueDateAsNormal = ""
+            try {
+                value = oldFormatter.parse(item.createdAt)
+                val newFormatter = SimpleDateFormat("MMM dd,yyyy • hh:mma")
+                newFormatter.timeZone = TimeZone.getDefault()
+                dueDateAsNormal = newFormatter.format(value)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
 
-            time.text = context.resources.getString(
-                R.string.activity_time,
-                dtf.format(odt),
-                dtf1.format(odt)
-            )
+
+            time.text = dueDateAsNormal
 
             val options = RequestOptions()
             Glide.with(context)
@@ -110,12 +114,9 @@ class ActivityLogAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun setItems(
-        reminders: List<ListItem>?,
-        invisibleListItems: List<ListItem>?
+        reminders: List<ListItem>?
     ) {
-        this.invisibleItems = ArrayList(invisibleListItems ?: listOf())
         this.listItems = ArrayList(reminders ?: listOf())
-        Log.e("ListItems:", listItems.toString())
         notifyDataSetChanged()
     }
 

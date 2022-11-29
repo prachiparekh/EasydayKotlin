@@ -5,7 +5,7 @@ data class ListSection(
     val code: String,
     val isToday: Boolean,
     val isPastSection: Boolean
-) : ListItem(null, null) {
+) : ListItem(null) {
     override fun toString(): String {
         return "ListSection(title='$title', code='$code', isToday=$isToday, isPastSection=$isPastSection)"
     }

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -459,7 +458,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
             this.redFlag = 0
             drawableList[2] = requireContext().resources.getDrawable(R.drawable.ic_flag)
         }
-        Log.e("flag_click", drawableList.toString())
+
         taskAdapter?.flagChanged()
 
     }
