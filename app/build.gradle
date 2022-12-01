@@ -172,6 +172,11 @@ dependencies {
     implementation 'com.amazonaws:aws-android-sdk-cognito:2.18.0'
     implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.18.0'
 
+//    Edittext editor -> Notepad
+    implementation 'com.yydcdut:markdown-processor:0.1.3'
+    implementation 'com.yydcdut:rxmarkdown-wrapper:0.1.3'
+
+
 }
 
 

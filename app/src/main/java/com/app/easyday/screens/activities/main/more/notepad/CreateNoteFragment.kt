@@ -39,6 +39,7 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val month = Calendar.getInstance().get(Calendar.MONTH)
         val date = Calendar.getInstance().get(Calendar.DATE)
         val year = Calendar.getInstance().get(Calendar.YEAR)
@@ -124,16 +125,11 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
         }
 
         toolbar_number.setOnClickListener {
-            if (selectedFilter == "UNDERLINE") {
 
-                mEditText?.length()?.let { it1 -> mUnderlineHashMap[underlineStartIndex] = it1 }
-                Log.e("mUnderlineHashMap", mUnderlineHashMap.toString())
-            }
             toolbar_number.isSelected = !toolbar_number.isSelected
             if (toolbar_number.isSelected) {
                 selectedFilter = "NUMBER"
                 numberIndex = 0
-//                selectedFilter?.let { mHashmap.put(it, "") }
                 toolbar_fontsizeH1.isSelected = false
                 toolbar_fontsizeH2.isSelected = false
                 toolbar_inc_indent.isSelected = false
@@ -162,19 +158,39 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
 
             }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            override fun onTextChanged(s: CharSequence?, start: Int, count: Int, before: Int) {
+                if (start < (s?.length?.minus(1) ?: 0) || count > before) {
+                    if (selectedFilter == "UNDERLINE") {
+                        mUnderlineHashMap[underlineStartIndex] = mEditText?.length() ?: 0
+                    }
 
+                    val mUnderlineHashMap1 = mUnderlineHashMap
+                    for (key in mUnderlineHashMap.keys) {
+                        val value = mUnderlineHashMap[key]
+                        if (value != null) {
+                            if (value > (mEditText?.length() ?: 0))
+                                mUnderlineHashMap1[key] = mEditText?.length() ?: 0
+                            if (key > (mEditText?.length() ?: 0)) {
+                                mUnderlineHashMap1.remove(key)
+                            }
+                        }
+                    }
+
+                    Log.e("mUnderlineHashMap", mUnderlineHashMap1.toString())
+                    for (key in mUnderlineHashMap1.keys) {
+                        val value = mUnderlineHashMap1[key]
+                        value?.let {
+                            mEditText?.text?.setSpan(
+                                UnderlineSpan(), key, it,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                        }
+                    }
+                }
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                for (key in mUnderlineHashMap.keys) {
-                    mUnderlineHashMap[key]?.let {
-                        p0?.setSpan(
-                            UnderlineSpan(), key, it,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                    }
-                }
+
             }
         })
     }
