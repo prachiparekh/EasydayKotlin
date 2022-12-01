@@ -34,7 +34,7 @@ data class AddTaskRequestModelToPass(
     var spaces: Int? = null,
 
     @field:SerializedName("task_media")
-    var task_media: ArrayList<String?>? = null,
+    var task_media: ArrayList<String>? = null,
 
     @field:SerializedName("task_participants")
     var task_participants: ArrayList<Int>? = null
@@ -51,8 +51,7 @@ data class AddTaskRequestModelToPass(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         TODO("task_media"),
         TODO("task_participants")
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(project_id)

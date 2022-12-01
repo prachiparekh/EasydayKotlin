@@ -2,7 +2,6 @@ package com.app.easyday.app.sources.remote.apis
 
 import com.app.easyday.app.sources.ApiResponse
 import com.app.easyday.app.sources.remote.model.*
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 import rx.Observable
@@ -43,18 +42,6 @@ interface EasyDayApi {
 
     @POST("task/add-task")
     fun addTask(
-//        @Part("project_id") project_id: RequestBody,
-//        @Part("title") title: RequestBody,
-//        @Part("description") description: RequestBody,
-//        @Part("priority") priority: RequestBody,
-//        @Part("red_flag") red_flag: RequestBody,
-//        @Part("due_date") due_date: RequestBody,
-//        @Part("tags[]") tags: ArrayList<Int>?,
-//        @Part("zones[]") zones: Int?,
-//        @Part("spaces[]") spaces: Int?,
-//        @Part task_media: ArrayList<MultipartBody.Part>,
-//        @Part("task_participants") task_participants: ArrayList<Int>?,
-
         @Body addTaskRequestModel: AddTaskRequestModelToPass
     ): Observable<ApiResponse<TaskResponse>>
 

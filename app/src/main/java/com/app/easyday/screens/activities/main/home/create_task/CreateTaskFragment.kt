@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -15,14 +16,8 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
-import com.amazonaws.HttpMethod
-import com.amazonaws.services.s3.AmazonS3
-import com.amazonaws.services.s3.AmazonS3Client
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
-import com.amazonaws.services.s3.model.PutObjectRequest
-import com.amazonaws.services.s3.model.ResponseHeaderOverrides
 import com.app.easyday.R
-import com.app.easyday.app.sources.aws.*
+import com.app.easyday.app.sources.aws.MultiS3Uploader
 import com.app.easyday.app.sources.local.interfaces.*
 import com.app.easyday.app.sources.local.model.ContactModel
 import com.app.easyday.app.sources.local.model.Media
@@ -40,6 +35,7 @@ import com.app.easyday.utils.FileUtil
 import com.passiondroid.imageeditorlib.ImageEditActivity
 import com.passiondroid.imageeditorlib.ImageEditor
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.delete_dialog_layout.*
 import kotlinx.android.synthetic.main.fragment_create_task.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -48,10 +44,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
-import java.time.Duration
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 @AndroidEntryPoint
@@ -83,7 +75,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     var redFlag = 0 // False
     var selectedDate: String? = null
 
-    private var s3uploaderObj: S3Uploader? = null
+
     private var urlFromS3: ArrayList<String?>? = null
     var mImageFile: File? = null
     var mFile: File? = null
@@ -106,7 +98,6 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
 
     override fun initUi() {
 
-        s3uploaderObj = S3Uploader(requireContext(), AWSKeys.FOLDER_NAME_PROFILE_IMAGES)
 
         selectedUriList = arguments?.getParcelableArrayList<Media>("uriList") as ArrayList<Media>
 
@@ -587,7 +578,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
             duedate = spf.format(newDate)
         }
 
-        var mFileHashMap = HashMap<File, String>()
+        val mFileHashMap = HashMap<File, String>()
         for (i in selectedUriList.indices) {
 
             mImageFile = selectedUriList[i].uri?.let {
@@ -595,45 +586,27 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                     ?.let { File(it) }
             }
 
-            mImageFile?.let { it.name?.let { it1 -> mFileHashMap.put(it, it1) } }
+            mImageFile.let { it?.name?.let { it1 -> mFileHashMap.put(it, it1) } }
         }
 
         Log.e("mFileHashMap", mFileHashMap.toString())
-        val s3Uploader: MultiS3Uploader = MultiS3Uploader()
-        s3Uploader.uploadMultiple(mFileHashMap, requireContext())
-
-        val path = mImageFile?.absolutePath
-//        val url = S3Utils.generates3ShareUrl(
-//            requireContext(),
-//            path,
-//            AWSKeys.FOLDER_NAME_TASK_COMMENT_MEDIA
-//        )
-//
-//        urlFromS3?.add(url)
 
 
-       /* viewModel.addTask(
-            AddTaskRequestModelToPass(
-                selectedProjectID,
-                taskNameET.text.toString(),
-                "",
-                selectedPriority,
-                redFlag,
-                duedate,
-                selectedTagList,
-                selectedZone,
-                selectedSpace,
-                urlFromS3,
-                assigneeList
-            )
-        )*/
+        val s3UrlList = arrayListOf<String>()
+        val s3uploaderObj = MultiS3Uploader()
+        s3uploaderObj.uploadMultiple(mFileHashMap, requireContext())
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe { "Uploads completed!" }
 
-        /*s3Uploader.setOns3UploadDone(object : MultiS3Uploader.MultiS3UploadInterface {
+        s3uploaderObj.setMultiple3UploadDone(object : MultiS3Uploader.MultiS3UploadInterface {
             override fun onUploadSuccess(response: String?) {
-                if (response.equals("Success", ignoreCase = true)) {
 
-                    Log.e("TAG", "Uploaded: $response")
-                    Toast.makeText(requireContext(), "Uploaded: $response", Toast.LENGTH_SHORT).show()
+                if (response != null) {
+                    s3UrlList.add(response)
+                }
+
+                if (s3UrlList.size == mFileHashMap.size) {
                     viewModel.addTask(
                         AddTaskRequestModelToPass(
                             selectedProjectID,
@@ -645,84 +618,26 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                             selectedTagList,
                             selectedZone,
                             selectedSpace,
-                            response,
+                            s3UrlList,
                             assigneeList
                         )
                     )
-
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        requireContext().resources.getString(R.string.fail_to_upload),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
             override fun onUploadError(response: String?) {
-
-                Log.e("TAG", "Error Uploading: $response")
-            }
-        })*/
-
-     /*viewModel.addTask(
-                        AddTaskRequestModel(
-                            selectedProjectID,
-                            taskNameET.text.toString(),
-                            "",
-                            selectedPriority,
-                            redFlag,
-                            duedate,
-                            selectedTagList,
-                            selectedZone,
-                            selectedSpace,
-                            attachmentBodyList,
-                            assigneeList
-                        )
-                    )*/
-    }
-
-    /*  private fun uploadImageVideoTos3(it1: File, duedate: String?, assigneeList: ArrayList<Int>?) {
-          val path = it1.absolutePath
-
-
-                  s3uploaderObj?.initUpload(path)
-          s3uploaderObj?.setOns3UploadDone(object : S3Uploader.S3UploadInterface {
-              override fun onUploadSuccess(response: String?) {
-                  if (response.equals("Success", ignoreCase = true)) {
-
-                      val url = S3Utils.generates3ShareUrl(
-                          requireContext(),
-                          path,
-                          AWSKeys.FOLDER_NAME_PROFILE_IMAGES
-                      )
-                      urlFromS3?.add(url)
-                      if (!TextUtils.isEmpty(url)) {
-
-                          Log.e("urls", url)
-                         urlFromS3?.let {
-
-                             viewModel.addTask(
-                                 AddTaskRequestModelToPass(
-                                     selectedProjectID,
-                                     taskNameET.text.toString(),
-                                     "",
-                                     selectedPriority,
-                                     redFlag,
-                                     duedate,
-                                     selectedTagList,
-                                     selectedZone,
-                                     selectedSpace,
-                                     it,
-                                     assigneeList
-                                 )
-                             )
-                         }
-
-                    }
-                }
-            }
-
-            override fun onUploadError(response: String?) {
-
-                Log.e("TAG", "Error Uploading: $response")
+                Toast.makeText(requireContext(), response, Toast.LENGTH_SHORT).show()
+                Log.e("onError", response.toString())
             }
         })
-    }*/
 
+
+    }
 
 }
