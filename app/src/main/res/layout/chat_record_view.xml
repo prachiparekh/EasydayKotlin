@@ -3,6 +3,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_stroke_round"
     android:layoutDirection="ltr">
 
     <LinearLayout
@@ -11,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="bottom"
+        android:layout_marginHorizontal="@dimen/_5sdp"
         android:orientation="horizontal">
 
         <FrameLayout
@@ -78,9 +80,9 @@
     <!--        app:contentPadding="0dp">-->
 
     <ImageView
-        android:id="@+id/imageAudio"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
+        android:id="@+id/imageViewAudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:src="@drawable/ic_chat_recorder" />
 

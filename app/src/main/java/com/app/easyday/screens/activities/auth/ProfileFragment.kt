@@ -23,6 +23,7 @@ import com.app.easyday.screens.activities.main.MainActivity
 import com.app.easyday.screens.base.BaseActivity
 import com.app.easyday.screens.base.BaseActivity.Companion.profileLogoListener
 import com.app.easyday.screens.base.BaseFragment
+import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.FileUtil
 import com.app.easyday.utils.IntentUtil
 import com.app.easyday.utils.IntentUtil.Companion.cameraPermission
@@ -100,6 +101,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                 }
 
                 if (mImageFile != null) {
+                    DeviceUtils.showProgress()
                     mImageFile?.let { it1 ->
                         uploadImageTos3(
                             it1
@@ -115,6 +117,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 //                        professionTIE.text.toString(), null
 //                    )
 //                    viewModel.createUser(modelToPass)
+                    DeviceUtils.showProgress()
                     viewModel.createUser(
                         CreateUserModelToPass(
                             fullNameTIE.text.toString(),
@@ -149,6 +152,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                     }
 
                     if (mImageFile != null) {
+                        DeviceUtils.showProgress()
                         mImageFile?.let { it1 ->
                             uploadUpdatedImageTos3(
                                 it1
@@ -159,7 +163,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
 //                        viewModel.updateUser(
 //                            fullNameTIE.text.toString(),
 //                            professionTIE.text.toString(), null)
-
+                        DeviceUtils.showProgress()
                         viewModel.updateUser(
                             CreateUserModelToPass(
                                 fullNameTIE.text.toString(),

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
@@ -60,19 +61,20 @@ class TaskAdapter(
         val projectIcon = itemView.findViewById<ImageView>(R.id.projectIcon)
         val discussion = itemView.findViewById<TextView>(R.id.discussion)
         val taskStatus = itemView.findViewById<TextView>(R.id.taskStatus)
+        val edit = itemView.findViewById<ImageView>(R.id.edit)
 
         @SuppressLint("NewApi")
         fun bind(position: Int) {
 
             val item = taskList[position]
             taskTitle.text = item.title
-            mDescription.text = item.title
+//            mDescription.text = item.title
 
             val odt = OffsetDateTime.parse(item.createdAt)
             val dtf = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
 
             mDate.text = dtf.format(odt)
-//            mDescription.text = item.description
+            mDescription.text = item.description
 
             if (item.redFlag == true) {
                 flag.setImageDrawable(context.resources.getDrawable(R.drawable.ic_flaged))
@@ -124,6 +126,9 @@ class TaskAdapter(
                 item.taskTags as ArrayList<TaskAttributeResponse>
             )
 
+            edit.setOnClickListener {
+                Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
+            }
             itemView.setOnClickListener {
                 position.let { it1 ->
                     anInterfaceClick.onTaskClick(item)

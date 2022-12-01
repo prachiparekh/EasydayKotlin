@@ -27,6 +27,7 @@ import com.app.easyday.screens.activities.auth.ProfileViewModel
 import com.app.easyday.screens.activities.main.home.HomeViewModel.Companion.userModel
 import com.app.easyday.screens.base.BaseActivity
 import com.app.easyday.screens.base.BaseFragment
+import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.FileUtil
 import com.app.easyday.utils.IntentUtil
 import com.bumptech.glide.Glide
@@ -99,6 +100,8 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
             }
 
             if (mImageFile != null) {
+                DeviceUtils.showProgress()
+
                 mImageFile?.let { it1 ->
                     uploadUpdatedImageTos3(
                         it1
@@ -110,6 +113,7 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
 //                    fullName.text.toString(),
 //                    profession.text.toString(), null
 //                )
+                DeviceUtils.showProgress()
                 viewModel.updateUser(
                     CreateUserModelToPass(
                         fullName.text.toString(),

@@ -256,7 +256,6 @@ class ChatAudioRecordView {
             )?.start()
         layoutSlideCancel?.translationX = 0f
         layoutSlideCancel?.visibility = View.GONE
-
         imageViewLockArrow?.clearAnimation()
         imageViewLock?.clearAnimation()
         if (isLocked) {
@@ -266,7 +265,7 @@ class ChatAudioRecordView {
 
         if (recordingBehaviour == RecordingBehaviour.CANCELED) {
             timeText?.visibility = View.INVISIBLE
-
+            layoutSlideCancel?.visibility = View.INVISIBLE
             layoutEffect2?.visibility = View.GONE
             timerTask?.cancel()
             delete()
@@ -290,7 +289,6 @@ class ChatAudioRecordView {
             OvershootInterpolator()
         )?.start()
         timeText?.visibility = View.VISIBLE
-
         layoutSlideCancel?.visibility = View.VISIBLE
 
         layoutEffect2?.visibility = View.VISIBLE

@@ -83,8 +83,7 @@
         android:src="@drawable/ic_low"
         app:layout_constraintBottom_toBottomOf="@id/edit"
         app:layout_constraintEnd_toStartOf="@id/projectIcon"
-        app:layout_constraintTop_toTopOf="@id/edit"
-        app:tint="@color/red" />
+        app:layout_constraintTop_toTopOf="@id/edit" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/projectIcon"

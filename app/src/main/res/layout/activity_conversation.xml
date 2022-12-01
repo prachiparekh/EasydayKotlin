@@ -342,27 +342,27 @@
                         android:paddingVertical="@dimen/_7sdp">
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/vidPlayerButton"
+                            android:id="@+id/vidPlayerButtonIV"
                             android:layout_width="@dimen/_33sdp"
                             android:layout_height="@dimen/_33sdp"
                             android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@+id/vidProgress"
+                            android:layout_toLeftOf="@+id/vidProgressPB"
                             android:src="@drawable/ic_video_circle" />
 
                         <ProgressBar
-                            android:id="@+id/vidProgress"
+                            android:id="@+id/vidProgressPB"
                             style="@android:style/Widget.ProgressBar.Horizontal"
                             android:layout_width="@dimen/_160sdp"
                             android:layout_height="@dimen/_7sdp"
                             android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@+id/vidDuration"
+                            android:layout_toLeftOf="@+id/vidDurationTV"
                             android:clickable="false"
                             android:maxHeight="@dimen/_5sdp"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:progressDrawable="@drawable/video_progressbar" />
 
                         <TextView
-                            android:id="@+id/vidDuration"
+                            android:id="@+id/vidDurationTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -418,7 +418,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_12sdp">
-
+            <FrameLayout
+                android:id="@+id/layoutAudio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="gone" />
             <RelativeLayout
                 android:id="@+id/conv_rel"
                 android:layout_width="wrap_content"

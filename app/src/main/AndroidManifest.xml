@@ -30,6 +30,7 @@
         <activity
             android:name=".screens.activities.main.inbox.ConversationActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:hardwareAccelerated="true" />
 
         <activity
