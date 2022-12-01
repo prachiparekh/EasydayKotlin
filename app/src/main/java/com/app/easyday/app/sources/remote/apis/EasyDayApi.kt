@@ -41,20 +41,21 @@ interface EasyDayApi {
         @Body addProjectRequestModel: AddProjectRequestModelToPass
     ): Observable<ApiResponse<ProjectRespModel>>
 
-    @Multipart
     @POST("task/add-task")
     fun addTask(
-        @Part("project_id") project_id: RequestBody,
-        @Part("title") title: RequestBody,
-        @Part("description") description: RequestBody,
-        @Part("priority") priority: RequestBody,
-        @Part("red_flag") red_flag: RequestBody,
-        @Part("due_date") due_date: RequestBody,
-        @Part("tags[]") tags: ArrayList<Int>?,
-        @Part("zones[]") zones: Int?,
-        @Part("spaces[]") spaces: Int?,
-        @Part task_media: ArrayList<MultipartBody.Part>,
-        @Part("task_participants") task_participants: ArrayList<Int>?,
+//        @Part("project_id") project_id: RequestBody,
+//        @Part("title") title: RequestBody,
+//        @Part("description") description: RequestBody,
+//        @Part("priority") priority: RequestBody,
+//        @Part("red_flag") red_flag: RequestBody,
+//        @Part("due_date") due_date: RequestBody,
+//        @Part("tags[]") tags: ArrayList<Int>?,
+//        @Part("zones[]") zones: Int?,
+//        @Part("spaces[]") spaces: Int?,
+//        @Part task_media: ArrayList<MultipartBody.Part>,
+//        @Part("task_participants") task_participants: ArrayList<Int>?,
+
+        @Body addTaskRequestModel: AddTaskRequestModelToPass
     ): Observable<ApiResponse<TaskResponse>>
 
     @GET("task/get-task")

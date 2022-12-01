@@ -194,6 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_5sdp"
                 android:background="@null"
                 android:fontFamily="@font/inter_medium_500"
                 android:hint="@string/task_title"

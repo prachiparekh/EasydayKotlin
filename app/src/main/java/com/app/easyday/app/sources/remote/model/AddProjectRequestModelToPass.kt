@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.app.easyday.app.sources.local.model.ContactModel
 import com.google.gson.annotations.SerializedName
 
-data class AddProjectRequestModelToPass (
+data class AddProjectRequestModelToPass(
     @field:SerializedName("assign_color")
     val assignColor: String? = null,
 
@@ -17,13 +17,13 @@ data class AddProjectRequestModelToPass (
 
     @field:SerializedName("participants")
     var participants: ArrayList<ContactModelToPass>? = null
-        ):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
 
-    ) {
+        ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

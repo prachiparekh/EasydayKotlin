@@ -3,6 +3,7 @@ package com.app.easyday.screens.activities.main.home.create_task
 import androidx.lifecycle.MutableLiveData
 import com.app.easyday.app.sources.remote.apis.EasyDayApi
 import com.app.easyday.app.sources.remote.model.AddTaskRequestModel
+import com.app.easyday.app.sources.remote.model.AddTaskRequestModelToPass
 import com.app.easyday.app.sources.remote.model.AttributeResponse
 import com.app.easyday.app.sources.remote.model.ProjectParticipantsModel
 import com.app.easyday.navigation.SingleLiveEvent
@@ -11,7 +12,6 @@ import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.ErrorUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import rx.android.schedulers.AndroidSchedulers
@@ -76,9 +76,23 @@ class CreateTaskViewModel @Inject constructor(
             })
     }
 
-    fun addTask(addTaskRequestModel: AddTaskRequestModel) {
+    fun addTask(addTaskRequestModel: AddTaskRequestModelToPass) {
 
+        DeviceUtils.showProgress()
 
+        api.addTask(addTaskRequestModel)
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ resp ->
+                if(resp.success)
+                    actionStream.value= resp.message?.let { ACTION.taskResponse(it) }
+                DeviceUtils.dismissProgress()
+            }, {throwable->
+                actionStream.value = ErrorUtil.onError(throwable)
+                    ?.let { ACTION.showError(it) }
+                DeviceUtils.dismissProgress()
+            })
+
+/*
         val part_project_id: RequestBody = addTaskRequestModel.project_id.toString()
             .toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
@@ -98,7 +112,6 @@ class CreateTaskViewModel @Inject constructor(
             .toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
 
-
         api.addTask(
             part_project_id,
             part_title,
@@ -115,12 +128,14 @@ class CreateTaskViewModel @Inject constructor(
             .subscribe({ resp ->
                 if(resp.success)
                     actionStream.value= resp.message?.let { ACTION.taskResponse(it) }
-
+                    DeviceUtils.dismissProgress()
 
             }, {throwable->
                 actionStream.value = ErrorUtil.onError(throwable)
                     ?.let { ACTION.showError(it) }
+                DeviceUtils.dismissProgress()
+            })*/
 
-            })
+
     }
 }
