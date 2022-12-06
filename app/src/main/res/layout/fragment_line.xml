@@ -6,11 +6,15 @@
     android:layout_height="wrap_content"
     android:background="@color/bg_white"
     android:nestedScrollingEnabled="false"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
     tools:context=".screens.activities.main.reports.LineFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainCL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/taskStatusCL"
@@ -579,10 +583,10 @@
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_10sdp"
                 app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
-                tools:listitem="@layout/item_tag_line_report"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tagLabel" />
+                app:layout_constraintTop_toBottomOf="@id/tagLabel"
+                tools:listitem="@layout/item_tag_line_report" />
 
             <View
                 android:id="@+id/v5"
@@ -592,6 +596,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tagRV" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -55,11 +55,14 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     private var projectList = arrayListOf<ProjectRespModel>()
     var selectedProjectPosition: Int? = null
 
-   override fun getContentView() = R.layout.fragment_home
+    override fun getContentView() = R.layout.fragment_home
+
 
     override fun initUi() {
 
         DeviceUtils.initProgress(requireContext())
+        DeviceUtils.showProgress()
+
 
         if (!AppPreferencesDelegates.get().showcaseSeen) {
 
@@ -148,10 +151,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                             .format(DecodeFormat.PREFER_ARGB_8888)
                     )
                     .into(profile)
-
-
             }
-
         }
 
         viewModel.projectList.observe(viewLifecycleOwner) { projectList ->
@@ -223,6 +223,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                 taskRV.adapter = TaskAdapter(requireContext(), it, this)
             }
             //            }
+
             DeviceUtils.dismissProgress()
         }
     }

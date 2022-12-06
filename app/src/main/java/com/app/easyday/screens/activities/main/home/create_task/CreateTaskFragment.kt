@@ -75,10 +75,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
     var redFlag = 0 // False
     var selectedDate: String? = null
 
-
-    private var urlFromS3: ArrayList<String?>? = null
     var mImageFile: File? = null
-    var mFile: File? = null
 //    *****************
 
     override fun onResume() {
@@ -607,6 +604,7 @@ class CreateTaskFragment : BaseFragment<CreateTaskViewModel>(), FilterTypeInterf
                 }
 
                 if (s3UrlList.size == mFileHashMap.size) {
+                    DeviceUtils.showProgress()
                     viewModel.addTask(
                         AddTaskRequestModelToPass(
                             selectedProjectID,

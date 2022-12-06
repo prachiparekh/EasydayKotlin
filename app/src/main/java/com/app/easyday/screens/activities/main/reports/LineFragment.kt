@@ -12,9 +12,8 @@ import kotlinx.android.synthetic.main.fragment_line.*
 @AndroidEntryPoint
 class LineFragment : BaseFragment<LineViewModel>() {
 
-    companion object
-    {
-        val tag="Line"
+    companion object {
+        val tag = "Line"
     }
 
     var isLineFragment: Boolean = true
@@ -22,6 +21,7 @@ class LineFragment : BaseFragment<LineViewModel>() {
     override fun getContentView() = R.layout.fragment_line
 
     override fun initUi() {
+
 
         HomeFragment.selectedProjectID?.let { viewModel.getReport(it) }
     }

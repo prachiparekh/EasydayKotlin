@@ -17,15 +17,15 @@ import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.views.CustomEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_note.*
+import org.json.JSONObject
 import java.util.*
 
 
 @AndroidEntryPoint
 class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
 
-
     companion object {
-        var selectedFilter: String? = null
+        var selectedFilter: String? = "NORMAL"
         var numberIndex = 0
         var underlineStartIndex = 0
 
@@ -35,6 +35,9 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
     }
 
     var mEditText: CustomEditText? = null
+    var obj: JSONObject = JSONObject()
+    var previousText: String? = ""
+    var previousFilter: String? = "NORMAL"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +59,7 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
         )
 
         back?.setOnClickListener {
+            Log.e("ARRAY", " :: $obj")
             Navigation.findNavController(requireView()).popBackStack()
         }
 
@@ -125,11 +129,16 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
         }
 
         toolbar_number.setOnClickListener {
+            if (selectedFilter == "UNDERLINE") {
 
+                mEditText?.length()?.let { it1 -> mUnderlineHashMap[underlineStartIndex] = it1 }
+                Log.e("mUnderlineHashMap", mUnderlineHashMap.toString())
+            }
             toolbar_number.isSelected = !toolbar_number.isSelected
             if (toolbar_number.isSelected) {
                 selectedFilter = "NUMBER"
                 numberIndex = 0
+//                selectedFilter?.let { mHashmap.put(it, "") }
                 toolbar_fontsizeH1.isSelected = false
                 toolbar_fontsizeH2.isSelected = false
                 toolbar_inc_indent.isSelected = false
@@ -158,39 +167,32 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
 
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, count: Int, before: Int) {
-                if (start < (s?.length?.minus(1) ?: 0) || count > before) {
-                    if (selectedFilter == "UNDERLINE") {
-                        mUnderlineHashMap[underlineStartIndex] = mEditText?.length() ?: 0
-                    }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-                    val mUnderlineHashMap1 = mUnderlineHashMap
-                    for (key in mUnderlineHashMap.keys) {
-                        val value = mUnderlineHashMap[key]
-                        if (value != null) {
-                            if (value > (mEditText?.length() ?: 0))
-                                mUnderlineHashMap1[key] = mEditText?.length() ?: 0
-                            if (key > (mEditText?.length() ?: 0)) {
-                                mUnderlineHashMap1.remove(key)
-                            }
-                        }
-                    }
-
-                    Log.e("mUnderlineHashMap", mUnderlineHashMap1.toString())
-                    for (key in mUnderlineHashMap1.keys) {
-                        val value = mUnderlineHashMap1[key]
-                        value?.let {
-                            mEditText?.text?.setSpan(
-                                UnderlineSpan(), key, it,
-                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
-                        }
-                    }
-                }
             }
 
             override fun afterTextChanged(p0: Editable?) {
-
+                if (p0?.endsWith("\n")!!) {
+                    Log.e("previousText", " :: ${previousText.toString()}")
+                    Log.e("previousFilter", " :: ${previousFilter.toString()}")
+                    try {
+                        obj.put(selectedFilter, p0.toString().replace(previousText.toString(), ""))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    Log.e("obj", " :: $obj")
+                    if (previousFilter != selectedFilter)
+                        previousText = p0.toString()
+                    previousFilter = selectedFilter
+                }
+                for (key in mUnderlineHashMap.keys) {
+                    mUnderlineHashMap[key]?.let {
+                        p0.setSpan(
+                            UnderlineSpan(), key, it,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+                }
             }
         })
     }
