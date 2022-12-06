@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Handler
-import android.util.Log
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
@@ -59,7 +58,6 @@ class ReportsFragment : BaseFragment<ReportsViewModel>(),
             val ss = view.let {
                 BigScreenshot(object : BigScreenshot.ProcessScreenshot {
                     override fun getScreenshot(bitmap: Bitmap?) {
-                        Log.e("bitmap:", bitmap.toString())
                         img.setImageBitmap(bitmap)
                         mainCL.isVisible = false
                     }
