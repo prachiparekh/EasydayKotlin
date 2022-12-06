@@ -292,37 +292,6 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
         option.isVisible = false
         title1.text = requireContext().resources.getString(R.string.edit_profile)
 
-        /*KeyboardUtils.addKeyboardToggleListener(
-            requireActivity(),
-            object : KeyboardUtils.SoftKeyboardToggleListener {
-                override fun onToggleSoftKeyboard(isVisible: Boolean) {
-                    if (isVisible){
-                        ctaTV.isVisible = false
-                    }else{
-                        Handler().postDelayed({
-                            ctaTV.isVisible = true
-                        }, 50)
-                    }
-                }
-            })*/
-//        parent_constraint.getViewTreeObserver()
-//            .addOnGlobalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener {
-//                val r = Rect()
-//                parent_constraint.getWindowVisibleDisplayFrame(r)
-//                val screenHeight: Int = parent_constraint.getRootView().getHeight()
-//                val keypadHeight: Int = screenHeight - r.bottom
-//                if (keypadHeight > screenHeight * 0.15) {
-//
-//                    ctaTV.visibility = View.GONE
-//                } else {
-//                    Handler().postDelayed({
-//                        ctaTV.visibility = View.VISIBLE
-//                    }, 50)
-//
-//
-//                }
-//            })
-
 
     }
 

@@ -59,9 +59,9 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_alignEnd="@id/avatar"
             android:layout_alignBottom="@id/avatar"
+            android:adjustViewBounds="true"
             android:background="@drawable/bg_circle_white"
             android:backgroundTint="@color/white"
-            android:adjustViewBounds="true"
             android:padding="@dimen/_7sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_camera" />

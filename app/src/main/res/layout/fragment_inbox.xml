@@ -47,22 +47,12 @@
                 app:tint="@color/white" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/notification"
+                android:id="@+id/add_participant"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
                 android:padding="@dimen/_5sdp"
-                android:src="@drawable/ic_bell" />
+                android:src="@drawable/ic_add_participants" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/profile"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_profile_circle"
-                android:background="@drawable/bg_circle_white"
-                android:scaleType="centerCrop" />
 
         </LinearLayout>
 

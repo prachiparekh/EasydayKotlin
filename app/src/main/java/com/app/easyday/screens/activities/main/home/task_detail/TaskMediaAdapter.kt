@@ -50,6 +50,10 @@ class TaskMediaAdapter(
                     ".png"
                 ) == true
 
+            if(isImg){
+                imagePreview.isVisible = true
+                imagePlay.isVisible = false
+            }
             imagePreview.load(item.mediaUrl) {
                 if (!isImg
                 ) {

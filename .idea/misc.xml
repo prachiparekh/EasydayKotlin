@@ -16,6 +16,7 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_messages.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_no_picture.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_plus_icon.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_video_circle.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/tab_selector_blue.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/act_log_recycler_layout.xml" value="0.36666666666666664" />
@@ -27,6 +28,7 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/country_code.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/country_code_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/create_note_popup_window.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/custom_video_controls.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_dialog_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_logout_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_note_layout.xml" value="0.36666666666666664" />
