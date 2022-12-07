@@ -1,6 +1,8 @@
 package com.app.easyday.screens.dialogs
 
 import android.app.Dialog
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +54,7 @@ class FilterBottomSheetDialog(val anInterface: TaskFilterApplyInterface) : Botto
                     }
                 })
             }
+
         }
 
         return dialog

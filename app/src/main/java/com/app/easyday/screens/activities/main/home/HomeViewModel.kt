@@ -15,6 +15,7 @@ import com.app.easyday.screens.activities.main.home.filter.FilterFragment.Compan
 import com.app.easyday.screens.activities.main.home.filter.FilterFragment.Companion.filterTagList
 import com.app.easyday.screens.activities.main.home.filter.FilterFragment.Companion.filterZoneList
 import com.app.easyday.screens.base.BaseViewModel
+import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.ErrorUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import rx.android.schedulers.AndroidSchedulers
@@ -59,20 +60,24 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getProjects() {
+        DeviceUtils.showProgress()
         api.getAllProject()
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({ resp ->
 
                 projectList.value = resp.data
+                DeviceUtils.dismissProgress()
 
             }, {
 
                 projectList.value = null
+                DeviceUtils.dismissProgress()
             })
     }
 
     fun getAllTask(projectId: Int) {
 
+        DeviceUtils.showProgress()
         api.getTask(
             projectId
 
@@ -80,11 +85,13 @@ class HomeViewModel @Inject constructor(
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({ resp ->
                 taskList.value = resp.data
+                DeviceUtils.dismissProgress()
 
             }, { throwable ->
                 actionStream.value = ErrorUtil.onError(throwable)
                     ?.let { ACTION.showError(it) }
                 taskList.value = null
+                DeviceUtils.dismissProgress()
             })
     }
 

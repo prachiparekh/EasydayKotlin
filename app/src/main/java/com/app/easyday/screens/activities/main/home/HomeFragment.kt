@@ -1,18 +1,24 @@
 package com.app.easyday.screens.activities.main.home
 
 
+import android.app.Activity
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.ProjectInterface
 import com.app.easyday.app.sources.local.interfaces.TaskFilterApplyInterface
@@ -32,6 +38,8 @@ import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item_picture.*
+import kotlinx.android.synthetic.main.item_task.*
 import me.toptas.fancyshowcase.FancyShowCaseQueue
 import me.toptas.fancyshowcase.FancyShowCaseView
 import me.toptas.fancyshowcase.listener.OnViewInflateListener
@@ -46,6 +54,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         var selectedProjectID: Int? = null
         var selectedColor: String? = null
         var createProjectTitle: ProjectRespModel? = null
+        val activity: Activity? = null
     }
 
     private lateinit var queue: FancyShowCaseQueue
@@ -54,6 +63,9 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     private var filterDialog: FilterBottomSheetDialog? = null
     private var projectList = arrayListOf<ProjectRespModel>()
     var selectedProjectPosition: Int? = null
+    val adapter: TaskAdapter? = null
+
+//    lateinit var simpleExoPlayer: SimpleExoPlayer
 
     override fun getContentView() = R.layout.fragment_home
 
@@ -61,7 +73,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     override fun initUi() {
 
         DeviceUtils.initProgress(requireContext())
-        DeviceUtils.showProgress()
+//        DeviceUtils.showProgress()
 
 
         if (!AppPreferencesDelegates.get().showcaseSeen) {
@@ -128,8 +140,40 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
         }
 
         createProjectTitle = arguments?.getParcelable("projectName") as ProjectRespModel?
-    }
 
+        initScrollListener()
+
+    }
+    private fun initScrollListener() {
+        taskRV.addOnScrollListener(object : OnScrollListener() {
+            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+            }
+
+            override fun onScrolled(@NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val linearLayoutManager: LinearLayoutManager? = recyclerView.layoutManager as LinearLayoutManager?
+
+                if(dy > 0 || dx > 0){
+
+                    exo_player_view.keepScreenOn = false
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        imagePreview.isVisible = true
+                        imagePlay.isVisible = true
+                        video_RL.isVisible = true
+                        exo_player_view.isVisible = false
+
+                    }, 2000)
+                }
+
+//                simpleExoPlayer.playWhenReady = false
+//                simpleExoPlayer.playbackState
+
+            }
+        })
+    }
 
     override fun setObservers() {
 
@@ -201,12 +245,13 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                 }
 
                 activeProject.setOnClickListener {
-                    DeviceUtils.showProgress()
+//                    DeviceUtils.showProgress()
                     val fragment = ProjectListDialog(this, projectList, selectedProjectPosition)
                     childFragmentManager.let {
                         fragment.show(it, "projects")
-                        DeviceUtils.dismissProgress()
+//                        DeviceUtils.dismissProgress()
                     }
+
                 }
             }
         }
@@ -220,11 +265,11 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
             } else {
                 noTaskCL.isVisible = false
                 taskRV.isVisible = true
-                taskRV.adapter = TaskAdapter(requireContext(), it, this)
+                taskRV.adapter = TaskAdapter(requireContext(),requireActivity(), it, this,childFragmentManager)
             }
             //            }
 
-            DeviceUtils.dismissProgress()
+//            DeviceUtils.dismissProgress()
         }
     }
 

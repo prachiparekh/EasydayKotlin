@@ -149,15 +149,15 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
         var mediaAdapter: TaskMediaAdapter? = null
         mediaAdapter = context?.let {
             TaskMediaAdapter(
-                it,
+                it, manager = childFragmentManager,
                 onItemClick = { isImg, uri ->
                     if (!isImg) {
-                        val play = Intent(Intent.ACTION_VIEW, uri.toUri())
-                        play.setDataAndType(
-                            uri.toUri(),
-                            "video/mp4"
-                        )
-                        context?.startActivity(play)
+//                        val play = Intent(Intent.ACTION_VIEW, uri.toUri())
+//                        play.setDataAndType(
+//                            uri.toUri(),
+//                            "video/mp4"
+//                        )
+//                        context?.startActivity(play)
                     }
                 },
 
