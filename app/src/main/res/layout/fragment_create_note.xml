@@ -93,7 +93,15 @@
             android:padding="@dimen/_10sdp"
             android:paddingVertical="@dimen/_2sdp"
             android:textColor="@color/navy_blue"
+            android:visibility="gone"
             android:textCursorDrawable="@drawable/edit_text_colored_cursor"
+            app:layout_constraintBottom_toTopOf="@id/scrollView"
+            app:layout_constraintTop_toBottomOf="@id/subject" />
+
+        <com.app.easyday.utils.notepad_utils.WYSIWYG
+            android:id="@+id/editor"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/scrollView"
             app:layout_constraintTop_toBottomOf="@id/subject" />
 

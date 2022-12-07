@@ -1,10 +1,6 @@
 package com.app.easyday.screens.activities.main.more.notepad
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.Spannable
-import android.text.TextWatcher
-import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -14,6 +10,7 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.screens.base.BaseFragment
+import com.app.easyday.utils.notepad_utils.WYSIWYG
 import com.app.easyday.views.CustomEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_note.*
@@ -43,6 +40,22 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        val wysiwygEditor = editor as WYSIWYG
+        wysiwygEditor.setEditorHeight(200)
+        wysiwygEditor.setEditorFontSize(16)
+        wysiwygEditor.setPadding(10, 10, 10, 10)
+        wysiwygEditor.setPlaceholder("Insert your notes here...")
+
+//        val mPreview = preview as TextView
+        wysiwygEditor.setOnTextChangeListener(object : WYSIWYG.OnTextChangeListener {
+            override fun onTextChange(text: String?) {
+                if (text != null) {
+                    Log.e("text", text)
+                }
+            }
+        })
+
+
         val month = Calendar.getInstance().get(Calendar.MONTH)
         val date = Calendar.getInstance().get(Calendar.DATE)
         val year = Calendar.getInstance().get(Calendar.YEAR)
@@ -70,15 +83,15 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
         mEditText = rtEditText
 
         toolbar_undo.setOnClickListener {
-
+            wysiwygEditor.undo()
         }
 
         toolbar_redo.setOnClickListener {
-
+            wysiwygEditor.redo()
         }
 
         toolbar_inc_indent.setOnClickListener {
-            toolbar_inc_indent.isSelected = !toolbar_inc_indent.isSelected
+            /*toolbar_inc_indent.isSelected = !toolbar_inc_indent.isSelected
             if (toolbar_inc_indent.isSelected) {
                 selectedFilter = "INDENT"
                 toolbar_fontsizeH1.isSelected = false
@@ -86,12 +99,16 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
                 toolbar_bullet.isSelected = false
                 toolbar_number.isSelected = false
                 toolbar_underline.isSelected = false
-            }
+            }*/
+
+            wysiwygEditor.setIndent()
         }
 
         toolbar_fontsizeH1.setOnClickListener {
-
-            toolbar_fontsizeH1.isSelected = !toolbar_fontsizeH1.isSelected
+            wysiwygEditor.setHeading(
+                1
+            )
+            /*toolbar_fontsizeH1.isSelected = !toolbar_fontsizeH1.isSelected
             if (toolbar_fontsizeH1.isSelected) {
                 selectedFilter = "H1"
                 toolbar_inc_indent.isSelected = false
@@ -99,10 +116,13 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
                 toolbar_bullet.isSelected = false
                 toolbar_number.isSelected = false
                 toolbar_underline.isSelected = false
-            }
+            }*/
         }
         toolbar_fontsizeH2.setOnClickListener {
-            toolbar_fontsizeH1.isSelected = false
+            wysiwygEditor.setHeading(
+                2
+            )
+            /*toolbar_fontsizeH1.isSelected = false
             toolbar_fontsizeH2.isSelected = !toolbar_fontsizeH2.isSelected
 
             if (toolbar_fontsizeH2.isSelected) {
@@ -112,11 +132,12 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
                 toolbar_bullet.isSelected = false
                 toolbar_number.isSelected = false
                 toolbar_underline.isSelected = false
-            }
+            }*/
         }
 
         toolbar_bullet.setOnClickListener {
-            toolbar_bullet.isSelected = !toolbar_bullet.isSelected
+            wysiwygEditor.setBullets()
+            /*toolbar_bullet.isSelected = !toolbar_bullet.isSelected
             if (toolbar_bullet.isSelected) {
                 selectedFilter = "BULLET"
 //                selectedFilter?.let { mHashmap.put(it, "") }
@@ -125,30 +146,32 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
                 toolbar_inc_indent.isSelected = false
                 toolbar_number.isSelected = false
                 toolbar_underline.isSelected = false
-            }
+            }*/
         }
 
         toolbar_number.setOnClickListener {
-            if (selectedFilter == "UNDERLINE") {
+            wysiwygEditor.setNumbers()
+            /* if (selectedFilter == "UNDERLINE") {
 
-                mEditText?.length()?.let { it1 -> mUnderlineHashMap[underlineStartIndex] = it1 }
-                Log.e("mUnderlineHashMap", mUnderlineHashMap.toString())
-            }
-            toolbar_number.isSelected = !toolbar_number.isSelected
-            if (toolbar_number.isSelected) {
-                selectedFilter = "NUMBER"
-                numberIndex = 0
-//                selectedFilter?.let { mHashmap.put(it, "") }
-                toolbar_fontsizeH1.isSelected = false
-                toolbar_fontsizeH2.isSelected = false
-                toolbar_inc_indent.isSelected = false
-                toolbar_bullet.isSelected = false
-                toolbar_underline.isSelected = false
-            }
+                 mEditText?.length()?.let { it1 -> mUnderlineHashMap[underlineStartIndex] = it1 }
+                 Log.e("mUnderlineHashMap", mUnderlineHashMap.toString())
+             }
+             toolbar_number.isSelected = !toolbar_number.isSelected
+             if (toolbar_number.isSelected) {
+                 selectedFilter = "NUMBER"
+                 numberIndex = 0
+ //                selectedFilter?.let { mHashmap.put(it, "") }
+                 toolbar_fontsizeH1.isSelected = false
+                 toolbar_fontsizeH2.isSelected = false
+                 toolbar_inc_indent.isSelected = false
+                 toolbar_bullet.isSelected = false
+                 toolbar_underline.isSelected = false
+             }*/
         }
 
         toolbar_underline.setOnClickListener {
-            toolbar_underline.isSelected = !toolbar_underline.isSelected
+            wysiwygEditor.setUnderline()
+            /*toolbar_underline.isSelected = !toolbar_underline.isSelected
             if (toolbar_underline.isSelected) {
                 selectedFilter = "UNDERLINE"
                 underlineStartIndex = mEditText?.length() ?: 0
@@ -159,10 +182,10 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
                 toolbar_inc_indent.isSelected = false
                 toolbar_bullet.isSelected = false
                 toolbar_number.isSelected = false
-            }
+            }*/
         }
 
-        mEditText?.addTextChangedListener(object : TextWatcher {
+        /*mEditText?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -194,7 +217,8 @@ class CreateNoteFragment : BaseFragment<CreateNoteViewModel>() {
                     }
                 }
             }
-        })
+        })*/
+
     }
 
     private fun showDialog() {
