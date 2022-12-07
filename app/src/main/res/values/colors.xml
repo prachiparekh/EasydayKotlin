@@ -14,6 +14,7 @@
     <color name="actlog_text">#1A1A30</color>
     <color name="gray">#4B5563</color>
     <color name="stroke">#ECE8FF</color>
+    <color name="video_bg">#79636363</color>
     <color name="dark_blue">#162651</color>
     <color name="p_text">#1A1341</color>
     <color name="note_text">#0A0045</color>

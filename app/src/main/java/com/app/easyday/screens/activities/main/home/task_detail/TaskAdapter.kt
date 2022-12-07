@@ -1,10 +1,13 @@
 package com.app.easyday.screens.activities.main.home.task_detail
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +17,14 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.remote.model.TaskAttributeResponse
 import com.app.easyday.app.sources.remote.model.TaskResponse
+import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.activities.main.home.HomeFragment.Companion.selectedColor
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -29,11 +34,13 @@ import java.util.*
 
 class TaskAdapter(
     private val context: Context,
+    val activity: Activity,
     private var taskList: ArrayList<TaskResponse>,
-    val anInterfaceClick: TaskInterfaceClick
+    val anInterfaceClick: TaskInterfaceClick,
+    val manager: FragmentManager
 ) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
-
+    var pos: String? = null
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -46,7 +53,10 @@ class TaskAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
+        pos = taskList[position].toString()
     }
+
+
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -99,15 +109,17 @@ class TaskAdapter(
 
             var mediaAdapter: TaskMediaAdapter? = null
             mediaAdapter = TaskMediaAdapter(
-                context,
+                context,  activity, manager = manager,
                 onItemClick = { isImg, uri ->
+                    Log.e("isImg", isImg.toString())
                     if (!isImg) {
-                        val play = Intent(Intent.ACTION_VIEW, uri.toUri())
-                        play.setDataAndType(
-                            uri.toUri(),
-                            "video/mp4"
-                        )
-                        context.startActivity(play)
+//                        val play = Intent(Intent.ACTION_VIEW, uri.toUri())
+//                        play.setDataAndType(
+//                            uri.toUri(),
+//                            "video/mp4"
+//                        )
+//                        context.startActivity(play)
+                        Toast.makeText(context, "video Playing", Toast.LENGTH_SHORT).show()
                     }
                 },
 

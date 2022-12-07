@@ -16,8 +16,14 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_messages.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_no_picture.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_pause.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_pause_circle.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_play.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_play_circle.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_plus_icon.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_round_pause.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_video_circle.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_video_pause_circle.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/tab_selector_blue.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/act_log_recycler_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/activity_auth.xml" value="0.36666666666666664" />
@@ -28,10 +34,11 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/country_code.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/country_code_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/create_note_popup_window.xml" value="0.36666666666666664" />
-        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/custom_video_controls.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/custom_video_controls.xml" value="0.33" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_dialog_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_logout_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_note_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/filter_bottomsheet.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_activity_log.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_camera.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_chart.xml" value="0.36666666666666664" />
@@ -53,8 +60,10 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_task.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/layout_progressbar.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/note_pad_item.xml" value="0.33" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/project_list_bdialog.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/record_view.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/single_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/video_play.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Cubezytech/.gradle/caches/transforms-3/63bb56e7012c7f32603c02570978fef4/transformed/jetified-android-rteditor-1.7.8/res/drawable/selector_ic_toolbar_align_center_light.xml" value="0.2245" />
         <entry key="..\:/Users/Cubezytech/.gradle/caches/transforms-3/63bb56e7012c7f32603c02570978fef4/transformed/jetified-android-rteditor-1.7.8/res/drawable/selector_ic_toolbar_align_left_light.xml" value="0.2245" />
         <entry key="..\:/Users/Cubezytech/.gradle/caches/transforms-3/63bb56e7012c7f32603c02570978fef4/transformed/jetified-android-rteditor-1.7.8/res/drawable/selector_ic_toolbar_bold_light.xml" value="0.2245" />
@@ -225,12 +234,10 @@
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/delete_dialog_layout.xml" value="0.29717180244829045" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_activity_log.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_camera.xml" value="0.3009833262077811" />
-        <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_create_note.xml" value="0.29717180244829045" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_create_task.xml" value="0.29717180244829045" />
-        <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_discussion.xml" value="0.10403428402541746" />
+        <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_discussion.xml" value="0.25" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_feedback.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_home.xml" value="0.3009833262077811" />
-        <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_line.xml" value="0.20738636363636365" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_notepad_list.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_o_t_p.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Cubezytech/AndroidStudioProjects/Client_Projects/EasydayKotlin/app/src/main/res/layout/fragment_reports.xml" value="0.3009833262077811" />
