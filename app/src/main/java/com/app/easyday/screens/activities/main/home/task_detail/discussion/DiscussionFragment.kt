@@ -372,6 +372,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
                     if (mediaPlayer?.isPlaying == true) {
                         mediaPlayer?.pause()
                         mTimer?.cancel()
+                        vidPlayerButton.setImageResource(R.drawable.ic_video_circle)
                     } else {
                         mediaPlayer?.start()
                         if (milliSecLeft == duration?.toLong()) {
@@ -381,6 +382,7 @@ class DiscussionFragment : BaseFragment<DiscussionViewModel>(), DiscussionInterf
                                 timerStart(milliSecLeft, duration)
                             }
                         }
+                        vidPlayerButton.setImageResource(R.drawable.ic_pause)
                     }
                 }
 

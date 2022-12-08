@@ -14,11 +14,9 @@ import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.app.easyday.R
-import com.app.easyday.utils.DeviceUtils
 import com.app.easyday.utils.IntentUtil
 import com.app.easyday.views.ChatAudioRecordView
 import com.karumi.dexter.Dexter
@@ -27,8 +25,6 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_conversation.*
-import kotlinx.android.synthetic.main.activity_conversation.layoutAudio
-import kotlinx.android.synthetic.main.fragment_discussion.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -175,6 +171,7 @@ class ConversationActivity : AppCompatActivity(), ChatAudioRecordView.RecordingL
                     if (mediaPlayer?.isPlaying == true) {
                         mediaPlayer?.pause()
                         mTimer?.cancel()
+                        vidPlayerButtonIV.setImageResource(R.drawable.ic_video_circle)
                     } else {
                         mediaPlayer?.start()
                         if (milliSecLeft == duration?.toLong()) {
@@ -184,6 +181,7 @@ class ConversationActivity : AppCompatActivity(), ChatAudioRecordView.RecordingL
                                 timerStart(milliSecLeft, duration)
                             }
                         }
+                        vidPlayerButtonIV.setImageResource(R.drawable.ic_pause)
                     }
                 }
 

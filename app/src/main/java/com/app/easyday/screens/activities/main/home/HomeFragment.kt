@@ -27,7 +27,7 @@ import com.app.easyday.app.sources.local.prefrences.AppPreferencesDelegates
 import com.app.easyday.app.sources.remote.model.ProjectRespModel
 import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
-import com.app.easyday.screens.activities.main.home.task_detail.TaskAdapter
+import com.app.easyday.screens.activities.main.home.create_task.TaskAdapter
 import com.app.easyday.screens.base.BaseFragment
 import com.app.easyday.screens.dialogs.FilterBottomSheetDialog
 import com.app.easyday.screens.dialogs.ProjectListDialog
@@ -39,7 +39,6 @@ import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_picture.*
-import kotlinx.android.synthetic.main.item_task.*
 import me.toptas.fancyshowcase.FancyShowCaseQueue
 import me.toptas.fancyshowcase.FancyShowCaseView
 import me.toptas.fancyshowcase.listener.OnViewInflateListener
@@ -146,17 +145,12 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     }
     private fun initScrollListener() {
         taskRV.addOnScrollListener(object : OnScrollListener() {
-            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-            }
 
             override fun onScrolled(@NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val linearLayoutManager: LinearLayoutManager? = recyclerView.layoutManager as LinearLayoutManager?
 
-                if(dy > 0 || dx > 0){
-
+                if (!recyclerView.isFocused) {
                     exo_player_view.keepScreenOn = false
 
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -166,7 +160,30 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
                         exo_player_view.isVisible = false
 
                     }, 2000)
+
+                } else {
+                    exo_player_view.keepScreenOn = true
+
+//                    Handler(Looper.getMainLooper()).postDelayed({
+                    imagePreview.isVisible = false
+                    imagePlay.isVisible = false
+                    video_RL.isVisible = false
+                    exo_player_view.isVisible = true
+
+//                    }, 2000)
                 }
+//                if(dy > 0 || dx > 0){
+//
+//                    exo_player_view.keepScreenOn = false
+//
+//                    Handler(Looper.getMainLooper()).postDelayed({
+//                        imagePreview.isVisible = true
+//                        imagePlay.isVisible = true
+//                        video_RL.isVisible = true
+//                        exo_player_view.isVisible = false
+//
+//                    }, 2000)
+//                }
 
 //                simpleExoPlayer.playWhenReady = false
 //                simpleExoPlayer.playbackState

@@ -8,6 +8,7 @@ import com.app.easyday.R
 import com.app.easyday.app.sources.remote.model.TaskAttributeResponse
 import com.app.easyday.app.sources.remote.model.TaskParticipantsItem
 import com.app.easyday.app.sources.remote.model.TaskResponse
+import com.app.easyday.screens.activities.main.home.create_task.TaskMediaAdapter
 import com.app.easyday.screens.base.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_task_details.*
@@ -157,9 +158,7 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
 //                        )
 //                        context?.startActivity(play)
                     }
-                },
-
-                )
+                })
         }
         mediaPager.apply {
             adapter = mediaAdapter?.apply { submitList(taskModel?.taskMedia) }

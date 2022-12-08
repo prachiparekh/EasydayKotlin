@@ -1,4 +1,4 @@
-package com.app.easyday.screens.activities.main.home.task_detail
+package com.app.easyday.screens.activities.main.home.create_task
 
 import android.app.Activity
 import android.content.Context
@@ -7,6 +7,7 @@ import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,6 @@ import coil.fetch.VideoFrameUriFetcher
 import coil.load
 import com.app.easyday.R
 import com.app.easyday.app.sources.remote.model.TaskMediaItem
-import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.dialogs.VideoPlayBottomSheetDialog
 import com.app.easyday.utils.camera_utils.TaskMediaDiffCallback
 import com.bumptech.glide.Glide
@@ -65,7 +65,7 @@ class TaskMediaAdapter(
 
         fun bind(item: TaskMediaItem) {
 
-
+            Log.e("item", item.toString())
             val isImg  =
                 item.mediaUrl?.endsWith(".jpg") == true ||
                         item.mediaUrl?.endsWith(".jpeg") == true || item.mediaUrl?.endsWith(
@@ -169,14 +169,21 @@ class TaskMediaAdapter(
                 .build()
             player.player = simpleExoPlayer
             player.keepScreenOn = true
-            simpleExoPlayer.addListener(object : Player.Listener{
+            simpleExoPlayer.addListener(object : Player.Listener {
                 override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-                    if (playbackState == Player.STATE_ENDED || playbackState == Player.STATE_IDLE){
+                    if (playbackState == Player.STATE_ENDED || playbackState == Player.STATE_IDLE) {
                         customImagePlay.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_play_circle))
 
                         player.keepScreenOn = false
                         simpleExoPlayer.playWhenReady = false
                     }
+                }
+
+                override fun onPlayerError(error: PlaybackException) {
+                    Toast.makeText(mContext, "Video Playing Error", Toast.LENGTH_SHORT)
+                        .show()
+                    simpleExoPlayer.playWhenReady = false
+                    customImagePlay.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_play_circle))
                 }
             })
             val videoSource = Uri.parse("https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4")
@@ -187,7 +194,7 @@ class TaskMediaAdapter(
             }
             simpleExoPlayer.prepare()
             simpleExoPlayer.play()
-            playError()
+//            playError()
         }
 
         private fun playError() {
