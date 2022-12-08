@@ -91,6 +91,15 @@
                 android:layout_centerInParent="true"
                 android:padding="@dimen/_10sdp"
                 android:src="@drawable/ic_fullscreen" />
+            <ImageView
+                android:id="@+id/rotate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/ic_screen_rotation"
+                android:visibility="gone"/>
         </RelativeLayout>
     </RelativeLayout>
 

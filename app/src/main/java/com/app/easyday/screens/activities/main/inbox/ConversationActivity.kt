@@ -175,6 +175,7 @@ class ConversationActivity : AppCompatActivity(), ChatAudioRecordView.RecordingL
                     if (mediaPlayer?.isPlaying == true) {
                         mediaPlayer?.pause()
                         mTimer?.cancel()
+                        vidPlayerButtonIV.setImageResource(R.drawable.ic_video_circle)
                     } else {
                         mediaPlayer?.start()
                         if (milliSecLeft == duration?.toLong()) {
@@ -184,6 +185,7 @@ class ConversationActivity : AppCompatActivity(), ChatAudioRecordView.RecordingL
                                 timerStart(milliSecLeft, duration)
                             }
                         }
+                        vidPlayerButtonIV.setImageResource(R.drawable.ic_pause)
                     }
                 }
 

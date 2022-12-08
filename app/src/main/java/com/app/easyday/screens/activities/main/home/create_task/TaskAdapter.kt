@@ -1,10 +1,8 @@
-package com.app.easyday.screens.activities.main.home.task_detail
+package com.app.easyday.screens.activities.main.home.create_task
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.Log
@@ -14,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.FragmentManager
@@ -24,8 +21,8 @@ import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.TaskInterfaceClick
 import com.app.easyday.app.sources.remote.model.TaskAttributeResponse
 import com.app.easyday.app.sources.remote.model.TaskResponse
-import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.activities.main.home.HomeFragment.Companion.selectedColor
+import com.app.easyday.screens.activities.main.home.task_detail.TaskTagAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.time.OffsetDateTime
@@ -56,7 +53,13 @@ class TaskAdapter(
         pos = taskList[position].toString()
     }
 
+    override fun onViewAttachedToWindow(holder: ViewHolder) {
+        super.onViewAttachedToWindow(holder)
+    }
 
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -121,9 +124,7 @@ class TaskAdapter(
 //                        context.startActivity(play)
                         Toast.makeText(context, "video Playing", Toast.LENGTH_SHORT).show()
                     }
-                },
-
-                )
+                })
 
             mediaPager.apply {
                 adapter = mediaAdapter.apply { submitList(item.taskMedia) }

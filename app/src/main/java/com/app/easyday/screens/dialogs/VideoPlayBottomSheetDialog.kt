@@ -8,12 +8,14 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.app.easyday.R
 import com.app.easyday.databinding.VideoPlayBinding
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
@@ -38,14 +40,12 @@ class VideoPlayBottomSheetDialog(
         binding = DataBindingUtil.inflate(inflater, R.layout.video_play, container, false)
         isCancelable = false
 
-//        val orientation = activity.resources.configuration.orientation
-        val orientation: Int = activity.resources.configuration.orientation
-
         val player = binding?.exoPlayerView
         val playBtn = binding?.exoPlayerView?.custom_imagePlay
         val fullSc = binding?.exoPlayerView?.fullScreen
         val back = binding?.exoPlayerView?.back
         val progressB = binding?.exoPlayerView?.exo_progress
+        val rotate = binding?.exoPlayerView?.rotate
         playBtn?.setImageDrawable(resources.getDrawable(R.drawable.ic_pause_circle))
 
         player?.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
@@ -65,6 +65,12 @@ class VideoPlayBottomSheetDialog(
                     simpleExoPlayer.playWhenReady = false
                 }
             }
+            override fun onPlayerError(error: PlaybackException) {
+                Toast.makeText(mContext, "Video Playing Error", Toast.LENGTH_SHORT)
+                    .show()
+                simpleExoPlayer.playWhenReady = false
+                playBtn?.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_play_circle))
+            }
         })
         val videoSource = Uri.parse("https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4")
         val mediaItem = MediaItem.fromUri(videoSource)
@@ -77,19 +83,9 @@ class VideoPlayBottomSheetDialog(
 
         back?.isVisible = true
         progressB?.isVisible = true
-        back?.setOnClickListener {
-//            when(orientation){
-//                Configuration.ORIENTATION_LANDSCAPE -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//                else -> {
-//                    dismiss()
-//                }
-//            }
-//            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
-                activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//            else if (orientation == Configuration.ORIENTATION_PORTRAIT)
-                dismiss()
+        rotate?.isVisible = true
+        fullSc?.isVisible = false
 
-        }
 
         playBtn?.setOnClickListener {
             if (simpleExoPlayer.isPlaying) {
@@ -102,33 +98,43 @@ class VideoPlayBottomSheetDialog(
                 playBtn.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_pause_circle))
             }
         }
-        val isProtrait = true
-        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        fullSc?.setOnClickListener {
 
-//            if (isProtrait){
-//                activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-//            }else
-//                activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//            Toast.makeText(mContext, "portrait", Toast.LENGTH_SHORT).show()
-
-
-            if (orientation == Configuration.ORIENTATION_PORTRAIT)
+        rotate?.setOnClickListener {
+            val orientation = activity.resources.configuration.orientation
+            if (orientation == Configuration.ORIENTATION_PORTRAIT){
                 //set in landscape
                 activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-            else if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+                player?.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
+            }
+            else if (orientation == Configuration.ORIENTATION_LANDSCAPE){
                 //set in portrait
                 activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                player?.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+            }
 
+
+        }
+        back?.setOnClickListener {
+
+            val orientation = activity.resources.configuration.orientation
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE){
+                activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                player?.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+            }
+            else if (orientation == Configuration.ORIENTATION_PORTRAIT)
+                dismiss()
         }
 
         binding?.root?.isFocusableInTouchMode = true
         binding?.root?.requestFocus()
         binding?.root?.setOnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-//                if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+                val orientation = activity.resources.configuration.orientation
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE){
                     activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//                else if (orientation == Configuration.ORIENTATION_PORTRAIT)
+                    player?.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                }
+                else if (orientation == Configuration.ORIENTATION_PORTRAIT)
                     dismiss()
 
                 true

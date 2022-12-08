@@ -78,7 +78,7 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
         var width = displayMetrics.widthPixels
         var height = displayMetrics.heightPixels
 
-        rel.layoutParams.height = height - 220
+//        rel.layoutParams.height = height - 220
 
         ctaTV.setOnClickListener {
             if (fullName.text.isNullOrEmpty()) {

@@ -1,15 +1,14 @@
 package com.app.easyday.screens.activities.main.home.task_detail
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.View
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.app.easyday.R
 import com.app.easyday.app.sources.remote.model.TaskAttributeResponse
 import com.app.easyday.app.sources.remote.model.TaskParticipantsItem
 import com.app.easyday.app.sources.remote.model.TaskResponse
+import com.app.easyday.screens.activities.main.home.create_task.TaskMediaAdapter
 import com.app.easyday.screens.base.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_task_details.*
@@ -149,7 +148,7 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
         var mediaAdapter: TaskMediaAdapter? = null
         mediaAdapter = context?.let {
             TaskMediaAdapter(
-                it, manager = childFragmentManager,
+                it,  requireActivity(), manager = childFragmentManager,
                 onItemClick = { isImg, uri ->
                     if (!isImg) {
 //                        val play = Intent(Intent.ACTION_VIEW, uri.toUri())
@@ -159,9 +158,7 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
 //                        )
 //                        context?.startActivity(play)
                     }
-                },
-
-                )
+                })
         }
         mediaPager.apply {
             adapter = mediaAdapter?.apply { submitList(taskModel?.taskMedia) }
