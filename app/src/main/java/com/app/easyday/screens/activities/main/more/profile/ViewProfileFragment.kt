@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
@@ -73,12 +72,7 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
             blankRL.isVisible = true
         }
 
-        val displayMetrics = DisplayMetrics()
-        requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
-        var width = displayMetrics.widthPixels
-        var height = displayMetrics.heightPixels
 
-        rel.layoutParams.height = height - 220
 
         ctaTV.setOnClickListener {
             if (fullName.text.isNullOrEmpty()) {

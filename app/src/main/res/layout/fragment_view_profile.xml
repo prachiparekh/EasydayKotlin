@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topCL" />
 
-    <androidx.core.widget.NestedScrollView
+  <!--  <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -80,22 +80,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topCL">-->
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topCL">
 
+
         <RelativeLayout
-            android:id="@+id/rel"
+            android:id="@+id/profileRL"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
-
-
-            <RelativeLayout
-                android:id="@+id/profileRL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/_30sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_30sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/avatar"
@@ -195,45 +199,44 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+        <RelativeLayout
+            android:id="@+id/blankRL"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </RelativeLayout>
+    <!--    </androidx.core.widget.NestedScrollView>-->
 
-            <RelativeLayout
-                android:id="@+id/saveRL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/profLabel"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="@dimen/_13sdp"
-                android:background="@color/white"
-                android:visibility="gone">
+    <RelativeLayout
+        android:id="@+id/saveRL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-                <TextView
-                    android:id="@+id/ctaTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginHorizontal="@dimen/_20sdp"
-                    android:layout_marginBottom="@dimen/_25sdp"
-                    android:alpha="0.5"
-                    android:background="@drawable/green_curve_bg"
-                    android:enabled="false"
-                    android:fontFamily="@font/dm_sans_700"
-                    android:gravity="center_horizontal"
-                    android:paddingVertical="@dimen/_10sdp"
-                    android:text="@string/save_changes"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12sdp"
-                    android:visibility="visible" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/blankRL"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
+        <TextView
+            android:id="@+id/ctaTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:alpha="0.5"
+            android:background="@drawable/green_curve_bg"
+            android:enabled="false"
+            android:fontFamily="@font/dm_sans_700"
+            android:gravity="center_horizontal"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="@string/save_changes"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="visible" />
+    </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

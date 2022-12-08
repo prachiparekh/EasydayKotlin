@@ -1,9 +1,7 @@
 package com.app.easyday.screens.activities.main.home.task_detail
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.View
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.app.easyday.R
@@ -149,7 +147,7 @@ class TaskDetailsFragment : BaseFragment<TaskDetailsViewModel>() {
         var mediaAdapter: TaskMediaAdapter? = null
         mediaAdapter = context?.let {
             TaskMediaAdapter(
-                it, manager = childFragmentManager,
+                it, requireActivity(), manager = childFragmentManager,
                 onItemClick = { isImg, uri ->
                     if (!isImg) {
 //                        val play = Intent(Intent.ACTION_VIEW, uri.toUri())
