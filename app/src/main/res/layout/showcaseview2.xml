@@ -15,24 +15,24 @@
             android:id="@+id/cardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_30sdp">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_color_ecllipse"
+                android:drawableEnd="@drawable/ic_arrow_down"
+                android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="@font/dm_sans_400"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_10sdp"
                 android:text="@string/guys_task"
                 android:textColor="@color/navy_blue"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableEnd="@drawable/ic_arrow_down"
-                android:drawableStart="@drawable/ic_color_ecllipse"
-                android:fontFamily="@font/dm_sans_400"
                 android:textSize="@dimen/_11sdp" />
 
 
@@ -44,19 +44,42 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:src="@drawable/ic_up_left"
-            app:layout_constraintTop_toTopOf="@id/cardView"
-            app:layout_constraintStart_toEndOf="@id/cardView" />
+            app:layout_constraintStart_toEndOf="@id/cardView"
+            app:layout_constraintTop_toTopOf="@id/cardView" />
 
-
-        <TextView
-            android:id="@+id/text2"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/dm_sans_700"
-            android:text="@string/see_all"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/arrow"
-            app:layout_constraintStart_toStartOf="@id/arrow" />
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintTop_toBottomOf="@id/arrow">
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mulish_700"
+                android:text="@string/see_all"
+                android:layout_marginEnd="@dimen/_60sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text2"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/dm_sans_regular"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/skip"

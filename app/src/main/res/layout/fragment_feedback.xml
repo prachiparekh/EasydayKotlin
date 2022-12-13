@@ -45,29 +45,27 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--    <ScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/topfeedbackCL"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent">-->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/parent_const"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topfeedbackCL">
+        app:layout_constraintTop_toBottomOf="@+id/topfeedbackCL"
+        app:layout_constraintBottom_toTopOf="@+id/btnRl">
 
-        <RelativeLayout
-            android:id="@+id/parent_rel"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parent_const"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="0dp">
 
             <RelativeLayout
+                android:id="@+id/parent_rel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
                     android:id="@+id/ratingRL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -170,7 +168,7 @@
                                     android:fontFamily="@font/dm_sans_400"
                                     android:hint="@string/type_here"
                                     android:maxLength="500"
-                                    android:paddingVertical="@dimen/_5sdp"
+                                    android:paddingVertical="@dimen/_8sdp"
                                     android:textSize="@dimen/_12sdp" />
 
                                 <TextView
@@ -205,8 +203,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/opinionRl"
                     android:layout_marginHorizontal="@dimen/_15sdp"
-                    android:paddingVertical="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_15sdp">
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_10sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -230,12 +228,14 @@
                 </RelativeLayout>
 
 
-        </RelativeLayout>
+            </RelativeLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--    </ScrollView>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
     <RelativeLayout
+        android:id="@+id/btnRl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -244,7 +244,8 @@
         android:paddingBottom="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_weight="1">
 
 
         <TextView

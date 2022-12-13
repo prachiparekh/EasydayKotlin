@@ -27,7 +27,7 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
     override fun setupObservers() {
         viewModel.userProfileData.observe(this) { userData ->
 
-        if (userData?.profession != null) {
+            if (userData?.profession != null) {
 //                AppPreferencesDelegates.get().token=userData.token.toString()
                 startActivity(
                     Intent(
