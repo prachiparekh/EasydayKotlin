@@ -21,10 +21,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
-        android:fontFamily="@font/dm_sans_700"
+        android:fontFamily="@font/mulish_700"
         android:text="@string/verify_number"
+        android:textStyle="bold"
         android:textColor="@color/navy_blue"
-        android:textSize="@dimen/_20sdp"
+        android:textSize="@dimen/_28sdp"
         app:layout_constraintStart_toStartOf="@id/back"
         app:layout_constraintTop_toBottomOf="@id/back" />
 
@@ -35,6 +36,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/dm_sans_regular"
         android:text="@string/enter_otp"
+        android:textSize="@dimen/_12sdp"
         android:textColor="@color/gray"
         app:layout_constraintStart_toStartOf="@id/title1"
         app:layout_constraintTop_toBottomOf="@id/title1" />
@@ -45,8 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/dm_sans_regular"
-        android:textColor="@color/navy_blue"
-        android:textSize="@dimen/_12sdp"
+        android:textColor="@color/accent_blue"
+        android:textSize="@dimen/_13sdp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/title2"
         app:layout_constraintTop_toBottomOf="@id/title2" />
@@ -59,7 +61,7 @@
         android:fontFamily="@font/dm_sans_400"
         android:text="@string/change"
         android:textColor="@color/green"
-        android:textSize="@dimen/_12sdp"
+        android:textSize="@dimen/_14sdp"
         app:layout_constraintBottom_toBottomOf="@id/phoneNumber"
         app:layout_constraintStart_toEndOf="@id/phoneNumber"
         app:layout_constraintTop_toTopOf="@id/phoneNumber" />

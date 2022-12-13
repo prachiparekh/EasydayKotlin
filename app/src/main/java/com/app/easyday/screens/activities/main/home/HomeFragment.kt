@@ -140,7 +140,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
         createProjectTitle = arguments?.getParcelable("projectName") as ProjectRespModel?
 
-        initScrollListener()
+//        initScrollListener()
 
     }
     private fun initScrollListener() {

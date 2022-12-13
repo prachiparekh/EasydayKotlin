@@ -32,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_25sdp"
-        android:fontFamily="@font/dm_sans_700"
+        android:fontFamily="@font/mulish_700"
+        android:textStyle="bold"
         android:text="@string/hello_there"
         android:textColor="@color/green"
         android:textSize="@dimen/_25sdp"
@@ -44,7 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
-        android:fontFamily="@font/dm_sans_700"
+        android:fontFamily="@font/mulish_700"
+        android:textStyle="bold"
         android:text="@string/lets_make"
         android:textColor="@color/navy_blue"
         android:textSize="@dimen/_25sdp"
@@ -57,10 +59,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_30sdp"
-        android:fontFamily="@font/dm_sans_400"
+        android:fontFamily="@font/dm_sans_regular"
         android:text="@string/get_otp"
         android:textColor="@color/gray"
-        android:textSize="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text2" />
 
@@ -107,10 +109,10 @@
                     android:layout_marginTop="@dimen/_3sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:alpha="0.8"
-                    android:fontFamily="@font/dm_sans_400"
+                    android:fontFamily="@font/dm_sans_regular"
                     android:text="@string/country_code"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_9sdp"
                     app:layout_constraintBottom_toTopOf="@id/phoneFlag"
                     app:layout_constraintLeft_toLeftOf="parent"
                     tools:ignore="RtlSymmetry" />
@@ -139,6 +141,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/phoneFlag"
                     app:layout_constraintStart_toEndOf="@+id/phoneFlag"
                     app:layout_constraintTop_toTopOf="@id/phoneFlag"
+                    app:layout_constraintVertical_bias="0.666"
                     tools:ignore="RtlSymmetry" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -164,7 +167,6 @@
             android:id="@+id/phoneLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_2sdp"
             android:layout_weight="1.8"
             android:background="@android:color/transparent"

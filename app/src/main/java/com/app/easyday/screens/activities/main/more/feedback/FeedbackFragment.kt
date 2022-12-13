@@ -1,9 +1,11 @@
 package com.app.easyday.screens.activities.main.more.feedback
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.DisplayMetrics
+import android.view.inputmethod.InputMethodManager
 import android.widget.RelativeLayout
 import androidx.navigation.Navigation
 import com.app.easyday.R
@@ -13,6 +15,7 @@ import com.app.easyday.screens.dialogs.BackTosettingDialog
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_feedback.*
+
 
 @AndroidEntryPoint
 class FeedbackFragment : BaseFragment<FeedbackViewModel>(), FeedBackTagInterfaceClick {
@@ -89,6 +92,7 @@ class FeedbackFragment : BaseFragment<FeedbackViewModel>(), FeedBackTagInterface
         tags_RecV?.layoutManager = FlexboxLayoutManager(requireContext())
         adapter = FeedTagsAdapter(requireContext(), list, this)
         tags_RecV?.adapter = adapter
+
 
     }
 

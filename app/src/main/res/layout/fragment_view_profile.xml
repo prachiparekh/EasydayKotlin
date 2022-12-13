@@ -111,18 +111,18 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_user" />
 
-                <ImageView
-                    android:id="@+id/camera"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_alignEnd="@id/avatar"
-                    android:layout_alignBottom="@id/avatar"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/bg_circle_white"
-                    android:backgroundTint="@color/white"
-                    android:padding="@dimen/_7sdp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_camera" />
+            <ImageView
+                android:id="@+id/camera"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignEnd="@id/avatar"
+                android:layout_alignBottom="@id/avatar"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_circle_white"
+                android:backgroundTint="@color/white"
+                android:padding="@dimen/_7sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_pf_camera" />
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
