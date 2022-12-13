@@ -73,7 +73,6 @@ class ViewProfileFragment : BaseFragment<ProfileViewModel>(),
         }
 
 
-
         ctaTV.setOnClickListener {
             if (fullName.text.isNullOrEmpty()) {
                 Toast.makeText(
