@@ -51,12 +51,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingHorizontal="@dimen/_3sdp"
             android:paddingVertical="@dimen/_3sdp">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
                 android:background="@drawable/bg_circle_white"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_profile_circle" />
@@ -67,7 +67,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/dm_sans_400"
-                android:paddingHorizontal="@dimen/_3sdp"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:paddingHorizontal="@dimen/_2sdp"
                 android:text="John Doe"
                 android:textColor="@color/white" />
 
@@ -79,7 +81,7 @@
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:padding="@dimen/_3sdp"
+        android:padding="@dimen/_2sdp"
         android:src="@drawable/ic_low"
         app:layout_constraintBottom_toBottomOf="@id/edit"
         app:layout_constraintEnd_toStartOf="@id/projectIcon"
@@ -110,7 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:padding="@dimen/_3sdp"
+        android:padding="@dimen/_2sdp"
         android:src="@drawable/ic_edit_3"
         app:layout_constraintBottom_toBottomOf="@id/nameCard"
         app:layout_constraintEnd_toEndOf="parent"
@@ -185,7 +187,7 @@
         android:paddingStart="@dimen/_10sdp"
         android:text="@string/date_"
         android:textColor="@color/hint_color"
-        android:textSize="@dimen/_11sdp"
+        android:textSize="@dimen/_10sdp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/videoProgressCL" />
@@ -199,7 +201,7 @@
         android:paddingStart="@dimen/_10sdp"
         android:text="26 Apr 2022"
         android:textColor="@color/hint_color"
-        android:textSize="@dimen/_11sdp"
+        android:textSize="@dimen/_10sdp"
         app:layout_constraintStart_toEndOf="@id/dateTitle"
         app:layout_constraintTop_toBottomOf="@id/videoProgressCL" />
 
@@ -212,7 +214,7 @@
         android:paddingStart="@dimen/_10sdp"
         android:text="First floor, second Unit. Living Room door should be opening on the left from window. Please change the opening direction. Call me if you need more help. "
         android:textColor="@color/hint_color"
-        android:textSize="@dimen/_11sdp"
+        android:textSize="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateTitle" />
 
@@ -262,10 +264,10 @@
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_tick_square"
                     android:drawablePadding="@dimen/_2sdp"
-                    android:fontFamily="@font/inter_medium_500"
+                    android:fontFamily="@font/dm_sans_400"
                     android:gravity="center_horizontal"
                     android:maxLines="1"
-                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_4sdp"
                     android:paddingVertical="@dimen/_10sdp"
                     android:text="@string/complete"
                     android:textColor="@color/tab_gray"
@@ -281,7 +283,7 @@
                     android:fontFamily="@font/inter_medium_500"
                     android:gravity="center_horizontal"
                     android:maxLines="1"
-                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_4sdp"
                     android:paddingVertical="@dimen/_10sdp"
                     android:text="@string/share"
                     android:textColor="@color/tab_gray"
@@ -297,7 +299,7 @@
                     android:fontFamily="@font/inter_medium_500"
                     android:gravity="center_horizontal"
                     android:maxLines="1"
-                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_4sdp"
                     android:paddingVertical="@dimen/_10sdp"
                     android:text="@string/discussion"
                     android:textColor="@color/tab_gray"
@@ -313,7 +315,7 @@
                     android:fontFamily="@font/inter_medium_500"
                     android:gravity="center_horizontal"
                     android:maxLines="1"
-                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_4sdp"
                     android:paddingVertical="@dimen/_10sdp"
                     android:text="@string/message"
                     android:textColor="@color/tab_gray"

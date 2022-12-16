@@ -1,6 +1,11 @@
 package com.app.easyday.screens.activities.main.dashboard
 
+import android.app.Dialog
+import android.graphics.drawable.ColorDrawable
 import android.view.KeyEvent
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -19,8 +24,8 @@ class DashboardFragment : BaseFragment<DashboardViewModel>() {
 
     override fun getContentView() = R.layout.fragment_dashboard
 
-//    companion object {
-        var selectedTabID = R.id.home
+    //    companion object {
+    var selectedTabID = R.id.home
 //    }
 
     override fun initUi() {
@@ -42,11 +47,12 @@ class DashboardFragment : BaseFragment<DashboardViewModel>() {
         }
 
         add.setOnClickListener {
-            val action = DashboardFragmentDirections.dashboardToCamera()
-            val nav: NavController = Navigation.findNavController(requireView())
-            if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
-                nav.navigate(action)
-            }
+//            val action = DashboardFragmentDirections.dashboardToCamera()
+//            val nav: NavController = Navigation.findNavController(requireView())
+//            if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
+//                nav.navigate(action)
+//            }
+            showDialog()
         }
     }
 
@@ -61,24 +67,45 @@ class DashboardFragment : BaseFragment<DashboardViewModel>() {
                 tag = HomeFragment.TAG
             }
             R.id.inbox -> {
-                fragment = InboxFragment()
-                tag = InboxFragment.TAG
+//                fragment = InboxFragment()
+//                tag = InboxFragment.TAG
+                showDialog()
             }
             R.id.reports -> {
-                fragment = ReportsFragment()
-                tag = ReportsFragment.TAG
+//                fragment = ReportsFragment()
+//                tag = ReportsFragment.TAG
+                showDialog()
             }
             R.id.more -> {
-                fragment = MoreFragment()
-                tag = MoreFragment.TAG
+//                fragment = MoreFragment()
+//                tag = MoreFragment.TAG
+                showDialog()
             }
         }
-   if (fragment != null) {
+        if (fragment != null) {
             childFragmentManager.beginTransaction()
                 .replace(R.id.childContent, fragment)
                 .addToBackStack(tag)
                 .commit()
         }
+
+    }
+    private fun showDialog() {
+        val dialog = Dialog(requireActivity(), R.style.DialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.coming_soon_dialog)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(0))
+//        val body = dialog.findViewById(R.id.body) as TextView
+//        body.text = title
+        val yesBtn = dialog.findViewById(R.id.yesBtn) as TextView
+
+        yesBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
 
     }
 

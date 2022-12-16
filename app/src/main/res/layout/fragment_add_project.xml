@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:fontFamily="@font/inter_medium_500"
+                android:fontFamily="@font/dm_sans_regular"
                 android:inputType="text"
                 android:singleLine="true"
                 android:textColor="@color/dark_blue"
@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:fontFamily="@font/inter_medium_500"
+                android:fontFamily="@font/dm_sans_400"
                 android:gravity="top|start"
                 android:inputType="textMultiLine"
                 android:lines="4"
@@ -149,10 +149,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:fontFamily="@font/inter_medium_500"
+                android:fontFamily="@font/dm_sans_regular"
                 android:text="@string/assign_color"
-                android:textColor="@color/tab_gray"
-                android:textSize="@dimen/_11sdp"
+                android:textColor="@color/p_text"
+                android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -190,14 +190,18 @@
                 android:id="@+id/cta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/green_curve_bg"
                 android:fontFamily="@font/dm_sans_700"
+                android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:paddingVertical="@dimen/_10sdp"
                 android:text="@string/next"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_13sdp" />
 
         </RelativeLayout>
 

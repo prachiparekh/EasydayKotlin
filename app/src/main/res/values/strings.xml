@@ -11,6 +11,8 @@
     <string name="lets_make">Let’s make \nyour day easy</string>
     <string name="get_otp">Enter your mobile number to get OTP</string>
     <string name="country_code">Country code</string>
+    <string name="country_name">Country Name :</string>
+    <string name="coming_soon_text">We are happy to know you are excited to see this feature. 🤗 \nThis will be included in our future builds.</string>
     <string name="romania_flag">us</string>
     <string name="phone_number">Phone Number</string>
     <string name="verify_number">Verify Your \nPhone Number</string>

@@ -7,9 +7,12 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/bg_stroke_round.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/bottom_nav_text_color.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/conversation_dialog_1.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_arrow_down.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_arrow_down_home.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_arrow_left.xml" value="0.284" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_arrow_right.xml" value="0.284" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_briefcase.xml" value="0.2095" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_close_circle.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_delete.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_delete_btn.xml" value="0.2095" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/drawable/ic_easyday_white.xml" value="0.2095" />
@@ -42,6 +45,7 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/add_assignee_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/chat_record_view.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/comming_soon_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/country_code.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/country_code_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/create_note_popup_window.xml" value="0.36666666666666664" />
@@ -49,8 +53,12 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_dialog_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_logout_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/delete_note_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/details_layout.xml" value="0.33" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/filter_bottomsheet.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_activity_log.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_add_admin.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_add_participants.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_add_project.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_camera.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_chart.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_create_note.xml" value="0.36666666666666664" />
@@ -66,11 +74,15 @@
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_privacy_security.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_reports.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_search.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_task_details.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/fragment_view_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_bottom_image.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_onboarding_pager.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_participant.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_picture.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_project.xml" value="0.36666666666666664" />
+        <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_tag.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/item_task.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/layout_progressbar.xml" value="0.36666666666666664" />
         <entry key="..\:/EasydayKotlin/app/src/main/res/layout/note_pad_item.xml" value="0.33" />

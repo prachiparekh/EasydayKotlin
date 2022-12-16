@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_rect_15"
+        android:backgroundTint="@color/light_gray"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_centerVertical="true">
+        <TextView
+            android:id="@+id/ttv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_centerHorizontal="true"
+            android:text="@string/coming_soon_text"
+            android:textSize="@dimen/_15sdp"
+            android:fontFamily="@font/dm_sans_400"/>
+        <TextView
+            android:id="@+id/yesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ok"
+            android:fontFamily="@font/mulish_700"
+            android:textColor="@color/green"
+            android:paddingVertical="@dimen/_3sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:textSize="@dimen/_16sdp"
+            android:layout_below="@+id/ttv"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+</RelativeLayout>
