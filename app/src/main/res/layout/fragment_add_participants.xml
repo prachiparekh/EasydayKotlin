@@ -100,6 +100,7 @@
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/green_curve_bg"
                 android:fontFamily="@font/dm_sans_700"
+                android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:paddingVertical="@dimen/_10sdp"
                 android:text="@string/next"

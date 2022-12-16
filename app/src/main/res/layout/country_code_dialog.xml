@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dialog_rly"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,6 +20,46 @@
             android:layout_marginTop="20dp"
             android:gravity="center">
 
+            <RelativeLayout
+                android:id="@+id/searchRL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/ic_edittext_radius_bg"
+                android:backgroundTint="@color/navy_blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/mBack"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/country_name"
+                    android:textColor="@color/accent_blue"
+                    android:textSize="@dimen/_8sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"/>
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/mSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"
+                    android:splitMotionEvents="true"
+                    android:theme="@style/ThemeOverlay.SearchView"
+                    app:closeIcon="@drawable/ic_close_circle_skyblue"
+                    app:iconifiedByDefault="true"
+                    app:queryHint="Search "
+                    app:searchIcon="@drawable/ic_search"
+                    android:layout_toRightOf="@+id/tt"/>
+
+
+            </RelativeLayout>
+
+
+
             <TextView
                 android:id="@+id/textItems"
                 android:layout_width="0dp"
@@ -30,7 +71,8 @@
                 android:paddingVertical="@dimen/_8sdp"
                 android:text="@string/country_code"
                 android:textColor="@color/navy_blue"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_14sdp"
+                android:visibility="visible"/>
 
             <ImageView
                 android:id="@+id/mClose"
@@ -48,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_4sdp" />
+            android:layout_marginTop="@dimen/_10sdp" />
 
     </LinearLayout>
 

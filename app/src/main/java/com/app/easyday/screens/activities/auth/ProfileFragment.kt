@@ -397,6 +397,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), BaseActivity.OnProfile
                 Glide.with(requireContext())
                     .load(imageUrl)
                     .error(requireContext().resources.getDrawable(R.drawable.ic_user))
+                    .placeholder(requireContext().resources.getDrawable(R.drawable.ic_user))
                     .apply(
                         options.centerCrop()
                             .skipMemoryCache(true)

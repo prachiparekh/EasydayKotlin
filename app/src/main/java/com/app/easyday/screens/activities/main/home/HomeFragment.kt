@@ -1,24 +1,25 @@
 package com.app.easyday.screens.activities.main.home
 
 
+import android.app.ActionBar
 import android.app.Activity
+import android.app.Dialog
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Handler
-import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.app.easyday.R
 import com.app.easyday.app.sources.local.interfaces.ProjectInterface
 import com.app.easyday.app.sources.local.interfaces.TaskFilterApplyInterface
@@ -29,6 +30,7 @@ import com.app.easyday.app.sources.remote.model.TaskResponse
 import com.app.easyday.screens.activities.main.dashboard.DashboardFragmentDirections
 import com.app.easyday.screens.activities.main.home.create_task.TaskAdapter
 import com.app.easyday.screens.base.BaseFragment
+import com.app.easyday.screens.dialogs.DisplayDetailsDialog
 import com.app.easyday.screens.dialogs.FilterBottomSheetDialog
 import com.app.easyday.screens.dialogs.ProjectListDialog
 import com.app.easyday.utils.DeviceUtils
@@ -38,7 +40,6 @@ import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item_picture.*
 import me.toptas.fancyshowcase.FancyShowCaseQueue
 import me.toptas.fancyshowcase.FancyShowCaseView
 import me.toptas.fancyshowcase.listener.OnViewInflateListener
@@ -71,7 +72,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
     override fun initUi() {
 
-        DeviceUtils.initProgress(requireContext())
+//        DeviceUtils.initProgress(requireContext())
 //        DeviceUtils.showProgress()
 
 
@@ -104,92 +105,67 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
 
         filterDialog = FilterBottomSheetDialog(this)
         filterTV.setOnClickListener {
-            if (filterDialog?.isAdded == false)
-                filterDialog?.show(childFragmentManager, "filter")
+          /*  if (filterDialog?.isAdded == false)
+                filterDialog?.show(childFragmentManager, "filter")*/
+            showDialog()
         }
 
         cta.setOnClickListener {
-            val action = DashboardFragmentDirections.dashboardToCamera()
+            /*val action = DashboardFragmentDirections.dashboardToCamera()
             val nav: NavController = Navigation.findNavController(requireView())
-            nav.navigate(action)
+            nav.navigate(action)*/
+            showDialog()
         }
 
         search.setOnClickListener {
-            val action = DashboardFragmentDirections.dashboardToSearch()
+           /* val action = DashboardFragmentDirections.dashboardToSearch()
             val nav: NavController = Navigation.findNavController(requireView())
             if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
                 nav.navigate(action)
-            }
+            }*/
+            showDialog()
         }
 
         notification.setOnClickListener {
-            val action = DashboardFragmentDirections.dashboardToMoreNotifications()
+           /* val action = DashboardFragmentDirections.dashboardToMoreNotifications()
             val nav: NavController = Navigation.findNavController(requireView())
             if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
                 nav.navigate(action)
-            }
+            }*/
+            showDialog()
         }
 
         profile.setOnClickListener {
-            val action = DashboardFragmentDirections.dashboardToMoreViewProfile()
+           /* val action = DashboardFragmentDirections.dashboardToMoreViewProfile()
             val nav: NavController = Navigation.findNavController(requireView())
             if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
                 nav.navigate(action)
-            }
+            }*/
+
+            showDialog()
         }
 
         createProjectTitle = arguments?.getParcelable("projectName") as ProjectRespModel?
 
-//        initScrollListener()
 
     }
-    private fun initScrollListener() {
-        taskRV.addOnScrollListener(object : OnScrollListener() {
+    private fun showDialog() {
+        val dialog = Dialog(requireActivity(), R.style.DialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.coming_soon_dialog)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(0))
+//        val body = dialog.findViewById(R.id.body) as TextView
+//        body.text = title
+        val yesBtn = dialog.findViewById(R.id.yesBtn) as TextView
 
-            override fun onScrolled(@NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val linearLayoutManager: LinearLayoutManager? = recyclerView.layoutManager as LinearLayoutManager?
+        yesBtn.setOnClickListener {
+            dialog.dismiss()
+        }
 
-                if (!recyclerView.isFocused) {
-                    exo_player_view.keepScreenOn = false
+        dialog.show()
 
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        imagePreview.isVisible = true
-                        imagePlay.isVisible = true
-                        video_RL.isVisible = true
-                        exo_player_view.isVisible = false
-
-                    }, 2000)
-
-                } else {
-                    exo_player_view.keepScreenOn = true
-
-//                    Handler(Looper.getMainLooper()).postDelayed({
-                    imagePreview.isVisible = false
-                    imagePlay.isVisible = false
-                    video_RL.isVisible = false
-                    exo_player_view.isVisible = true
-
-//                    }, 2000)
-                }
-//                if(dy > 0 || dx > 0){
-//
-//                    exo_player_view.keepScreenOn = false
-//
-//                    Handler(Looper.getMainLooper()).postDelayed({
-//                        imagePreview.isVisible = true
-//                        imagePlay.isVisible = true
-//                        video_RL.isVisible = true
-//                        exo_player_view.isVisible = false
-//
-//                    }, 2000)
-//                }
-
-//                simpleExoPlayer.playWhenReady = false
-//                simpleExoPlayer.playbackState
-
-            }
-        })
     }
 
     override fun setObservers() {
@@ -273,7 +249,8 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
             }
         }
 
-        viewModel.taskList.observe(viewLifecycleOwner) {
+
+        /*viewModel.taskList.observe(viewLifecycleOwner) {
 
             //            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
             if (it.isNullOrEmpty()) {
@@ -287,7 +264,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
             //            }
 
 //            DeviceUtils.dismissProgress()
-        }
+        }*/
     }
 
     private fun setAnimatedContent(view: View, fancyShowCaseView: FancyShowCaseView) {
@@ -361,12 +338,15 @@ class HomeFragment : BaseFragment<HomeViewModel>(),
     }
 
     override fun onTaskClick(taskModel: TaskResponse) {
-        val action = DashboardFragmentDirections.dashboardToTaskDetails()
-        action.taskModel = taskModel
-        val nav: NavController = Navigation.findNavController(requireView())
-        if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
-            nav.navigate(action)
-        }
+//        val action = DashboardFragmentDirections.dashboardToTaskDetails()
+//        action.taskModel = taskModel
+//        val nav: NavController = Navigation.findNavController(requireView())
+//        if (nav.currentDestination != null && nav.currentDestination?.id == R.id.dashboardFragment) {
+//            nav.navigate(action)
+//        }
+
+        val fragment = DisplayDetailsDialog(requireContext(), requireActivity() , taskModel)
+        fragment.show(childFragmentManager, "")
     }
 
     override fun onDiscussionClick(taskId: Int) {

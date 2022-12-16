@@ -55,9 +55,9 @@
         <activity
             android:name="com.app.easyday.screens.activities.main.MainActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="sensorPortrait"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize|stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize|stateHidden" />
 <!--            android:screenOrientation="portrait"-->
 
 
