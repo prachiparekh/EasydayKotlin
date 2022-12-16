@@ -15,8 +15,8 @@ android {
         applicationId "com.app.easyday"
         minSdk 21
         targetSdk 32
-        versionCode 8
-        versionName "1.0.7"
+        versionCode 9
+        versionName "1.0.8"
         resConfigs "en", "US"
         setProperty("archivesBaseName", "EasyDay" + "-v" + versionCode + "(" + versionName + ")")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

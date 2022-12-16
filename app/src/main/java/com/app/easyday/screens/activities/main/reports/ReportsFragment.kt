@@ -5,18 +5,14 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.pdf.PdfDocument
-import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup
 import com.app.easyday.R
 import com.app.easyday.screens.activities.main.home.HomeFragment
 import com.app.easyday.screens.base.BaseFragment
-import com.app.easyday.utils.BigScreenshot
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_reports.*
 
@@ -43,17 +39,18 @@ class ReportsFragment : BaseFragment<ReportsViewModel>(),
 
         share.setOnClickListener {
 // take long screenshot
-            val bitmap = getBitmapFromView(mainCL, mainCL.getChildAt(0).getHeight(), mainCL.getChildAt(0).getWidth())
+            val bitmap =
+                getBitmapFromView(mainCL, mainCL.getChildAt(0).height, mainCL.getChildAt(0).width)
             // set screenshot in img
             if (bitmap != null) {
-                mainCL.setVisibility(View.GONE)
+                mainCL.visibility = View.GONE
                 img.visibility = View.VISIBLE
                 img.setImageBitmap(bitmap)
             }
 
 // converting screenshot bitmap to Pdf
             val pdfDocument = PdfDocument()
-            val pi = PdfDocument.PageInfo.Builder(bitmap!!.width, bitmap!!.height, 1).create()
+            val pi = PdfDocument.PageInfo.Builder(bitmap!!.width, bitmap.height, 1).create()
             val page = pdfDocument.startPage(pi)
 
             page.canvas.drawBitmap(bitmap, bitmap.width.toFloat(), bitmap.height.toFloat(), null)
